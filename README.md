@@ -1,9 +1,8 @@
 
-# Webtrees 2 Custom Module: ⚶ Vesta Places and Pedigree map
+# ⚶ Vesta Places and Pedigree map (Webtrees 2 Custom Module)
 
-This is a [webtrees](https://www.webtrees.net/) custom module. 
+This [webtrees](https://www.webtrees.net/) custom module provides replacements for the original 'Places' and 'Pedigree map' modules, using location data from GEDCOM, as well as location data provided by other modules.  
 The project’s website is [cissee.de](https://cissee.de). 
-The original module is on [github](https://github.com/dkniffin/webtrees-openstreetmap).
 
 ## Contents
 
@@ -32,7 +31,7 @@ The original module is on [github](https://github.com/dkniffin/webtrees-openstre
 * Requires the ⚶ Vesta Common module ('vesta_common_lib').
 * Download the zipped module, including all related modules, [here](https://cissee.de/vesta.latest.zip).
 * Support, suggestions, feature requests: <ric@richard-cissee.de>
-* Issues also via <https://github.com/ric2016/openstreetmap_hooked/issues>
+* Issues also via <https://github.com/vesta-webtrees-2-custom-modules/vesta_places_and_pedigree_map/issues>
 
 ### Installation
 
@@ -41,13 +40,10 @@ The original module is on [github](https://github.com/dkniffin/webtrees-openstre
 
 ### License<a name="license"/>
 
-* **vesta_places: a webtrees custom module**
+* **vesta_places_and_pedigree_map: a webtrees custom module**
 * Copyright (C) 2019 Richard Cissée
 
 * Derived from **webtrees** - Copyright (C) 2010 to 2019 webtrees development team.
-* Derived from **openstreetmap** - Copyright (C) 2017 Derek Kniffin. See file 'LICENSE' for additional permission notice.
-* Derived from **Leaflet** - Copyright (c) 2010-2017, Vladimir Agafonkin; Copyright (c) 2010-2011, CloudMade. See file 'LICENSE' for additional permission notice.
-* Derived from **Leaflet.markercluster** - Copyright (C) 2012 David Leaver. See file 'LICENSE' for additional permission notice.
 * French translations provided by Pierre Dousselin.
 
 This program is free software: you can redistribute it and/or modify

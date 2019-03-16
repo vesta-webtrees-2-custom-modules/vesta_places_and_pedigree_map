@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Cissee\WebtreesExt\AbstractModuleBaseController;
-use Cissee\WebtreesExt\ModuleView;
 use Fisharebest\Webtrees\Exceptions\IndividualAccessDeniedException;
 use Fisharebest\Webtrees\Exceptions\IndividualNotFoundException;
 use Fisharebest\Webtrees\Functions\Functions;
+use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
@@ -19,8 +18,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
+use function view;
 
-class PedigreeMapChartController extends AbstractModuleBaseController {
+class PedigreeMapChartController extends AbstractBaseController {
 
   const LINE_COLORS = [
       '#FF0000',
@@ -38,14 +38,13 @@ class PedigreeMapChartController extends AbstractModuleBaseController {
       '#7777FF',
       // Light blue
       '#80FF80'
-          // Light green
+      // Light green
   ];
 
-  //for getPreferences and other methods - generalize and move to AbstractModuleBaseController?
+  //for getPreferences and other methods
   protected $module;
 
-  public function __construct(PlacesAndPedigreeMapModulExtended $module) {
-    parent::__construct($module->getDirectory(), $module->name());
+  public function __construct(PlacesAndPedigreeMapModuleExtended $module) {
     $this->module = $module;
   }
 
@@ -64,7 +63,7 @@ class PedigreeMapChartController extends AbstractModuleBaseController {
       throw new IndividualAccessDeniedException();
     }
 
-    return $this->viewMainResponse('modules/pedigree-map/page', [
+    return $this->viewResponse('modules/pedigree-map/page', [
                 'module_name' => $this->module->name(),
                 /* I18N: %s is an individual’s name */
                 'title' => I18N::translate('Pedigree map of %s', $individual->fullName()),
@@ -72,8 +71,7 @@ class PedigreeMapChartController extends AbstractModuleBaseController {
                 'individual' => $individual,
                 'generations' => $generations,
                 'maxgenerations' => $maxgenerations,
-                'map' => ModuleView::make($this->directory,
-                        'chart',
+                'map' => view($this->module->name() . '::chart',
                         [
                             'module' => $this->module->name(),
                             'ref' => $individual->xref(),

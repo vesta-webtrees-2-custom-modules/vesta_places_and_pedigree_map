@@ -32,15 +32,10 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   use ModuleTabTrait;
   use ModuleChartTrait;
 
-  /** @var string The directory where the module is installed */
-  protected $directory;
+  protected $module_service;
 
-  public function __construct($directory) {
-    $this->directory = $directory;
-  }
-
-  public function getDirectory(): string {
-    return $this->directory;
+  public function __construct(ModuleService $module_service) {
+    $this->module_service = $module_service;
   }
 
   public function customModuleAuthorName(): string {
@@ -70,18 +65,6 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
    */
   public function resourcesFolder(): string {
     return __DIR__ . '/resources/';
-  }
-
-  /**
-   * Additional/updated translations.
-   *
-   * @param string $language
-   *
-   * @return string[]
-   */
-  public function customTranslations(string $language): array {
-    //TODO
-    return [];
   }
 
   public function tabTitle(): string {
@@ -170,7 +153,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   public function postProvidersAction(Request $request): Response {
     $modules = FunctionsPlaceUtils::modules($this, true);
 
-    $controller1 = new ModuleController(app()->make(ModuleService::class));
+    $controller1 = new ModuleController($this->module_service);
     $reflector = new ReflectionObject($controller1);
 
     //private!

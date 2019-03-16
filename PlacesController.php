@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Cissee\WebtreesExt\AbstractModuleBaseController;
 use Fisharebest\Webtrees\Functions\Functions;
+use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\PlacesModule;
 use ReflectionClass;
 use stdClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
+use function view;
 
 //TODO: support other map providers?
-class PlacesController extends AbstractModuleBaseController {
+class PlacesController extends AbstractBaseController {
 
   protected $module;
 
-  public function __construct(PlacesAndPedigreeMapModulExtended $module) {
-    parent::__construct($module->getDirectory(), $module->name());
+  public function __construct(PlacesAndPedigreeMapModuleExtended $module) {
     $this->module = $module;
   }
 

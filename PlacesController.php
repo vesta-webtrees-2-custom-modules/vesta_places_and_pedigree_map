@@ -46,6 +46,8 @@ class PlacesController extends AbstractBaseController {
         'features' => [],
     ];
 
+    //[RC] TODO: use hierarchy (higher-level places) as fallback?
+    
     foreach ($facts as $id => $fact) {
       //$location = new Location($fact->place()->gedcomName());
       // Use the co-ordinates from the fact (if they exist).

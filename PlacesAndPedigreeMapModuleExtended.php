@@ -16,14 +16,12 @@ use Fisharebest\Webtrees\Module\ModuleTabTrait;
 use Fisharebest\Webtrees\Tree;
 use ReflectionObject;
 use Fisharebest\Webtrees\Services\ChartService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
 use Fisharebest\Webtrees\Services\ModuleService;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements ModuleCustomInterface, ModuleConfigInterface, ModuleTabInterface, ModuleChartInterface {
 
@@ -124,12 +122,12 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
     return $this->getChartMenu($individual);
   }
 
-  public function getPedigreeMapAction(Request $request, Tree $tree): Response {
+  public function getPedigreeMapAction(ServerRequestInterface $request, Tree $tree): ResponseInterface {
     $controller = new PedigreeMapChartController($this);
     return $controller->page($request, $tree);
   }
 
-  public function getMapDataAction(Request $request, Tree $tree, ChartService $chart_service): JsonResponse {
+  public function getMapDataAction(ServerRequestInterface $request, Tree $tree, ChartService $chart_service): ResponseInterface {
     $controller = new PedigreeMapChartController($this);
     return $controller->mapData($request, $tree, $chart_service);
   }
@@ -137,7 +135,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   //////////////////////////////////////////////////////////////////////////////
   //hook management - generalize?
   //adapted from ModuleController (e.g. listFooters)
-  public function getProvidersAction(): Response {
+  public function getProvidersAction(): ResponseInterface {
     $modules = FunctionsPlaceUtils::modules($this, true);
 
     $controller = new VestaAdminController($this->name());
@@ -150,7 +148,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
                     true);
   }
 
-  public function postProvidersAction(Request $request): Response {
+  public function postProvidersAction(ServerRequestInterface $request): ResponseInterface {
     $modules = FunctionsPlaceUtils::modules($this, true);
 
     $controller1 = new ModuleController($this->module_service);
@@ -177,7 +175,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
         'action' => 'Providers'
     ]);
 
-    return new RedirectResponse($url);
+    return redirect($url);
   }
 
   protected function editConfigBeforeFaq() {

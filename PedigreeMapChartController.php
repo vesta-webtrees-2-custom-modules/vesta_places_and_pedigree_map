@@ -14,9 +14,11 @@ use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Tree;
 use ReflectionClass;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Fig\Http\Message\StatusCodeInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Cissee\WebtreesExt\Requests;
+
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use function view;
 
@@ -49,11 +51,11 @@ class PedigreeMapChartController extends AbstractBaseController {
   }
 
   //adapted from PedigreeMapModule
-  public function page(Request $request, Tree $tree): Response {
-    $xref = $request->get('xref', '');
+  public function page(ServerRequestInterface $request, Tree $tree): ResponseInterface {
+    $xref = Requests::getString($request, 'xref');
     $individual = Individual::getInstance($xref, $tree);
     $maxgenerations = $tree->getPreference('MAX_PEDIGREE_GENERATIONS');
-    $generations = $request->get('generations', $tree->getPreference('DEFAULT_PEDIGREE_GENERATIONS'));
+    $generations = Requests::getString($request, 'generations', $tree->getPreference('DEFAULT_PEDIGREE_GENERATIONS'));
 
     if ($individual === null) {
       throw new IndividualNotFoundException();
@@ -83,7 +85,7 @@ class PedigreeMapChartController extends AbstractBaseController {
   }
 
   //adapted from PedigreeMapModule
-  public function mapData(Request $request, Tree $tree, ChartService $chart_service): JsonResponse {
+  public function mapData(ServerRequestInterface $request, Tree $tree, ChartService $chart_service): ResponseInterface {
     $pedigreeMapModule = new PedigreeMapModule();
 
     $class = new ReflectionClass($pedigreeMapModule);
@@ -93,7 +95,7 @@ class PedigreeMapChartController extends AbstractBaseController {
     $summaryDataMethod->setAccessible(true);
 
 
-    $xref = $request->get('reference');
+    $xref = Requests::getString($request, 'reference');
     $indi = Individual::getInstance($xref, $tree);
     $color_count = count(self::LINE_COLORS);
 
@@ -164,9 +166,9 @@ class PedigreeMapChartController extends AbstractBaseController {
       }
     }
 
-    $code = empty($facts) ? Response::HTTP_NO_CONTENT : Response::HTTP_OK;
+    $code = empty($facts) ? StatusCodeInterface::STATUS_NO_CONTENT : StatusCodeInterface::STATUS_OK;
 
-    return new JsonResponse($geojson, $code);
+    return response($geojson, $code);
   }
 
   private function getLatLon($fact) {

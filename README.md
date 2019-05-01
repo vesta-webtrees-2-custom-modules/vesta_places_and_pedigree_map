@@ -25,9 +25,8 @@ The project’s website is [cissee.de](https://cissee.de).
 
 ### Download<a name="download"/>
 
-* Current version: 2.0.0-alpha.5.1
-* Based on and tested with webtrees 2.0.0-alpha.5. Cannot be used with webtrees 1.x!
-* Requires the Hooks module ('hooks_repackaged').
+* Current version: 2.0.0-beta.1.1
+* Based on and tested with webtrees 2.0.0-beta.1. Cannot be used with webtrees 1.x!
 * Requires the ⚶ Vesta Common module ('vesta_common_lib').
 * Download the zipped module, including all related modules, [here](https://cissee.de/vesta.latest.zip).
 * Support, suggestions, feature requests: <ric@richard-cissee.de>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
+use Cissee\WebtreesExt\Requests;
+use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Webtrees\Exceptions\IndividualAccessDeniedException;
 use Fisharebest\Webtrees\Exceptions\IndividualNotFoundException;
 use Fisharebest\Webtrees\Functions\Functions;
@@ -13,13 +15,13 @@ use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Tree;
-use ReflectionClass;
-use Fig\Http\Message\StatusCodeInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Cissee\WebtreesExt\Requests;
-
+use ReflectionClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
+use Vesta\Model\MapCoordinates;
+use Vesta\Model\PlaceStructure;
+use function response;
 use function view;
 
 class PedigreeMapChartController extends AbstractBaseController {
@@ -110,22 +112,13 @@ class PedigreeMapChartController extends AbstractBaseController {
     $sosa_points = [];
 
     foreach ($facts as $id => $fact) {
-      //$location = new Location($fact->place()->gedcomName());
-      // Use the co-ordinates from the fact (if they exist).
-      $latitude = $fact->latitude();
-      $longitude = $fact->longitude();
-
-      // Use the co-ordinates from a hook otherwise.
-      if ($latitude === 0.0 && $longitude === 0.0) {
-        $latLon = $this->getLatLon($fact);
-        if ($latLon !== null) {
-          $longitude = array_pop($latLon);
-          $latitude = array_pop($latLon);
-        }
-      }
+      $latLon = $this->getLatLon($fact);
 
       $icon = ['color' => 'Gold', 'name' => 'bullseye '];
-      if ($latitude !== 0.0 || $longitude !== 0.0) {
+      if ($latLon !== null) {
+        $latitude = $latLon->getLati();
+        $longitude = $latLon->getLong();
+        
         $polyline = null;
         $color = self::LINE_COLORS[log($id, 2) % $color_count];
         $icon['color'] = $color; //make icon color the same as the line
@@ -171,9 +164,14 @@ class PedigreeMapChartController extends AbstractBaseController {
     return response($geojson, $code);
   }
 
-  private function getLatLon($fact) {
+  private function getLatLon($fact): ?MapCoordinates {
     $placerec = Functions::getSubRecord(2, '2 PLAC', $fact->gedcom());
-    return FunctionsPlaceUtils::getFirstLatLon($this->module, $fact, $placerec);
+    if (!empty($placerec)) {
+      $ps = PlaceStructure::create($placerec, $fact->record()->tree(), $fact->getTag(), $fact->attribute("DATE"));
+      return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
+    }
+    
+    return null;
   }
 
 }

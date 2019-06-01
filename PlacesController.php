@@ -11,6 +11,8 @@ use Fisharebest\Webtrees\Module\PlacesModule;
 use ReflectionClass;
 use stdClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
+use Vesta\Model\MapCoordinates;
+use Vesta\Model\PlaceStructure;
 use function view;
 
 //TODO: support other map providers?
@@ -22,6 +24,26 @@ class PlacesController extends AbstractBaseController {
     $this->module = $module;
   }
 
+  protected const ICONS = [
+        'BIRT' => ['color' => 'lightcoral', 'name' => 'baby-carriage'],
+        'BAPM' => ['color' => 'lightcoral', 'name' => 'water'],
+        'BARM' => ['color' => 'lightcoral', 'name' => 'star-of-david'],
+        'BASM' => ['color' => 'lightcoral', 'name' => 'star-of-david'],
+        'CHR'  => ['color' => 'lightcoral', 'name' => 'water'],
+        'CHRA' => ['color' => 'lightcoral', 'name' => 'water'],
+        'MARR' => ['color' => 'green', 'name' => 'infinity'],
+        'DEAT' => ['color' => 'black', 'name' => 'times'],
+        'BURI' => ['color' => 'sienna', 'name' => 'times'],
+        'CREM' => ['color' => 'black', 'name' => 'times'],
+        'CENS' => ['color' => 'mediumblue', 'name' => 'list'],
+        'RESI' => ['color' => 'mediumblue', 'name' => 'home'],
+        'OCCU' => ['color' => 'mediumblue', 'name' => 'industry'],
+        'GRAD' => ['color' => 'plum', 'name' => 'university'],
+        'EDUC' => ['color' => 'plum', 'name' => 'university'],
+    ];
+
+  protected const DEFAULT_ICON = ['color' => 'gold', 'name' => 'bullseye '];
+    
   public function getTabContent(Individual $individual): string {
     $placesModule = new PlacesModule();
 
@@ -49,23 +71,14 @@ class PlacesController extends AbstractBaseController {
     //[RC] TODO: use hierarchy (higher-level places) as fallback?
     
     foreach ($facts as $id => $fact) {
-      //$location = new Location($fact->place()->gedcomName());
-      // Use the co-ordinates from the fact (if they exist).
-      $latitude = $fact->latitude();
-      $longitude = $fact->longitude();
+      $latLon = $this->getLatLon($fact);
 
-      // Use the co-ordinates from a hook otherwise.
-      if ($latitude === 0.0 && $longitude === 0.0) {
-        $latLon = $this->getLatLon($fact);
-        if ($latLon !== null) {
-          $longitude = array_pop($latLon);
-          $latitude = array_pop($latLon);
-        }
-      }
+      $icon = PlacesController::ICONS[$fact->getTag()] ?? PlacesController::DEFAULT_ICON;
 
-      $icon = PlacesModule::ICONS[$fact->getTag()] ?? PlacesModule::DEFAULT_ICON;
-
-      if ($latitude !== 0.0 || $longitude !== 0.0) {
+      if ($latLon !== null) {
+        $latitude = $latLon->getLati();
+        $longitude = $latLon->getLong();
+        
         $geojson['features'][] = [
             'type' => 'Feature',
             'id' => $id,
@@ -90,9 +103,14 @@ class PlacesController extends AbstractBaseController {
     return (object) $geojson;
   }
 
-  private function getLatLon($fact) {
+  private function getLatLon($fact): ?MapCoordinates {
     $placerec = Functions::getSubRecord(2, '2 PLAC', $fact->gedcom());
-    return FunctionsPlaceUtils::getFirstLatLon($this->module, $fact, $placerec);
+    if (!empty($placerec)) {
+      $ps = PlaceStructure::create($placerec, $fact->record()->tree(), $fact->getTag(), $fact->attribute("DATE"));
+      return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
+    }
+    
+    return null;
   }
 
 }

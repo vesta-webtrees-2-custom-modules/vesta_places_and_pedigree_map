@@ -133,6 +133,15 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   }
 
   //////////////////////////////////////////////////////////////////////////////
+  
+  private function title1(): string {
+    return I18N::translate('Places and Pedigree Map Location Data Providers');
+  }
+  
+  private function description1(): string {
+    return I18N::translate('Modules listed here are used (in the configured order) to determine map coordinates of places.');
+  }
+  
   //hook management - generalize?
   //adapted from ModuleController (e.g. listFooters)
   public function getProvidersAction(): ResponseInterface {
@@ -142,8 +151,8 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
     return $controller->listHooks(
                     $modules,
                     FunctionsPlaceInterface::class,
-                    I18N::translate('Location Data Providers'),
-                    '',
+                    $this->title1(),
+                    $this->description1(),
                     true,
                     true);
   }
@@ -190,14 +199,17 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
     ?>
     <div class="card-body">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-9">
                 <ul class="fa-ul">
                     <li>
                         <span class="fa-li"><?= view('icons/block') ?></span>
                         <a href="<?= e($url) ?>">
-                            <?= I18N::translate('Location Data Providers') ?>
+                            <?= $this->title1() ?>
                         </a>
                         <?= view('components/badge', ['count' => $modules->count()]) ?>
+                        <p class="small text-muted">
+                          <?= $this->description1() ?>
+                        </p>
                     </li>
                 </ul>
             </div>

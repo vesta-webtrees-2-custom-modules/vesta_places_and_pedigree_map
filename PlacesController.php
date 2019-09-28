@@ -104,13 +104,8 @@ class PlacesController extends AbstractBaseController {
   }
 
   private function getLatLon($fact): ?MapCoordinates {
-    $placerec = Functions::getSubRecord(2, '2 PLAC', $fact->gedcom());
-    if (!empty($placerec)) {
-      $ps = PlaceStructure::create($placerec, $fact->record()->tree(), $fact->getTag(), $fact->attribute("DATE"));
-      return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
-    }
-    
-    return null;
+    $ps = PlaceStructure::fromFact($fact);
+    return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
   }
 
 }

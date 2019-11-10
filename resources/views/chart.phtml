@@ -1,9 +1,5 @@
-<?php
-
-use Fisharebest\Webtrees\I18N; ?>
-<?php
-
-use Fisharebest\Webtrees\View; ?>
+<?php use Fisharebest\Webtrees\I18N; ?>
+<?php use Fisharebest\Webtrees\View; ?>
 
 
 <?php
@@ -12,8 +8,8 @@ use Fisharebest\Webtrees\View; ?>
 
 <div class="py-4">
     <div class="row gchart osm-wrapper">
-        <div id="osm-map" class="col-sm-9 wt-ajax-load osm-user-map"></div>
-        <ul class='col-sm-3 osm-sidebar wt-page-options-value'></ul>
+        <div id="osm-map" class="col-sm-9 wt-ajax-load osm-user-map" dir="ltr"></div>
+        <ul class="col-sm-3 osm-sidebar wt-page-options-value list-unstyled p-0"></ul>
     </div>
 </div>
 
@@ -154,14 +150,11 @@ use Fisharebest\Webtrees\View; ?>
     let domObj  = '.osm-sidebar';
     let sidebar = '';
 
-    $.getJSON("index.php", {
-    route:       "module",
-    module:      "<?= $module ?>",
-    action:      "MapData",
-    reference:   reference,
-    type:        mapType,
-    generations: Generations,
-    ged:         <?= json_encode($tree->name()) ?>
+    //[RC]  adjusted
+    $.getJSON(<?= json_encode(route('module', ['module' => $module, 'action' => 'MapData', 'tree' => $individual->tree()->name(), 'xref' => $individual->xref()])) ?>, {
+      reference:   reference,
+      type:        mapType,
+      generations: Generations
     })
     .done(function (data, textStatus, jqXHR) {
     if (jqXHR.status === 200 && data.features.length === 1) {
@@ -298,6 +291,6 @@ use Fisharebest\Webtrees\View; ?>
     };
     })();
 
-    WT_OSM.drawMap(<?= json_encode($ref) ?>, <?= json_encode($type) ?>, <?= json_encode($generations ?? null) ?>);
+    WT_OSM.drawMap(<?= json_encode($individual->xref()) ?>, <?= json_encode($type) ?>, <?= json_encode($generations ?? null) ?>);
 </script>
 <?php View::endpush() ?>

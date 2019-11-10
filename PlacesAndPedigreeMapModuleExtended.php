@@ -13,15 +13,21 @@ use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleTabInterface;
 use Fisharebest\Webtrees\Module\ModuleTabTrait;
-use Fisharebest\Webtrees\Tree;
-use ReflectionObject;
 use Fisharebest\Webtrees\Services\ChartService;
+use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Services\TreeService;
+use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use ReflectionObject;
+use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
-use Fisharebest\Webtrees\Services\ModuleService;
+use function app;
+use function redirect;
+use function route;
+use function view;
 
 class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements ModuleCustomInterface, ModuleConfigInterface, ModuleTabInterface, ModuleChartInterface {
 
@@ -31,9 +37,11 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   use ModuleChartTrait;
 
   protected $module_service;
-
-  public function __construct(ModuleService $module_service) {
+  protected $chart_service;
+  
+  public function __construct(ModuleService $module_service, ChartService $chart_service) {
     $this->module_service = $module_service;
+    $this->chart_service = $chart_service;
   }
 
   public function customModuleAuthorName(): string {
@@ -41,7 +49,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   }
 
   public function customModuleVersion(): string {
-    return '2.0.0-beta.4.3';
+    return '2.0.0-beta.5.1';
   }
 
   public function customModuleLatestVersionUrl(): string {
@@ -114,7 +122,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
         'module' => $this->name(),
         'action' => 'PedigreeMap',
         'xref' => $individual->xref(),
-        'ged' => $individual->tree()->name(),
+        'tree' => $individual->tree()->name(),
             ] + $parameters);
   }
 
@@ -122,14 +130,22 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
     return $this->getChartMenu($individual);
   }
 
-  public function getPedigreeMapAction(ServerRequestInterface $request, Tree $tree): ResponseInterface {
-    $controller = new PedigreeMapChartController($this);
+  public function getPedigreeMapAction(ServerRequestInterface $request): ResponseInterface {
+    //'tree' is handled specifically in Router.php
+    $tree = $request->getAttribute('tree');
+    assert($tree instanceof Tree);
+    
+    $controller = new PedigreeMapChartController($this, $this->chart_service);
     return $controller->page($request, $tree);
   }
 
-  public function getMapDataAction(ServerRequestInterface $request, Tree $tree, ChartService $chart_service): ResponseInterface {
-    $controller = new PedigreeMapChartController($this);
-    return $controller->mapData($request, $tree, $chart_service);
+  public function getMapDataAction(ServerRequestInterface $request): ResponseInterface {
+    //'tree' is handled specifically in Router.php
+    $tree = $request->getAttribute('tree');
+    assert($tree instanceof Tree);
+    
+    $controller = new PedigreeMapChartController($this, $this->chart_service);
+    return $controller->mapData($request, $tree);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -160,7 +176,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   public function postProvidersAction(ServerRequestInterface $request): ResponseInterface {
     $modules = FunctionsPlaceUtils::modules($this, true);
 
-    $controller1 = new ModuleController($this->module_service);
+    $controller1 = new ModuleController($this->module_service, app(TreeService::class));
     $reflector = new ReflectionObject($controller1);
 
     //private!

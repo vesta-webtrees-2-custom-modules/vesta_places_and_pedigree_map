@@ -27,8 +27,8 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 
 ### Download<a name="download"/>
 
-* Current version: 2.0.0-beta.4.3
-* Based on and tested with webtrees 2.0.0-beta.4. Cannot be used with webtrees 1.x!
+* Current version: 2.0.0-beta.5.1
+* Based on and tested with webtrees 2.0.0-beta.5. Cannot be used with webtrees 1.x!
 * Requires the ⚶ Vesta Common module ('vesta_common').
 * Download the zipped module, including all related modules, [here](https://cissee.de/vesta.latest.zip).
 * Support, suggestions, feature requests: <ric@richard-cissee.de>

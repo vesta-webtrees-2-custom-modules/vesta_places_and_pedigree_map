@@ -8,7 +8,6 @@ use Cissee\WebtreesExt\Requests;
 use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Webtrees\Exceptions\IndividualAccessDeniedException;
 use Fisharebest\Webtrees\Exceptions\IndividualNotFoundException;
-use Fisharebest\Webtrees\Functions\Functions;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
@@ -47,9 +46,14 @@ class PedigreeMapChartController extends AbstractBaseController {
 
   //for getPreferences and other methods
   protected $module;
+  protected $chart_service;
 
-  public function __construct(PlacesAndPedigreeMapModuleExtended $module) {
+  public function __construct(
+          PlacesAndPedigreeMapModuleExtended $module,
+          ChartService $chart_service) {
+    
     $this->module = $module;
+    $this->chart_service = $chart_service;
   }
 
   //adapted from PedigreeMapModule
@@ -67,7 +71,11 @@ class PedigreeMapChartController extends AbstractBaseController {
       throw new IndividualAccessDeniedException();
     }
 
-    return $this->viewResponse('modules/pedigree-map/page', [
+    //HACK
+    $currentRoute = $request->getQueryParams()['route'];
+    
+    return $this->viewResponse($this->module->name() . '::page', [
+                'currentRoute' => $currentRoute,
                 'module_name' => $this->module->name(),
                 /* I18N: %s is an individual’s name */
                 'title' => I18N::translate('Pedigree map of %s', $individual->fullName()),
@@ -77,9 +85,9 @@ class PedigreeMapChartController extends AbstractBaseController {
                 'maxgenerations' => $maxgenerations,
                 'map' => view($this->module->name() . '::chart',
                         [
-                            'module' => $this->module->name(),
-                            'ref' => $individual->xref(),
-                            'type' => 'pedigree',
+                            'module'      => $this->module->name(),
+                            'individual'  => $individual,
+                            'type'        => 'pedigree',
                             'generations' => $generations,
                         ]
                 ),
@@ -87,8 +95,8 @@ class PedigreeMapChartController extends AbstractBaseController {
   }
 
   //adapted from PedigreeMapModule
-  public function mapData(ServerRequestInterface $request, Tree $tree, ChartService $chart_service): ResponseInterface {
-    $pedigreeMapModule = new PedigreeMapModule();
+  public function mapData(ServerRequestInterface $request, Tree $tree): ResponseInterface {
+    $pedigreeMapModule = new PedigreeMapModule($this->chart_service);
 
     $class = new ReflectionClass($pedigreeMapModule);
     $getPedigreeMapFactsMethod = $class->getMethod('getPedigreeMapFacts');
@@ -96,13 +104,12 @@ class PedigreeMapChartController extends AbstractBaseController {
     $summaryDataMethod = $class->getMethod('summaryData');
     $summaryDataMethod->setAccessible(true);
 
-
     $xref = Requests::getString($request, 'reference');
     $indi = Individual::getInstance($xref, $tree);
     $color_count = count(self::LINE_COLORS);
 
-    //$facts = $pedigreeMapModule->getPedigreeMapFacts($request, $tree, $chart_service);
-    $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $tree, $chart_service);
+    //$facts = $pedigreeMapModule->getPedigreeMapFacts($request, $this->chart_service);
+    $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $this->chart_service);
 
     $geojson = [
         'type' => 'FeatureCollection',

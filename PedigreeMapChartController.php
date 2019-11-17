@@ -70,13 +70,9 @@ class PedigreeMapChartController extends AbstractBaseController {
     if (!$individual->canShow()) {
       throw new IndividualAccessDeniedException();
     }
-
-    //HACK
-    $currentRoute = $request->getQueryParams()['route'];
     
     return $this->viewResponse($this->module->name() . '::page', [
-                'currentRoute' => $currentRoute,
-                'module_name' => $this->module->name(),
+                'module' => $this->module->name(),
                 /* I18N: %s is an individual’s name */
                 'title' => I18N::translate('Pedigree map of %s', $individual->fullName()),
                 'tree' => $tree,

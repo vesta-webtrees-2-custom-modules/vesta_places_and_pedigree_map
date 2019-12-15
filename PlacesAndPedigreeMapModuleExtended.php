@@ -49,7 +49,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   }
 
   public function customModuleVersion(): string {
-    return '2.0.0-beta.5.2';
+    return '2.0.0.1';
   }
 
   public function customModuleLatestVersionUrl(): string {

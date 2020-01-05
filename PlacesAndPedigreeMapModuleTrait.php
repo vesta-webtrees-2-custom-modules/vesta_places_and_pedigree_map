@@ -21,9 +21,10 @@ trait PlacesAndPedigreeMapModuleTrait {
 
   protected function getFullDescription() {
     $description = array();
-    $description[] = I18N::translate('Show the location of events and the birthplace of ancestors on a map. Replacement for the original \'Places\' and  \'Pedigree map\' modules.') . ' ' .
-            I18N::translate('Uses location data from GEDCOM, as well as location data provided by other modules.') . ' ' .
-            I18N::translate('In particular, you should activate the \'%1$s Vesta Webtrees Location Data Provider\' module if you manage your location data via webtrees (outside the GEDCOM).', $this->getVestaSymbol());
+    $description[] = 
+            /* I18N: Module Configuration */I18N::translate('Show the location of events and the birthplace of ancestors on a map. Replacement for the original \'Places\' and  \'Pedigree map\' modules.') . ' ' .
+            /* I18N: Module Configuration */I18N::translate('Uses location data from GEDCOM, as well as location data provided by other modules.') . ' ' .
+            /* I18N: Module Configuration */I18N::translate('In particular, you should activate the \'%1$s Vesta Webtrees Location Data Provider\' module if you manage your location data via webtrees (outside the GEDCOM).', $this->getVestaSymbol());
     return $description;
   }
 
@@ -33,19 +34,18 @@ trait PlacesAndPedigreeMapModuleTrait {
             /* I18N: Configuration option */I18N::translate('Displayed title'),
             array(
         new ControlPanelCheckbox(
-                /* I18N: Configuration option */I18N::translate('Include the ' . $this->getVestaSymbol() . ' symbol in the tab (and module) title'),
-                /* I18N: Configuration option */ I18N::translate('Deselect in order to have the tab appear exactly as the original tab.') . ' ' .
-                /* I18N: Configuration option */I18N::translate('Note that this also affects the title of the module itself, because webtrees does not allow these two to differ.'),
+                /* I18N: Module Configuration */I18N::translate('Include the %1$s symbol in the module title', $this->getVestaSymbol()),
+                null,
                 'VESTA',
                 '1'),
         new ControlPanelCheckbox(
-                /* I18N: Configuration option */I18N::translate('Include the ' . $this->getVestaSymbol() . ' symbol in the tab title'),
-                /* I18N: Configuration option */ I18N::translate('Deselect in order to have the tab appear exactly as the original tab.'),
+                /* I18N: Module Configuration */I18N::translate('Include the %1$s symbol in the tab title', $this->getVestaSymbol()),
+                /* I18N: Module Configuration */I18N::translate('Deselect in order to have the tab appear exactly as the original tab.'),
                 'VESTA_TAB',
                 '1'),
         new ControlPanelCheckbox(
-                /* I18N: Configuration option */I18N::translate('Include the ' . $this->getVestaSymbol() . ' symbol in the chart menu entry'),
-                /* I18N: Configuration option */ I18N::translate('Deselect in order to have the chart menu entry appear exactly as the original entry.'),
+                /* I18N: Module Configuration */I18N::translate('Include the %1$s symbol in the chart menu entry', $this->getVestaSymbol()),
+                /* I18N: Module Configuration */I18N::translate('Deselect in order to have the chart menu entry appear exactly as the original chart menu entry.'),
                 'VESTA_CHART',
                 '1')));
 

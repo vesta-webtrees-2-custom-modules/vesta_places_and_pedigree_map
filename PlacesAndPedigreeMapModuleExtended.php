@@ -49,7 +49,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   }
 
   public function customModuleVersion(): string {
-    return '2.0.0.1';
+    return '2.0.1.1';
   }
 
   public function customModuleLatestVersionUrl(): string {
@@ -165,11 +165,11 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements Modul
   //////////////////////////////////////////////////////////////////////////////
   
   private function title1(): string {
-    return I18N::translate('Places and Pedigree Map Location Data Providers');
+    return /* I18N: Module Configuration */I18N::translate('Places and Pedigree Map Location Data Providers');
   }
   
   private function description1(): string {
-    return I18N::translate('Modules listed here are used (in the configured order) to determine map coordinates of places.');
+    return /* I18N: Module Configuration */I18N::translate('Modules listed here are used (in the configured order) to determine map coordinates of places.');
   }
   
   //hook management - generalize?

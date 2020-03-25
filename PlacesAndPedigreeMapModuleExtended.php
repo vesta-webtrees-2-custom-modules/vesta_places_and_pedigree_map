@@ -10,7 +10,9 @@ use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
 use Fisharebest\Webtrees\Module\ModuleChartTrait;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
+use Fisharebest\Webtrees\Module\ModuleConfigTrait;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
+use Fisharebest\Webtrees\Module\ModuleCustomTrait;
 use Fisharebest\Webtrees\Module\ModuleTabInterface;
 use Fisharebest\Webtrees\Module\ModuleTabTrait;
 use Fisharebest\Webtrees\Services\ChartService;
@@ -29,12 +31,22 @@ use function redirect;
 use function route;
 use function view;
 
-class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements ModuleCustomInterface, ModuleConfigInterface, ModuleTabInterface, ModuleChartInterface {
+class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements 
+  ModuleCustomInterface, 
+  ModuleConfigInterface,
+  ModuleTabInterface, 
+  ModuleChartInterface {
 
-  use VestaModuleTrait;
+  use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait {
+    VestaModuleTrait::customTranslations insteadof ModuleCustomTrait;
+    VestaModuleTrait::customModuleLatestVersion insteadof ModuleCustomTrait;
+    VestaModuleTrait::getAssetAction insteadof ModuleCustomTrait;
+    VestaModuleTrait::assetUrl insteadof ModuleCustomTrait;
+    
+    VestaModuleTrait::getConfigLink insteadof ModuleConfigTrait;
+  }
+  
   use PlacesAndPedigreeMapModuleTrait;
-  use ModuleTabTrait;
-  use ModuleChartTrait;
 
   protected $module_service;
   protected $chart_service;

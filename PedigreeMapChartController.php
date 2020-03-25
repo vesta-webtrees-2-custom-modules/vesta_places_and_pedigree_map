@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Cissee\Webtrees\Module\PPM;
 
 use Cissee\WebtreesExt\Requests;
-use Fig\Http\Message\StatusCodeInterface;
 use Fisharebest\Webtrees\Exceptions\IndividualAccessDeniedException;
 use Fisharebest\Webtrees\Exceptions\IndividualNotFoundException;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
@@ -20,29 +19,9 @@ use ReflectionClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
-use function response;
 use function view;
 
 class PedigreeMapChartController extends AbstractBaseController {
-
-  const LINE_COLORS = [
-      '#FF0000',
-      // Red
-      '#00FF00',
-      // Green
-      '#0000FF',
-      // Blue
-      '#FFB300',
-      // Gold
-      '#00FFFF',
-      // Cyan
-      '#FF00FF',
-      // Purple
-      '#7777FF',
-      // Light blue
-      '#80FF80'
-      // Light green
-  ];
 
   //for getPreferences and other methods
   protected $module;
@@ -71,100 +50,150 @@ class PedigreeMapChartController extends AbstractBaseController {
       throw new IndividualAccessDeniedException();
     }
     
+    //uargh (accessed as attributes in PedigreeMapModule.getPedigreeMapFacts)
+    $request = $request->withAttribute('xref', $xref);
+    $request = $request->withAttribute('generations', $generations);
+
+    $map = view('modules/pedigree-map/chart', [
+            'data'     => $this->getMapData($request),
+            'provider' => [
+                'url'    => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                'options' => [
+                    'attribution' => '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
+                    'max_zoom'    => 19
+                ]
+            ]
+        ]);
+            
     return $this->viewResponse($this->module->name() . '::page', [
-                'module' => $this->module->name(),
+                'module'         => $this->module->name(),
                 /* I18N: %s is an individual’s name */
-                'title' => I18N::translate('Pedigree map of %s', $individual->fullName()),
-                'tree' => $tree,
-                'individual' => $individual,
-                'generations' => $generations,
+                'title'          => I18N::translate('Pedigree map of %s', $individual->fullName()),
+                'tree'           => $tree,
+                'individual'     => $individual,
+                'generations'    => $generations,
                 'maxgenerations' => $maxgenerations,
-                'map' => view($this->module->name() . '::chart',
-                        [
-                            'module'      => $this->module->name(),
-                            'individual'  => $individual,
-                            'type'        => 'pedigree',
-                            'generations' => $generations,
-                        ]
-                ),
+                'map'            => $map,
     ]);
   }
 
+  // CSS colors for each generation
+  private const COLORS = [
+      'Red',
+      'Green',
+      'Blue',
+      'Gold',
+      'Cyan',
+      'Orange',
+      'DarkBlue',
+      'LightGreen',
+      'Magenta',
+      'Brown',
+  ];
+    
+  private const DEFAULT_ZOOM = 2;
+  
   //adapted from PedigreeMapModule
-  public function mapData(ServerRequestInterface $request, Tree $tree): ResponseInterface {
-    $pedigreeMapModule = new PedigreeMapModule($this->chart_service);
+  /**
+   * @param ServerRequestInterface $request
+   *
+   * @return array<mixed> $geojson
+   */
+  private function getMapData(ServerRequestInterface $request): array
+  {
+      $pedigreeMapModule = new PedigreeMapModule($this->chart_service);
 
-    $class = new ReflectionClass($pedigreeMapModule);
-    $getPedigreeMapFactsMethod = $class->getMethod('getPedigreeMapFacts');
-    $getPedigreeMapFactsMethod->setAccessible(true);
-    $summaryDataMethod = $class->getMethod('summaryData');
-    $summaryDataMethod->setAccessible(true);
+      $class = new ReflectionClass($pedigreeMapModule);
+      $getPedigreeMapFactsMethod = $class->getMethod('getPedigreeMapFacts');
+      $getPedigreeMapFactsMethod->setAccessible(true);
+      $getSosaNameMethod = $class->getMethod('getSosaName');
+      $getSosaNameMethod->setAccessible(true);
+    
+      $tree = $request->getAttribute('tree');
+      assert($tree instanceof Tree);
 
-    $xref = Requests::getString($request, 'reference');
-    $indi = Individual::getInstance($xref, $tree);
-    $color_count = count(self::LINE_COLORS);
+      $color_count = count(self::COLORS);
 
-    //$facts = $pedigreeMapModule->getPedigreeMapFacts($request, $this->chart_service);
-    $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $this->chart_service);
+      //[RC] adjusted
+      //$facts = $this->getPedigreeMapFacts($request, $this->chart_service);      
+      $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $this->chart_service);
 
-    $geojson = [
-        'type' => 'FeatureCollection',
-        'features' => [],
-    ];
+      $geojson = [
+          'type'     => 'FeatureCollection',
+          'features' => [],
+      ];
 
-    $sosa_points = [];
+      $sosa_points = [];
 
-    foreach ($facts as $id => $fact) {
-      $latLon = $this->getLatLon($fact);
+      foreach ($facts as $sosa => $fact) {
+          /*
+          $location = new Location($fact->place()->gedcomName());
 
-      $icon = ['color' => 'Gold', 'name' => 'bullseye '];
-      if ($latLon !== null) {
-        $latitude = $latLon->getLati();
-        $longitude = $latLon->getLong();
+          // Use the co-ordinates from the fact (if they exist).
+          $latitude  = $fact->latitude();
+          $longitude = $fact->longitude();
+
+          // Use the co-ordinates from the location otherwise.
+          if ($latitude === 0.0 && $longitude === 0.0) {
+              $latitude  = $location->latitude();
+              $longitude = $location->longitude();
+          }
+
+          if ($latitude !== 0.0 || $longitude !== 0.0) {
+          */ 
         
-        $polyline = null;
-        $color = self::LINE_COLORS[log($id, 2) % $color_count];
-        $icon['color'] = $color; //make icon color the same as the line
-        $sosa_points[$id] = [$latitude, $longitude];
-        $sosa_parent = intdiv($id, 2);
-        if (array_key_exists($sosa_parent, $sosa_points)) {
-          // Would like to use a GeometryCollection to hold LineStrings
-          // rather than generate polylines but the MarkerCluster library
-          // doesn't seem to like them
-          $polyline = [
-              'points' => [
-                  $sosa_points[$sosa_parent],
-                  [$latitude, $longitude],
-              ],
-              'options' => [
-                  'color' => $color,
-              ],
-          ];
-        }
-        $geojson['features'][] = [
-            'type' => 'Feature',
-            'id' => $id,
-            'valid' => true,
-            'geometry' => [
-                'type' => 'Point',
-                'coordinates' => [$longitude, $latitude],
-            ],
-            'properties' => [
-                'polyline' => $polyline,
-                'icon' => $icon,
-                'tooltip' => strip_tags($fact->place()->fullName()),
-                'summary' => view('modules/pedigree-map/events',
-                        //$pedigreeMapModule->summaryData($indi, $fact, $id)),
-                        $summaryDataMethod->invoke($pedigreeMapModule, $indi, $fact, $id)),
-                'zoom' => /* $location->zoom() ?: */ 2,
-            ],
-        ];
+          //[RC] adjusted
+          $latLon = $this->getLatLon($fact);
+
+          if ($latLon !== null) {
+              $latitude = $latLon->getLati();
+              $longitude = $latLon->getLong();
+        
+              $polyline           = null;
+              $sosa_points[$sosa] = [$latitude, $longitude];
+              $sosa_child         = intdiv($sosa, 2);
+              $color              = self::COLORS[$sosa_child % $color_count];
+
+              if (array_key_exists($sosa_child, $sosa_points)) {
+                  // Would like to use a GeometryCollection to hold LineStrings
+                  // rather than generate polylines but the MarkerCluster library
+                  // doesn't seem to like them
+                  $polyline = [
+                      'points'  => [
+                          $sosa_points[$sosa_child],
+                          [$latitude, $longitude],
+                      ],
+                      'options' => [
+                          'color' => $color,
+                      ],
+                  ];
+              }
+              $geojson['features'][] = [
+                  'type'       => 'Feature',
+                  'id'         => $sosa,
+                  'geometry'   => [
+                      'type'        => 'Point',
+                      'coordinates' => [$longitude, $latitude],
+                  ],
+                  'properties' => [
+                      'polyline'  => $polyline,
+                      'iconcolor' => $color,
+                      'tooltip'   => strip_tags($fact->place()->fullName()),
+                      'summary'   => view('modules/pedigree-map/events', [
+                          'fact'         => $fact,
+                          //'relationship' => ucfirst($this->getSosaName($sosa)),
+                          //[RC] adjusted
+                          'relationship' => ucfirst($getSosaNameMethod->invoke($pedigreeMapModule, $sosa)),
+                          'sosa'         => $sosa,
+                      ]),
+                      //[RC] adjusted
+                      'zoom'      => /*$location->zoom() ?:*/ self::DEFAULT_ZOOM,
+                  ],
+              ];
+          }
       }
-    }
 
-    $code = empty($facts) ? StatusCodeInterface::STATUS_NO_CONTENT : StatusCodeInterface::STATUS_OK;
-
-    return response($geojson, $code);
+      return $geojson;
   }
 
   private function getLatLon($fact): ?MapCoordinates {

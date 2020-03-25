@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Fisharebest\Webtrees\Functions\Functions;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\PlacesModule;
@@ -48,7 +47,14 @@ class PlacesController extends AbstractBaseController {
     $placesModule = new PlacesModule();
 
     return view('modules/places/tab', [
-        'data' => $this->getMapData($placesModule, $individual),
+        'data'     => $this->getMapData($placesModule, $individual),
+        'provider' => [
+            'url'    => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            'options' => [
+                'attribution' => '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
+                'max_zoom'    => 19
+            ]
+        ]
     ]);
   }
 

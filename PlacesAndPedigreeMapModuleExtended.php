@@ -2,6 +2,8 @@
 
 namespace Cissee\Webtrees\Module\PPM;
 
+use Aura\Router\RouterContainer;
+use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Http\Controllers\Admin\ModuleController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
@@ -21,6 +23,7 @@ use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionObject;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
@@ -35,7 +38,8 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
   ModuleCustomInterface, 
   ModuleConfigInterface,
   ModuleTabInterface, 
-  ModuleChartInterface {
+  ModuleChartInterface, 
+  RequestHandlerInterface {
 
   use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait {
     VestaModuleTrait::customTranslations insteadof ModuleCustomTrait;
@@ -47,6 +51,14 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
   }
   
   use PlacesAndPedigreeMapModuleTrait;
+
+  protected const ROUTE_URL = '/tree/{tree}/vesta-pedigree-{generations}/{xref}';
+  
+  // Defaults
+  public const DEFAULT_GENERATIONS = '4';
+  public const DEFAULT_PARAMETERS  = [
+      'generations' => self::DEFAULT_GENERATIONS,
+  ];
 
   protected $module_service;
   protected $chart_service;
@@ -110,7 +122,27 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
   public function canLoadAjax(): bool {
     return true;
   }
-
+  
+  /**
+   * Bootstrap the module
+   */
+  public function onBoot(): void {
+      //define our 'pretty' routes
+      //note: potentially problematic in case of name clashes; 
+      //webtrees isn't interested in solving this properly, see
+      //https://www.webtrees.net/index.php/en/forum/2-open-discussion/33687-pretty-urls-in-2-x
+      
+      $router_container = app(RouterContainer::class);
+      assert($router_container instanceof RouterContainer);
+      
+      $router_container->getMap()
+            ->get(static::class, static::ROUTE_URL, $this)
+            ->allows(RequestMethodInterface::METHOD_POST)
+            ->tokens([
+                'generations' => '\d+',
+            ]);
+  }
+  
   public function chartMenu(Individual $individual): Menu {
     return new Menu(
             $this->getChartTitle(I18N::translate('Pedigree map')),
@@ -130,39 +162,19 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
   }
 
   public function chartUrl(Individual $individual, array $parameters = []): string {
-    return route('module', [
-        'module' => $this->name(),
-        'action' => 'PedigreeMap',
-        'xref' => $individual->xref(),
-        'tree' => $individual->tree()->name(),
-            ] + $parameters);
+    return route(static::class, [
+                'tree' => $individual->tree()->name(),
+                'xref' => $individual->xref(),
+            ] + $parameters + self::DEFAULT_PARAMETERS);
   }
 
   public function getBoxChartMenu(Individual $individual) {
     return $this->getChartMenu($individual);
   }
-
-  public function postPedigreeMapAction(ServerRequestInterface $request): ResponseInterface {
-    //TODO use helper for this!
-
-    // Convert POST requests into GET requests for pretty URLs.
-    $keys = array('tree','xref','generations');
-    $parameters = array_filter($request->getParsedBody(), static function (string $key) use ($keys): bool {
-      return in_array($key, $keys);
-    }, ARRAY_FILTER_USE_KEY);
-    
-    return redirect(route('module', [
-        'module'      => $this->name(),
-        'action'      => 'PedigreeMap']+$parameters));
-  }
   
-  public function getPedigreeMapAction(ServerRequestInterface $request): ResponseInterface {
-    //'tree' is handled specifically in Router.php
-    $tree = $request->getAttribute('tree');
-    assert($tree instanceof Tree);
-    
+  public function handle(ServerRequestInterface $request): ResponseInterface {
     $controller = new PedigreeMapChartController($this, $this->chart_service);
-    return $controller->page($request, $tree);
+    return $controller->handle($request);
   }
 
   public function getMapDataAction(ServerRequestInterface $request): ResponseInterface {
@@ -260,5 +272,4 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
 
     <?php
   }
-
 }

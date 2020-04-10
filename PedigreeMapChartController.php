@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Cissee\WebtreesExt\Requests;
-use Fisharebest\Webtrees\Exceptions\IndividualAccessDeniedException;
-use Fisharebest\Webtrees\Exceptions\IndividualNotFoundException;
+use Fig\Http\Message\RequestMethodInterface;
+use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
@@ -19,11 +18,18 @@ use ReflectionClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
+use function redirect;
+use function route;
 use function view;
 
+//adapted from PedigreeMapModule.handle - we could just use that, if getMapData() wasn't private,
+//which is the part we actually override
 class PedigreeMapChartController extends AbstractBaseController {
+ 
+  // Limits
+  public const MAXIMUM_GENERATIONS = 10;
+  private const MINZOOM            = 2;
 
-  //for getPreferences and other methods
   protected $module;
   protected $chart_service;
 
@@ -35,46 +41,54 @@ class PedigreeMapChartController extends AbstractBaseController {
     $this->chart_service = $chart_service;
   }
 
-  //adapted from PedigreeMapModule
-  public function page(ServerRequestInterface $request, Tree $tree): ResponseInterface {
-    $xref = Requests::getString($request, 'xref');
-    $individual = Individual::getInstance($xref, $tree);
-    $maxgenerations = $tree->getPreference('MAX_PEDIGREE_GENERATIONS');
-    $generations = Requests::getString($request, 'generations', $tree->getPreference('DEFAULT_PEDIGREE_GENERATIONS'));
+  public function handle(ServerRequestInterface $request): ResponseInterface {
+      $tree = $request->getAttribute('tree');
+      assert($tree instanceof Tree);
 
-    if ($individual === null) {
-      throw new IndividualNotFoundException();
-    }
+      $xref = $request->getAttribute('xref');
+      assert(is_string($xref));
 
-    if (!$individual->canShow()) {
-      throw new IndividualAccessDeniedException();
-    }
-    
-    //uargh (accessed as attributes in PedigreeMapModule.getPedigreeMapFacts)
-    $request = $request->withAttribute('xref', $xref);
-    $request = $request->withAttribute('generations', $generations);
+      $individual  = Individual::getInstance($xref, $tree);
+      $individual  = Auth::checkIndividualAccess($individual);
 
-    $map = view('modules/pedigree-map/chart', [
-            'data'     => $this->getMapData($request),
-            'provider' => [
-                'url'    => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                'options' => [
-                    'attribution' => '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
-                    'max_zoom'    => 19
-                ]
-            ]
-        ]);
-            
-    return $this->viewResponse($this->module->name() . '::page', [
-                'module'         => $this->module->name(),
-                /* I18N: %s is an individual’s name */
-                'title'          => I18N::translate('Pedigree map of %s', $individual->fullName()),
-                'tree'           => $tree,
-                'individual'     => $individual,
-                'generations'    => $generations,
-                'maxgenerations' => $maxgenerations,
-                'map'            => $map,
-    ]);
+      $user        = $request->getAttribute('user');
+      $generations = (int) $request->getAttribute('generations');
+      //[RC] ref adjusted
+      Auth::checkComponentAccess($this->module, 'chart', $tree, $user);
+
+      // Convert POST requests into GET requests for pretty URLs.
+      if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {
+          $params = (array) $request->getParsedBody();
+
+          //[RC] ref adjusted
+          return redirect(route(get_class($this->module), [
+              'tree'        => $tree->name(),
+              'xref'        => $params['xref'],
+              'generations' => $params['generations'],
+          ]));
+      }
+
+      $map = view('modules/pedigree-map/chart', [
+          'data'     => $this->getMapData($request),
+          'provider' => [
+              'url'    => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              'options' => [
+                  'attribution' => '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
+                  'max_zoom'    => 19
+              ]
+          ]
+      ]);
+
+      return $this->viewResponse('modules/pedigree-map/page', [
+          //'module' obsolete
+          /* I18N: %s is an individual’s name */
+          'title'          => I18N::translate('Pedigree map of %s', $individual->fullName()),
+          'tree'           => $tree,
+          'individual'     => $individual,
+          'generations'    => $generations,
+          'maxgenerations' => self::MAXIMUM_GENERATIONS,
+          'map'            => $map,
+      ]);
   }
 
   // CSS colors for each generation
@@ -93,13 +107,12 @@ class PedigreeMapChartController extends AbstractBaseController {
     
   private const DEFAULT_ZOOM = 2;
   
-  //adapted from PedigreeMapModule
   /**
    * @param ServerRequestInterface $request
    *
    * @return array<mixed> $geojson
    */
-  private function getMapData(ServerRequestInterface $request): array
+  protected function getMapData(ServerRequestInterface $request): array
   {
       $pedigreeMapModule = new PedigreeMapModule($this->chart_service);
 

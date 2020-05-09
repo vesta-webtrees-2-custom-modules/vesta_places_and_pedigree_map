@@ -211,6 +211,9 @@ class PedigreeMapChartController extends AbstractBaseController {
 
   private function getLatLon($fact): ?MapCoordinates {
     $ps = PlaceStructure::fromFact($fact);
+    if ($ps === null) {
+      return null;
+    }
     return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
   }
 

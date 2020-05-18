@@ -6,9 +6,9 @@ namespace Cissee\Webtrees\Module\PPM;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Factory;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Tree;
@@ -48,7 +48,7 @@ class PedigreeMapChartController extends AbstractBaseController {
       $xref = $request->getAttribute('xref');
       assert(is_string($xref));
 
-      $individual  = Individual::getInstance($xref, $tree);
+      $individual  = Factory::individual()->make($xref, $tree);
       $individual  = Auth::checkIndividualAccess($individual);
 
       $user        = $request->getAttribute('user');
@@ -140,7 +140,7 @@ class PedigreeMapChartController extends AbstractBaseController {
 
       foreach ($facts as $sosa => $fact) {
           /*
-          $location = new Location($fact->place()->gedcomName());
+          $location = new PlaceLocation($fact->place()->gedcomName());
 
           // Use the co-ordinates from the fact (if they exist).
           $latitude  = $fact->latitude();

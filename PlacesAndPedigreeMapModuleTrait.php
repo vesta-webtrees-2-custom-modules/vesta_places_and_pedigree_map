@@ -3,10 +3,10 @@
 namespace Cissee\Webtrees\Module\PPM;
 
 use Fisharebest\Webtrees\I18N;
-use Vesta\ControlPanel\Model\ControlPanelCheckbox;
-use Vesta\ControlPanel\Model\ControlPanelPreferences;
-use Vesta\ControlPanel\Model\ControlPanelSection;
-use Vesta\ControlPanel\Model\ControlPanelSubsection;
+use Vesta\ControlPanelUtils\Model\ControlPanelCheckbox;
+use Vesta\ControlPanelUtils\Model\ControlPanelPreferences;
+use Vesta\ControlPanelUtils\Model\ControlPanelSection;
+use Vesta\ControlPanelUtils\Model\ControlPanelSubsection;
 
 trait PlacesAndPedigreeMapModuleTrait {
 
@@ -32,12 +32,12 @@ trait PlacesAndPedigreeMapModuleTrait {
     $generalSub = array();
     $generalSub[] = new ControlPanelSubsection(
             /* I18N: Configuration option */I18N::translate('Displayed title'),
-            array(
+            array(/*
         new ControlPanelCheckbox(
-                /* I18N: Module Configuration */I18N::translate('Include the %1$s symbol in the module title', $this->getVestaSymbol()),
+                I18N::translate('Include the %1$s symbol in the module title', $this->getVestaSymbol()),
                 null,
                 'VESTA',
-                '1'),
+                '1'),*/
         new ControlPanelCheckbox(
                 /* I18N: Module Configuration */I18N::translate('Include the %1$s symbol in the tab title', $this->getVestaSymbol()),
                 /* I18N: Module Configuration */I18N::translate('Deselect in order to have the tab appear exactly as the original tab.'),

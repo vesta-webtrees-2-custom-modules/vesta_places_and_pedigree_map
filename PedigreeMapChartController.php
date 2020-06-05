@@ -6,6 +6,7 @@ namespace Cissee\Webtrees\Module\PPM;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Factory;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\I18N;
@@ -82,7 +83,7 @@ class PedigreeMapChartController extends AbstractBaseController {
       return $this->viewResponse('modules/pedigree-map/page', [
           //'module' obsolete
           /* I18N: %s is an individual’s name */
-          'title'          => I18N::translate('Pedigree map of %s', $individual->fullName()),
+          'title'          => MoreI18N::xlate('Pedigree map of %s', $individual->fullName()),
           'tree'           => $tree,
           'individual'     => $individual,
           'generations'    => $generations,
@@ -209,7 +210,7 @@ class PedigreeMapChartController extends AbstractBaseController {
       return $geojson;
   }
 
-  private function getLatLon($fact): ?MapCoordinates {
+  protected function getLatLon(Fact $fact): ?MapCoordinates {
     $ps = PlaceStructure::fromFact($fact);
     if ($ps === null) {
       return null;

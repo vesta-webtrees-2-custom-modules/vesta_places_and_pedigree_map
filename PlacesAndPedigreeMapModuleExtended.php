@@ -3,23 +3,29 @@
 namespace Cissee\Webtrees\Module\PPM;
 
 use Aura\Router\RouterContainer;
+use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
+use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Http\Controllers\Admin\ModuleController;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Menu;
-use Fisharebest\Webtrees\Module\AbstractModule;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
 use Fisharebest\Webtrees\Module\ModuleChartTrait;
 use Fisharebest\Webtrees\Module\ModuleConfigInterface;
 use Fisharebest\Webtrees\Module\ModuleConfigTrait;
 use Fisharebest\Webtrees\Module\ModuleCustomInterface;
 use Fisharebest\Webtrees\Module\ModuleCustomTrait;
+use Fisharebest\Webtrees\Module\ModuleListInterface;
+use Fisharebest\Webtrees\Module\ModuleListTrait;
 use Fisharebest\Webtrees\Module\ModuleTabInterface;
 use Fisharebest\Webtrees\Module\ModuleTabTrait;
+use Fisharebest\Webtrees\Module\PlaceHierarchyListModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Services\SearchService;
 use Fisharebest\Webtrees\Services\TreeService;
+use Fisharebest\Webtrees\Statistics;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,14 +40,16 @@ use function redirect;
 use function route;
 use function view;
 
-class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements 
+//must extend PlaceHierarchyListModule inorder to handle urls via $place->url()
+class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implements 
   ModuleCustomInterface, 
   ModuleConfigInterface,
   ModuleTabInterface, 
-  ModuleChartInterface, 
+  ModuleChartInterface,
+  ModuleListInterface,
   RequestHandlerInterface {
 
-  use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait {
+  use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait, ModuleListTrait {
     VestaModuleTrait::customTranslations insteadof ModuleCustomTrait;
     VestaModuleTrait::customModuleLatestVersion insteadof ModuleCustomTrait;
     VestaModuleTrait::getAssetAction insteadof ModuleCustomTrait;
@@ -98,7 +106,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
   }
 
   public function tabTitle(): string {
-    return $this->getTabTitle(I18N::translate('Places'));
+    return $this->getTabTitle(MoreI18N::xlate('Places'));
   }
 
   public function defaultTabOrder(): int {
@@ -141,11 +149,13 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
             ->tokens([
                 'generations' => '\d+',
             ]);
+      
+      $this->flashWhatsNew('\Cissee\Webtrees\Module\PPM\WhatsNew', 1);
   }
   
   public function chartMenu(Individual $individual): Menu {
     return new Menu(
-            $this->getChartTitle(I18N::translate('Pedigree map')),
+            $this->getChartTitle(MoreI18N::xlate('Pedigree map')),
             $this->chartUrl($individual),
             $this->chartMenuClass(),
             $this->chartUrlAttributes()
@@ -158,7 +168,7 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
 
   public function chartTitle(Individual $individual): string {
     /* I18N: %s is an individual’s name */
-    return $this->getChartTitle(I18N::translate('Pedigree map of %s', $individual->fullName()));
+    return $this->getChartTitle(MoreI18N::xlate('Pedigree map of %s', $individual->fullName()));
   }
 
   public function chartUrl(Individual $individual, array $parameters = []): string {
@@ -185,7 +195,33 @@ class PlacesAndPedigreeMapModuleExtended extends AbstractModule implements
     $controller = new PedigreeMapChartController($this, $this->chart_service);
     return $controller->mapData($request, $tree);
   }
+  
+  //////////////////////////////////////////////////////////////////////////////
 
+  public function listTitle(): string {
+    return $this->getListTitle(MoreI18N::xlate('Place Hierarchy'));
+  }
+  
+  public function listMenuClass(): string {
+    return 'menu-list-plac';
+  }
+  
+  public function getListAction(ServerRequestInterface $request): ResponseInterface {
+    $tree = $request->getAttribute('tree');
+    assert($tree instanceof Tree);
+
+    $user = $request->getAttribute('user');
+
+    Auth::checkComponentAccess($this, ModuleListInterface::class, $tree, $user);
+    $controller = new ExtendedPlaceHierarchyController($this, app(SearchService::class), app(Statistics::class));
+
+    return $controller->show($request);
+  }
+
+  public function listUrlAttributes(): array {
+    return [];
+  }
+  
   //////////////////////////////////////////////////////////////////////////////
   
   private function title1(): string {

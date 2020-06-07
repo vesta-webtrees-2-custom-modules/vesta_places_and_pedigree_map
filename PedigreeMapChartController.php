@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Cissee\Webtrees\Module\PPM;
 
+use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Factory;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Tree;

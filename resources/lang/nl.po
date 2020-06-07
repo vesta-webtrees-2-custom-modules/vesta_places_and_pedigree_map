@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-06-05 20:30+0200\n"
-"PO-Revision-Date: 2020-06-06 13:54+0200\n"
+"PO-Revision-Date: 2020-06-07 17:43+0200\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,7 +35,7 @@ msgstr "Vesta Plaatsen en grafische kwartierstaat"
 #: PlacesAndPedigreeMapModuleTrait.php:19
 #: PlacesAndPedigreeMapModuleTrait.php:25
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
-msgstr "De hiërarchie van plaatsen. Toon ook de locatie van de gebeurtenissen en de geboorteplaats van voorouders op een kaart. Vervanging voor de originele modules 'Hiërarchie van plaatsen', 'Plaatsen' en 'Grafische kwartierstaat'."
+msgstr "De hiërarchie van plaatsen. Toon ook de locatie van de gebeurtenissen en de geboorteplaats van voorouders op een kaart. Vervanging voor de oorspronkelijke modules 'Hiërarchie van plaatsen', 'Plaatsen' en 'Grafische kwartierstaat'."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:26

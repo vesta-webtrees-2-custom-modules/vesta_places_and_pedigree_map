@@ -154,7 +154,15 @@ class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
           ]);
       }
 
+      $bounds = [];
+      $placeLocation = (new PlaceLocation($placeObj->gedcomName()));
+      //WEBTREES_2.0.6;
+      if (method_exists($placeLocation, 'boundingRectangle')) {
+        $bounds = $placeLocation->boundingRectangle();         
+      }
+      
       return [
+          'bounds'  => $bounds,
           'sidebar' => $sidebar,
           'markers' => [
               'type'     => 'FeatureCollection',
@@ -250,6 +258,7 @@ class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
     
   //Speedup #2
   //more efficient than $place->url() when calling for lots of places
+  //this should be in webtrees, e.g. via caching result of 'findByComponent' or even 'Auth::accessLevel'
   public static function placeUrl(Place $place, ?PlaceHierarchyListModule $phlm): string
     {
         if ($phlm !== null) {

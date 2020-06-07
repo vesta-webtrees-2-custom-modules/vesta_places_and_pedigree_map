@@ -92,15 +92,6 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     return 'https://cissee.de';
   }
 
-  public function description(): string {
-    return $this->getShortDescription();
-  }
-
-  /**
-   * Where does this module store its resources
-   *
-   * @return string
-   */
   public function resourcesFolder(): string {
     return __DIR__ . '/resources/';
   }

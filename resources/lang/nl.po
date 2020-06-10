@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-06-05 20:30+0200\n"
-"PO-Revision-Date: 2020-06-07 17:43+0200\n"
+"PO-Revision-Date: 2020-06-09 07:41+0200\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +29,7 @@ msgstr "De hier vermelde modules worden gebruikt (in de geconfigureerde volgorde
 
 #: PlacesAndPedigreeMapModuleTrait.php:14
 msgid "Vesta Places and Pedigree map"
-msgstr "Vesta Plaatsen en grafische kwartierstaat"
+msgstr "Vesta Plaatsen en Grafische kwartierstaat"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:19
@@ -57,7 +57,7 @@ msgstr "Weergegeven titel"
 #: PlacesAndPedigreeMapModuleTrait.php:42
 #, php-format
 msgid "Include the %1$s symbol in the list menu entry"
-msgstr "Het %1$s-symbool opnemen in de lijstmenu-vermelding"
+msgstr "Het %1$s-symbool opnemen in het Lijsten-menu"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:43
@@ -79,7 +79,7 @@ msgstr "Schakel de selectie uit om de naam van het oorspronkelijke tabblad te bl
 #: PlacesAndPedigreeMapModuleTrait.php:52
 #, php-format
 msgid "Include the %1$s symbol in the chart menu entry"
-msgstr "Het %1$s-symbool opnemen in de invoer van het grafiekmenu"
+msgstr "Het %1$s-symbool opnemen in het Diagrammen-menu"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:53

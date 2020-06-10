@@ -190,7 +190,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
   //////////////////////////////////////////////////////////////////////////////
 
   public function listTitle(): string {
-    return $this->getListTitle(MoreI18N::xlate('Place Hierarchy'));
+    return $this->getListTitle(MoreI18N::xlate('Place hierarchy'));
   }
   
   public function listMenuClass(): string {

@@ -79,7 +79,7 @@ class PlacesController extends AbstractBaseController {
     foreach ($facts as $id => $fact) {
       $latLon = $this->getLatLon($fact);
 
-      $icon = PlacesController::ICONS[$fact->tag()] ?? PlacesController::DEFAULT_ICON;
+      $icon = PlacesController::ICONS[$fact->getTag()] ?? PlacesController::DEFAULT_ICON;
 
       if ($latLon !== null) {
         $latitude = $latLon->getLati();

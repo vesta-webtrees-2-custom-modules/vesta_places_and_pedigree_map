@@ -156,10 +156,7 @@ class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
 
       $bounds = [];
       $placeLocation = (new PlaceLocation($placeObj->gedcomName()));
-      //WEBTREES_2.0.6;
-      if (method_exists($placeLocation, 'boundingRectangle')) {
-        $bounds = $placeLocation->boundingRectangle();         
-      }
+      $bounds = $placeLocation->boundingRectangle();         
       
       return [
           'bounds'  => $bounds,

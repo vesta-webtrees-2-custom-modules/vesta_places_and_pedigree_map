@@ -7,6 +7,7 @@ use Vesta\ControlPanelUtils\Model\ControlPanelCheckbox;
 use Vesta\ControlPanelUtils\Model\ControlPanelPreferences;
 use Vesta\ControlPanelUtils\Model\ControlPanelSection;
 use Vesta\ControlPanelUtils\Model\ControlPanelSubsection;
+use Vesta\ControlPanelUtils\Model\ControlPanelTextbox;
 
 trait PlacesAndPedigreeMapModuleTrait {
 
@@ -54,7 +55,17 @@ trait PlacesAndPedigreeMapModuleTrait {
                 'VESTA_CHART',
                 '1')));
 
-    //$placeSub = array();		
+    $placeSub = array();
+    $placeSub[] = new ControlPanelSubsection(
+            /* I18N: Configuration option */I18N::translate('Display details'),
+            array(
+        new ControlPanelTextbox(
+                /* I18N: Module Configuration */I18N::translate('Threshold size'),
+                /* I18N: Module Configuration */I18N::translate('Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold.') . ' ' .
+                /* I18N: Module Configuration */I18N::translate('A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies.'),
+                'DETAILS_THRESHOLD',
+                '100')));
+    
     //$placeSub[] = new ControlPanelSubsection(
     //				/* I18N: Configuration option */I18N::translate('Zoom levels'),
     //				array(new ControlPanelRange(
@@ -77,10 +88,10 @@ trait PlacesAndPedigreeMapModuleTrait {
             /* I18N: Configuration option */I18N::translate('General'),
             null,
             $generalSub);
-    //$sections[] = new ControlPanelSection(
-    //				/* I18N: Configuration option */I18N::translate('Common Map Settings'),
-    //				null,
-    //				$placeSub);
+    $sections[] = new ControlPanelSection(
+    				/* I18N: Configuration option */I18N::translate('Place hierarchy list'),
+    				null,
+    				$placeSub);
 
 
     return new ControlPanelPreferences($sections);

@@ -7,86 +7,127 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2020-06-05 20:30+0200\n"
+"POT-Creation-Date: 2020-07-13 22:07+0200\n"
 "PO-Revision-Date: 2020-06-09 07:41+0200\n"
+"Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.3.1\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleExtended.php:228
-msgid "Places and Pedigree Map Location Data Providers"
-msgstr "Aanbieders van locatiegegevens voor plaatsen en grafische kwartierstaat"
+#: PlacesAndPedigreeMapModuleTrait.php:65
+msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
+msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleExtended.php:232
-msgid "Modules listed here are used (in the configured order) to determine map coordinates of places."
-msgstr "De hier vermelde modules worden gebruikt (in de geconfigureerde volgorde) om de kaartcoördinaten van de plaatsen te bepalen."
-
-#: PlacesAndPedigreeMapModuleTrait.php:14
-msgid "Vesta Places and Pedigree map"
-msgstr "Vesta Plaatsen en Grafische kwartierstaat"
+#: PlacesAndPedigreeMapModuleTrait.php:54
+msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
+msgstr "Schakel de selectie uit om in het Diagrammenu de oorspronkelijke naam te blijven gebruiken."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:19
-#: PlacesAndPedigreeMapModuleTrait.php:25
-msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
-msgstr "De hiërarchie van plaatsen. Toon ook de locatie van de gebeurtenissen en de geboorteplaats van voorouders op een kaart. Vervanging voor de oorspronkelijke modules 'Hiërarchie van plaatsen', 'Plaatsen' en 'Grafische kwartierstaat'."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:26
-msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
-msgstr "Maakt gebruik van locatiegegevens van GEDCOM en van locatiegegevens van andere modules."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:27
-#, php-format
-msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
-msgstr "In het bijzonder moet u de module '%1$s Vesta Webtrees locatiegegevensaanbieder' activeren als u uw locatiegegevens beheert via webtrees (buiten de GEDCOM)."
-
-#. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:34
-msgid "Displayed title"
-msgstr "Weergegeven titel"
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:42
-#, php-format
-msgid "Include the %1$s symbol in the list menu entry"
-msgstr "Het %1$s-symbool opnemen in het Lijsten-menu"
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:43
+#: PlacesAndPedigreeMapModuleTrait.php:44
 msgid "Deselect in order to have the list menu entry appear exactly as the original chart menu entry."
 msgstr "Schakel de selectie uit om in het lijstmenu de naam van het oorspronkelijke diagram te blijven gebruiken."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:47
-#, php-format
-msgid "Include the %1$s symbol in the tab title"
-msgstr "Het %1$s-symbool opnemen in de titel van het tabblad"
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:48
+#: PlacesAndPedigreeMapModuleTrait.php:49
 msgid "Deselect in order to have the tab appear exactly as the original tab."
 msgstr "Schakel de selectie uit om de naam van het oorspronkelijke tabblad te blijven gebruiken."
 
+#. I18N: Configuration option
+#: PlacesAndPedigreeMapModuleTrait.php:60
+msgid "Display details"
+msgstr ""
+
+#. I18N: Configuration option
+#: PlacesAndPedigreeMapModuleTrait.php:35
+msgid "Displayed title"
+msgstr "Weergegeven titel"
+
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:52
+#: PlacesAndPedigreeMapModuleTrait.php:64
+msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
+msgstr ""
+
+#: resources/views/sidebar.phtml:58
+msgid "Families"
+msgstr ""
+
+#. I18N: Configuration option
+#: PlacesAndPedigreeMapModuleTrait.php:88
+msgid "General"
+msgstr "Algemeen"
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:28
+#, php-format
+msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
+msgstr "In het bijzonder moet u de module '%1$s Vesta Webtrees locatiegegevensaanbieder' activeren als u uw locatiegegevens beheert via webtrees (buiten de GEDCOM)."
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:53
 #, php-format
 msgid "Include the %1$s symbol in the chart menu entry"
 msgstr "Het %1$s-symbool opnemen in het Diagrammen-menu"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:53
-msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
-msgstr "Schakel de selectie uit om in het Diagrammenu de oorspronkelijke naam te blijven gebruiken."
+#: PlacesAndPedigreeMapModuleTrait.php:43
+#, php-format
+msgid "Include the %1$s symbol in the list menu entry"
+msgstr "Het %1$s-symbool opnemen in het Lijsten-menu"
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:48
+#, php-format
+msgid "Include the %1$s symbol in the tab title"
+msgstr "Het %1$s-symbool opnemen in de titel van het tabblad"
+
+#: resources/views/sidebar.phtml:53
+msgid "Individuals"
+msgstr ""
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleExtended.php:242
+msgid "Modules listed here are used (in the configured order) to determine map coordinates of places."
+msgstr "De hier vermelde modules worden gebruikt (in de geconfigureerde volgorde) om de kaartcoördinaten van de plaatsen te bepalen."
 
 #. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:77
-msgid "General"
-msgstr "Algemeen"
+#: PlacesAndPedigreeMapModuleTrait.php:92
+msgid "Place hierarchy list"
+msgstr ""
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleExtended.php:238
+msgid "Places and Pedigree Map Location Data Providers"
+msgstr "Aanbieders van locatiegegevens voor plaatsen en grafische kwartierstaat"
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:20
+#: PlacesAndPedigreeMapModuleTrait.php:26
+msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
+msgstr "De hiërarchie van plaatsen. Toon ook de locatie van de gebeurtenissen en de geboorteplaats van voorouders op een kaart. Vervanging voor de oorspronkelijke modules 'Hiërarchie van plaatsen', 'Plaatsen' en 'Grafische kwartierstaat'."
+
+#: resources/views/sidebar.phtml:47
+msgid "The location of this place is not known."
+msgstr ""
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:63
+msgid "Threshold size"
+msgstr ""
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:27
+msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
+msgstr "Maakt gebruik van locatiegegevens van GEDCOM en van locatiegegevens van andere modules."
+
+#: PlacesAndPedigreeMapModuleTrait.php:15
+msgid "Vesta Places and Pedigree map"
+msgstr "Vesta Plaatsen en Grafische kwartierstaat"
+
+#: WhatsNew/WhatsNew0.php:11
+msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
+msgstr ""

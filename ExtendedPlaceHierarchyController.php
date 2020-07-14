@@ -23,6 +23,7 @@ use function app;
 use function collect;
 use function view;
 
+//obsolete, refactored via GenericPlaceHierarchyController
 class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
 
   protected $module;
@@ -94,9 +95,6 @@ class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
                 $flag = $flag_path . $location->icon();
             }
             */
-            
-            //TODO we could preserve (flags and) zooms via PlaceLocation!
-            $zoom = 13; //note: standard default is 2. 
 
             //[RC] adjusted
             $latLon = $this->getLatLon($place);
@@ -123,8 +121,7 @@ class ExtendedPlaceHierarchyController extends PlaceHierarchyController {
                             'place'     => $place,
                             'latitude'  => $latitude,
                             'longitude' => $longitude,
-                        ]),
-                        'zoom'    => $zoom,
+                        ])
                     ],
                 ];
             }

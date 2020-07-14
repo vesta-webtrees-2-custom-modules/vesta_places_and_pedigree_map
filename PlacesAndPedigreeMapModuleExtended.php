@@ -3,6 +3,9 @@
 namespace Cissee\Webtrees\Module\PPM;
 
 use Aura\Router\RouterContainer;
+use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
+use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
+use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
 use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
@@ -27,6 +30,7 @@ use Fisharebest\Webtrees\Services\SearchService;
 use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Statistics;
 use Fisharebest\Webtrees\Tree;
+use Fisharebest\Webtrees\View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -40,13 +44,14 @@ use function redirect;
 use function route;
 use function view;
 
-//must extend PlaceHierarchyListModule inorder to handle urls via $place->url()
+//must extend PlaceHierarchyListModule in order to handle urls of standard places via $place->url()
 class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implements 
   ModuleCustomInterface, 
   ModuleConfigInterface,
   ModuleTabInterface, 
   ModuleChartInterface,
   ModuleListInterface,
+  ModulePlaceHierarchyInterface,
   RequestHandlerInterface {
 
   use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait, ModuleListTrait {
@@ -141,6 +146,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                 'generations' => '\d+',
             ]);
       
+      //for GenericPlaceHierarchyController
+      View::registerCustomView('::modules/generic-place-hierarchy/place-hierarchy', $this->name() . '::modules/generic-place-hierarchy-shared-places/place-hierarchy');
+      View::registerCustomView('::modules/generic-place-hierarchy/list', $this->name() . '::modules/generic-place-hierarchy-shared-places/list');
+      View::registerCustomView('::modules/generic-place-hierarchy/page', $this->name() . '::modules/generic-place-hierarchy-shared-places/page');
+      View::registerCustomView('::modules/generic-place-hierarchy/sidebar', $this->name() . '::modules/generic-place-hierarchy-shared-places/sidebar');
+      
       $this->flashWhatsNew('\Cissee\Webtrees\Module\PPM\WhatsNew', 1);
   }
   
@@ -204,7 +215,15 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     $user = $request->getAttribute('user');
 
     Auth::checkComponentAccess($this, ModuleListInterface::class, $tree, $user);
-    $controller = new ExtendedPlaceHierarchyController($this, app(SearchService::class), app(Statistics::class));
+    //$controller = new ExtendedPlaceHierarchyController($this, app(SearchService::class), app(Statistics::class));
+    
+    $searchService = app(SearchService::class);
+    $statistics = app(Statistics::class);
+    $participants = app(ModuleService::class)
+            ->findByComponent(PlaceHierarchyParticipant::class, $tree, Auth::user());
+            
+    $controller = new GenericPlaceHierarchyController(
+              new PlaceHierarchyUtilsImpl($this, $participants, $searchService, $statistics));
 
     return $controller->show($request);
   }

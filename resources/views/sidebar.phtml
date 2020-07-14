@@ -11,12 +11,17 @@ use Fisharebest\Webtrees\Place;
  * @var string $sidebar_class
  * @var array  $stats
  */
+
+//obsolete
 ?>
 
 <li class="gchart px-md-2 <?= $sidebar_class ?>" data-id="<?= $id ?>">
     <div class="row label">
         <div class="col" style="word-wrap: break-word">
             <?php if ($showlink) : ?>
+                <?php
+                //[RC] adjusted
+                ?>
                 <a href="<?= e($url) ?>">
                     <?= $place->placeName() ?>
                 </a>
@@ -32,6 +37,9 @@ use Fisharebest\Webtrees\Place;
         <?php endif ?>
     </div>
 
+    <?php
+    //[RC] adjusted
+    ?>
     <?php if ($showDetails) : ?>
     
       <?php if ($sidebar_class === 'unmapped') : ?>

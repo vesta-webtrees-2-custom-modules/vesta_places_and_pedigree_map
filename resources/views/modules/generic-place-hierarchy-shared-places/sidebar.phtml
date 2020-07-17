@@ -36,20 +36,25 @@ use Cissee\WebtreesExt\MoreI18N;
         <?php endif ?>
     </div>
 
-    <?php if ($sidebar_class === 'unmapped') : ?>
-        <div class="row">
-            <div class="col-sm-9"><i><?= MoreI18N::xlate('The location of this place is not known.') ?></i></div>
-            <div class="col-sm-3 align-digits"><?= view('icons/warning') ?></div>
-        </div>
+    <?php
+    //[RC] adjusted
+    ?>
+    <?php if ($showDetails) : ?>
+      <?php if ($sidebar_class === 'unmapped') : ?>
+          <div class="row">
+              <div class="col-sm-9"><i><?= MoreI18N::xlate('The location of this place is not known.') ?></i></div>
+              <div class="col-sm-3 align-digits"><?= view('icons/warning') ?></div>
+          </div>
+      <?php endif ?>
+
+      <div class="row">
+          <div class="col-sm-9"><?= MoreI18N::xlate('Individuals') ?></div>
+          <div class="col-sm-3 align-digits"><?= $stats['INDI'] ?></div>
+      </div>
+
+      <div class="row">
+          <div class="col-sm-9"><?= MoreI18N::xlate('Families') ?></div>
+          <div class="col-sm-3 align-digits"><?= $stats['FAM'] ?></div>
+      </div>
     <?php endif ?>
-
-    <div class="row">
-        <div class="col-sm-9"><?= MoreI18N::xlate('Individuals') ?></div>
-        <div class="col-sm-3 align-digits"><?= $stats['INDI'] ?></div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-9"><?= MoreI18N::xlate('Families') ?></div>
-        <div class="col-sm-3 align-digits"><?= $stats['FAM'] ?></div>
-    </div>
 </li>

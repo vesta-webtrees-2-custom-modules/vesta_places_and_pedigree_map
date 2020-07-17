@@ -74,8 +74,6 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
       }
     }
     
-    
-    
     if ($first === null) {
       $actual = Place::find($id, $tree);
       $first = new DefaultPlaceWithinHierarchy($actual, $urls, $this->search_service, $this->statistics);

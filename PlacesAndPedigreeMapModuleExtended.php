@@ -220,10 +220,16 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     $searchService = app(SearchService::class);
     $statistics = app(Statistics::class);
     $participants = app(ModuleService::class)
-            ->findByComponent(PlaceHierarchyParticipant::class, $tree, Auth::user());
+            ->findByComponent(PlaceHierarchyParticipant::class, $tree, Auth::user())
+            ->filter(function (PlaceHierarchyParticipant $php) use ($tree): bool {
+                return $php->participates($tree);
+            });
+            
+    $detailsThreshold = intval($this->getPreference('DETAILS_THRESHOLD', 100));        
             
     $controller = new GenericPlaceHierarchyController(
-              new PlaceHierarchyUtilsImpl($this, $participants, $searchService, $statistics));
+            new PlaceHierarchyUtilsImpl($this, $participants, $searchService, $statistics),
+            $detailsThreshold);
 
     return $controller->show($request);
   }

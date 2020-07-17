@@ -5,6 +5,7 @@ namespace Cissee\Webtrees\Module\PPM;
 use Cissee\WebtreesExt\Http\Controllers\DelegatingPlaceWithinHierarchyBase;
 use Cissee\WebtreesExt\Http\Controllers\PlaceUrls;
 use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
+use Fisharebest\Webtrees\Place;
 use Fisharebest\Webtrees\Services\GedcomService;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Support\Collection;
@@ -58,7 +59,7 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
       $pwh = $this->others->get($parameterName);      
       $otherChildrenArray[$parameterName] = $pwh->getChildPlaces();
     }
-
+    
     //either filter, or add others
     $ret = [];
     
@@ -85,9 +86,13 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
           break;
         }
         
+        //we still have to create for each participant
+        //because children of this child may exist
+        //but it's sufficient to create a placeholder (may be more efficient)
         if ($otherChild === null) {
           //create via participant
-          $otherChild = $this->participants->get($parameterName)->findPlace($id, $this->tree(), $this->urls);
+          $otherChild = $this->participants->get($parameterName)->
+                  createNonMatchingPlace(new Place($finalFirst->gedcomName(), $finalFirst->tree()), $this->urls);
         }
         
         $finalOthers[$parameterName] = $otherChild;
@@ -118,7 +123,7 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     foreach ($this->others as $other) {
       $ret = $ret->merge($other->searchIndividualsInPlace());
     }
-    return $ret;
+    return $ret->unique();
   }
   
   public function countIndividualsInPlace(): int {
@@ -135,7 +140,7 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     foreach ($this->others as $other) {
       $ret = $ret->merge($other->searchFamiliesInPlace());
     }
-    return $ret;
+    return $ret->unique();
   }
   
   public function countFamiliesInPlace(): int {
@@ -228,21 +233,24 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     $latiMax = (new Collection($latitudes))->max();
     $longMax = (new Collection($longitudes))->max();
 
-    if ($latiMin === $latiMax) {
-      $latiMin -= 0.5;
-      $latiMax += 0.5;
+    //never zoom in too far (in particular if there is only one place, but also if the places are close together)
+    $latiSpread = $latiMax - $latiMin;
+    if ($latiSpread < 1) {
+      $latiMin -= (1 - $latiSpread)/2;
+      $latiMax += (1 - $latiSpread)/2;
     }
-
-    if ($longMin === $longMax) {
-      $longMin -= 0.5;
-      $longMax += 0.5;
+    
+    $longSpread = $longMax - $longMin;
+    if ($longSpread < 1) {
+      $longMin -= (1 - $longSpread)/2;
+      $longMax += (1 - $longSpread)/2;
     }
 
     return [[$latiMin, $longMin], [$latiMax, $longMax]];
   }
 
   public function placeStructure(): ?PlaceStructure {
-    //TODO: merge all (more efficient wrt plac2map)
+    //TODO: merge all (more efficient wrt plac2map if _LOC or _GOV is already set)
     return $this->first->placeStructure();
   }
 

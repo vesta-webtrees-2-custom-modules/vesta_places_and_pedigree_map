@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-07-13 22:07+0200\n"
-"PO-Revision-Date: 2020-06-09 07:41+0200\n"
+"PO-Revision-Date: 2020-07-18 09:58+0200\n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -20,17 +20,17 @@ msgstr ""
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:65
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
-msgstr ""
+msgstr "Een kleinere drempelwaarde voorkomt prestatieproblemen in grote lijsten, die in platte plaatshiërarchieën kunnen voorkomen."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:54
 msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
-msgstr "Schakel de selectie uit om in het Diagrammenu de oorspronkelijke naam te blijven gebruiken."
+msgstr "Schakel de selectie uit om in het Diagrammen-menu de oorspronkelijke naam te blijven gebruiken."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:44
 msgid "Deselect in order to have the list menu entry appear exactly as the original chart menu entry."
-msgstr "Schakel de selectie uit om in het lijstmenu de naam van het oorspronkelijke diagram te blijven gebruiken."
+msgstr "Schakel de selectie uit om in het Lijsten-menu de naam van het oorspronkelijke diagram te blijven gebruiken."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:49
@@ -40,7 +40,7 @@ msgstr "Schakel de selectie uit om de naam van het oorspronkelijke tabblad te bl
 #. I18N: Configuration option
 #: PlacesAndPedigreeMapModuleTrait.php:60
 msgid "Display details"
-msgstr ""
+msgstr "Details weergeven"
 
 #. I18N: Configuration option
 #: PlacesAndPedigreeMapModuleTrait.php:35
@@ -50,11 +50,11 @@ msgstr "Weergegeven titel"
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:64
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
-msgstr ""
+msgstr "Geef geen details weer (zoals locatie en aantal personen) als de lijstgrootte (voor een specifieke plaats) groter is dan deze drempelwaarde."
 
 #: resources/views/sidebar.phtml:58
 msgid "Families"
-msgstr ""
+msgstr "Gezinnen"
 
 #. I18N: Configuration option
 #: PlacesAndPedigreeMapModuleTrait.php:88
@@ -87,7 +87,7 @@ msgstr "Het %1$s-symbool opnemen in de titel van het tabblad"
 
 #: resources/views/sidebar.phtml:53
 msgid "Individuals"
-msgstr ""
+msgstr "Personen"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleExtended.php:242
@@ -97,7 +97,7 @@ msgstr "De hier vermelde modules worden gebruikt (in de geconfigureerde volgorde
 #. I18N: Configuration option
 #: PlacesAndPedigreeMapModuleTrait.php:92
 msgid "Place hierarchy list"
-msgstr ""
+msgstr "Lijst met Hiërarchie van plaatsen"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleExtended.php:238
@@ -112,12 +112,12 @@ msgstr "De hiërarchie van plaatsen. Toon ook de locatie van de gebeurtenissen e
 
 #: resources/views/sidebar.phtml:47
 msgid "The location of this place is not known."
-msgstr ""
+msgstr "De locatie van deze plek is niet bekend."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:63
 msgid "Threshold size"
-msgstr ""
+msgstr "Drempelwaarde"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:27
@@ -130,4 +130,4 @@ msgstr "Vesta Plaatsen en Grafische kwartierstaat"
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
+msgstr "Vesta Plaatsen en Grafische kwartierstaat: Biedt nu ook een vervanging voor de lijst Hiërarchie van plaatsen, om aanvullende locatiegegevens weer te geven."

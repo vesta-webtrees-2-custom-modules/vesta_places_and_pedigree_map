@@ -96,7 +96,7 @@ class PlacesController extends AbstractBaseController {
             'properties' => [
                 'polyline' => null,
                 'icon' => $icon,
-                'tooltip' => strip_tags($fact->place()->fullName()),
+                'tooltip' => $fact->place()->gedcomName(),
                 'summary' => view('modules/places/event-sidebar',
                         //$placesModule->summaryData($indi, $fact)),
                         $summaryDataMethod->invoke($placesModule, $indi, $fact)),

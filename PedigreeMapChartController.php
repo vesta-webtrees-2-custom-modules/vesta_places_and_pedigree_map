@@ -192,7 +192,7 @@ class PedigreeMapChartController extends AbstractBaseController {
                   'properties' => [
                       'polyline'  => $polyline,
                       'iconcolor' => $color,
-                      'tooltip'   => strip_tags($fact->place()->fullName()),
+                      'tooltip'   => $fact->place()->gedcomName(),
                       'summary'   => view('modules/pedigree-map/events', [
                           'fact'         => $fact,
                           //'relationship' => ucfirst($this->getSosaName($sosa)),

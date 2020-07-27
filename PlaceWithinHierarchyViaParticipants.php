@@ -132,6 +132,9 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     foreach ($this->others as $other) {
       $counts->add($other->countIndividualsInPlace());
     }
+    //this assumes that one participant always has set of individuals for which all others are subsets,
+    //i.e. there are no two indiviuals returned only from different sets
+    //assumption seems somewhat dubious in general
     return $counts->max();
   }
   
@@ -149,6 +152,9 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     foreach ($this->others as $other) {
       $counts->add($other->countFamiliesInPlace());
     }
+    //this assumes that one participant always has set of families for which all others are subsets,
+    //i.e. there are no two families returned only from different sets
+    //assumption seems somewhat dubious in general
     return $counts->max();
   }
   

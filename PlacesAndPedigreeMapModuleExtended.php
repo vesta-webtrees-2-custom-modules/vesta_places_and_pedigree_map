@@ -77,6 +77,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
   protected $chart_service;
   
   public function __construct(ModuleService $module_service, ChartService $chart_service) {
+    parent::__construct(app(SearchService::class));
     $this->module_service = $module_service;
     $this->chart_service = $chart_service;
   }

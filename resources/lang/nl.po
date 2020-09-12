@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-07-13 22:07+0200\n"
-"PO-Revision-Date: 2020-07-18 09:58+0200\n"
+"PO-Revision-Date: 2020-09-12 21:36+0000\n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:65
@@ -71,7 +73,7 @@ msgstr "In het bijzonder moet u de module '%1$s Vesta Webtrees locatiegegevensaa
 #: PlacesAndPedigreeMapModuleTrait.php:53
 #, php-format
 msgid "Include the %1$s symbol in the chart menu entry"
-msgstr "Het %1$s-symbool opnemen in het Diagrammen-menu"
+msgstr "Het %1$s-­symbool opnemen in de vermelding in het diagrammenu"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:43
@@ -92,7 +94,9 @@ msgstr "Personen"
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleExtended.php:242
 msgid "Modules listed here are used (in the configured order) to determine map coordinates of places."
-msgstr "De hier vermelde modules worden gebruikt (in de geconfigureerde volgorde) om de kaartcoördinaten van de plaatsen te bepalen."
+msgstr ""
+"Modules die hier worden vermeld, worden (in de geconfigureerde volgorde) "
+"gebruikt om kaartcoördinaten van plaatsen te bepalen."
 
 #. I18N: Configuration option
 #: PlacesAndPedigreeMapModuleTrait.php:92

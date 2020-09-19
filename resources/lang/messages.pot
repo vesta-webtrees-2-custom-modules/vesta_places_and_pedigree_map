@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2020-07-13 22:07+0200\n"
+"POT-Creation-Date: 2020-09-19 15:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,116 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleExtended.php:238
-msgid "Places and Pedigree Map Location Data Providers"
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleExtended.php:242
-msgid "Modules listed here are used (in the configured order) to determine map coordinates of places."
-msgstr ""
-
-#: PlacesAndPedigreeMapModuleTrait.php:15
-msgid "Vesta Places and Pedigree map"
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:20
-#: PlacesAndPedigreeMapModuleTrait.php:26
+#: PlacesAndPedigreeMapModuleTrait.php:21
+#: PlacesAndPedigreeMapModuleTrait.php:27
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:27
+#: PlacesAndPedigreeMapModuleTrait.php:28
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:28
+#: PlacesAndPedigreeMapModuleTrait.php:29
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr ""
 
-#. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:35
-msgid "Displayed title"
-msgstr ""
-
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:43
-#, php-format
-msgid "Include the %1$s symbol in the list menu entry"
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:44
-msgid "Deselect in order to have the list menu entry appear exactly as the original chart menu entry."
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:48
-#, php-format
-msgid "Include the %1$s symbol in the tab title"
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:49
-msgid "Deselect in order to have the tab appear exactly as the original tab."
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:53
-#, php-format
-msgid "Include the %1$s symbol in the chart menu entry"
-msgstr ""
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:54
-msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
-msgstr ""
-
-#. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:60
+#: PlacesAndPedigreeMapModuleTrait.php:63
 msgid "Display details"
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:63
+#: PlacesAndPedigreeMapModuleTrait.php:66
 msgid "Threshold size"
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:64
+#: PlacesAndPedigreeMapModuleTrait.php:67
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:65
+#: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
 
-#. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:88
-msgid "General"
-msgstr ""
-
-#. I18N: Configuration option
-#: PlacesAndPedigreeMapModuleTrait.php:92
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:95
 msgid "Place hierarchy list"
 msgstr ""
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
-
-#: resources/views/sidebar.phtml:47
-msgid "The location of this place is not known."
-msgstr ""
-
-#: resources/views/sidebar.phtml:53
-msgid "Individuals"
-msgstr ""
-
-#: resources/views/sidebar.phtml:58
-msgid "Families"
 msgstr ""

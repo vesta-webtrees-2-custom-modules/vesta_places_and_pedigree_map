@@ -10,7 +10,6 @@ use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Http\Controllers\Admin\ModuleController;
-use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
@@ -35,6 +34,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use ReflectionObject;
+use Vesta\CommonI18N;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
@@ -242,11 +242,11 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
   //////////////////////////////////////////////////////////////////////////////
   
   private function title1(): string {
-    return /* I18N: Module Configuration */I18N::translate('Places and Pedigree Map Location Data Providers');
+    return CommonI18N::locationDataProviders();
   }
   
   private function description1(): string {
-    return /* I18N: Module Configuration */I18N::translate('Modules listed here are used (in the configured order) to determine map coordinates of places.');
+    return CommonI18N::mapCoordinates();
   }
   
   //hook management - generalize?

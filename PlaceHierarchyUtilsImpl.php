@@ -2,7 +2,6 @@
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Cissee\WebtreesExt\Http\Controllers\DefaultPlaceWithinHierarchy;
 use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyUtils;
 use Cissee\WebtreesExt\Http\Controllers\PlaceUrls;
 use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
@@ -40,7 +39,7 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
     $this->statistics = $statistics;
   }
   
-  public function findPlace(int $id, Tree $tree, array $requestParameters): PlaceWithinHierarchy {
+  public function getUrlFilters(array $requestParameters): array {
     $participantFilters = [];
     foreach ($this->participants as $participant) {
       $parameterName = $participant->filterParameterName();
@@ -50,6 +49,11 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
       }
     }
     
+    return $participantFilters;
+  }
+          
+  public function findPlace(int $id, Tree $tree, array $requestParameters): PlaceWithinHierarchy {
+    $participantFilters = $this->getUrlFilters($requestParameters);
     $urls = new PlaceUrls($this->module, $participantFilters, $this->participants);
     
     $first = null;
@@ -76,7 +80,7 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
     
     if ($first === null) {
       $actual = Place::find($id, $tree);
-      $first = new DefaultPlaceWithinHierarchy($actual, $urls, $this->search_service, $this->statistics);
+      $first = new VestaPlaceWithinHierarchy($actual, $urls, $this->search_service, $this->statistics, $this->module);
     }
     
     return new PlaceWithinHierarchyViaParticipants(

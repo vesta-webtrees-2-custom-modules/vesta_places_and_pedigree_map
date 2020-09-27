@@ -2,19 +2,18 @@
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Cissee\WebtreesExt\Http\Controllers\DelegatingPlaceWithinHierarchyBase;
+use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
 use Cissee\WebtreesExt\Http\Controllers\PlaceUrls;
 use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
 use Fisharebest\Webtrees\Place;
 use Fisharebest\Webtrees\Services\GedcomService;
 use Fisharebest\Webtrees\Tree;
 use Illuminate\Support\Collection;
-use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
 
-class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchyBase implements PlaceWithinHierarchy {
-
+class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
+  
   protected $urls;
           
   protected $first;
@@ -41,7 +40,6 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
           Collection $participantFilters,
           $module) {
     
-    parent::__construct($first);
     $this->urls = $urls;
     $this->first = $first;
     $this->others = $others;
@@ -50,12 +48,27 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     $this->module = $module;
   }
   
+  public function url(): string {
+    return $this->first->url();
+  }
+  
+  public function gedcomName(): string {
+    return $this->first->gedcomName();
+  }
+  
+  public function placeName(): string {
+    return $this->first->placeName();
+  }
+  
   public function getChildPlaces(): array {
     $firstChildren = $this->first->getChildPlaces();
     
     $otherChildrenArray = [];
     foreach ($this->participants as $participant) {
+      /* @var $participant PlaceHierarchyParticipant */
       $parameterName = $participant->filterParameterName();
+      
+      /* @var $pwh PlaceWithinHierarchy */
       $pwh = $this->others->get($parameterName);      
       $otherChildrenArray[$parameterName] = $pwh->getChildPlaces();
     }
@@ -134,7 +147,7 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     }
     //this assumes that one participant always has set of individuals for which all others are subsets,
     //i.e. there are no two indiviuals returned only from different sets
-    //assumption seems somewhat dubious in general
+    //assumption is dubious in general (in particular if places aren't linked to shared places consistently)
     return $counts->max();
   }
   
@@ -154,29 +167,39 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
     }
     //this assumes that one participant always has set of families for which all others are subsets,
     //i.e. there are no two families returned only from different sets
-    //assumption seems somewhat dubious in general
+    //assumption is dubious in general (in particular if places aren't linked to shared places consistently)
     return $counts->max();
   }
   
-  protected function getLatLon(): ?MapCoordinates {
-    $ps = $this->placeStructure();
-    if ($ps === null) {
-      return null;
+  protected function initLatLon(): ?MapCoordinates {
+    $ret = $this->first->getLatLon();
+    if ($ret !== null) {
+      return $ret;
     }
-    return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
+    foreach ($this->others as $other) {
+      $ret = $other->getLatLon();
+      if ($ret !== null) {
+        return $ret;
+      }
+    }
+    return null;
   }
   
-  public function latitude(): float {
+  public function getLatLon(): ?MapCoordinates {
     if (!$this->latLonInitialized) {
-      $this->latLon = $this->getLatLon();
+      $this->latLon = $this->initLatLon();
       $this->latLonInitialized = true;
     }
     
+    return $this->latLon;
+  }
+  
+  public function latitude(): float {
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $lati = null;
-    if ($this->latLon !== null) {
-      $lati = $this->latLon->getLati();
+    if ($this->getLatLon() !== null) {
+      $lati = $this->getLatLon()->getLati();
     }
     if ($lati === null) {
       return 0.0;
@@ -187,16 +210,11 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
   }
   
   public function longitude(): float {
-    if (!$this->latLonInitialized) {
-      $this->latLon = getLatLon();
-      $this->latLonInitialized = true;
-    }
-
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $long = null;
-    if ($this->latLon !== null) {
-      $long = $this->latLon->getLong();
+    if ($this->getLatLon() !== null) {
+      $long = $this->getLatLon()->getLong();
     }
     if ($long === null) {
       return 0.0;
@@ -270,5 +288,17 @@ class PlaceWithinHierarchyViaParticipants extends DelegatingPlaceWithinHierarchy
   
   public function links(): Collection {
     return $this->first->links();
+  }
+  
+  public function parent(): PlaceWithinHierarchy {
+    return new PlaceWithinHierarchyViaParticipants(
+            $this->urls, 
+            $this->first->parent(), 
+            $this->others->map(function ($place) {
+              return $place->parent();
+            }), 
+            $this->participants, 
+            $this->participantFilters, 
+            $this->module);
   }
 }

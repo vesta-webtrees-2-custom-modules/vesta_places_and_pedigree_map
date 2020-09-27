@@ -1,7 +1,6 @@
 <?php
 
 use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
-use Fisharebest\Webtrees\I18N;
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Place;
 use Fisharebest\Webtrees\Tree;
@@ -12,12 +11,13 @@ use Fisharebest\Webtrees\Tree;
  * @var string $action
  * @var string $title
  * @var Place|null $current
- * @var array<PlaceWithinHierarchyBase> $breadcrumbs
+ * @var array<PlaceWithinHierarchy> $breadcrumbs
  * @var bool $note
  * @var string $content
  * @var bool $showeventslink
  * @var Place $place
  * @var array $nextaction
+ * @var array $urlFilters
  */
 
 ?>
@@ -52,16 +52,12 @@ use Fisharebest\Webtrees\Tree;
         <h4>&nbsp;</h4> <?php //TODO better formatting ?>  
         <h5 class="text-center">
             <?php foreach ($breadcrumbs as $item) : ?>
-                <?php if ($item instanceof PlaceWithinHierarchy) : ?>
-                  <?= $item->additionalLinksHtmlBeforeName() ?>
-                <?php endif ?>
+                <?= $item->additionalLinksHtmlBeforeName() ?>
                 <a href="<?= e($item->url()) ?>" dir="auto"><?= ($item->gedcomName() !== '')?$item->placeName():MoreI18N::xlate('World') ?></a>
                 - 
             <?php endforeach ?>
 
-            <?php if ($current instanceof PlaceWithinHierarchy) : ?>
-              <?= $current->additionalLinksHtmlBeforeName() ?>
-            <?php endif ?>
+            <?= $current->additionalLinksHtmlBeforeName() ?>
             <?= ($current->gedcomName() !== '')?$current->placeName():MoreI18N::xlate('World') ?>
         </h5>
 
@@ -69,13 +65,13 @@ use Fisharebest\Webtrees\Tree;
 
         <div class="text-center">
             <?php if ($showeventslink) : ?>
-                <a class="formField" href= <?= e(route('module', ['module' => $module, 'action' => $action, 'tree' => $tree->name(), 'place_id' => $place->id(), 'action2' => 'hierarchy-e'])) ?>>
+                <a class="formField" href= <?= e(route('module', ['module' => $module, 'action' => $action, 'tree' => $tree->name(), 'place_id' => $place->id(), 'action2' => 'hierarchy-e'] + $urlFilters)) ?>>
                     <?= MoreI18N::xlate('View table of events occurring in %s', $place->fullName()) ?>
                 </a>
                 |
             <?php endif ?>
 
-            <a href="<?= e(route('module', ['module' => $module, 'action' => $action, 'tree' => $tree->name(), 'action2' => key($nextaction)])) ?>">
+            <a href="<?= e(route('module', ['module' => $module, 'action' => $action, 'tree' => $tree->name(), 'action2' => key($nextaction)] + $urlFilters)) ?>">
                 <?= current($nextaction) ?>
             </a>
         </div>

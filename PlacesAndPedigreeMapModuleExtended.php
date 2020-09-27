@@ -216,7 +216,6 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     $user = $request->getAttribute('user');
 
     Auth::checkComponentAccess($this, ModuleListInterface::class, $tree, $user);
-    //$controller = new ExtendedPlaceHierarchyController($this, app(SearchService::class), app(Statistics::class));
     
     $searchService = app(SearchService::class);
     $statistics = app(Statistics::class);

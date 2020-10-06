@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-09-19 15:42+0200\n"
-"PO-Revision-Date: 2020-10-06 12:26+0000\n"
+"PO-Revision-Date: 2020-10-06 15:26+0000\n"
 "Last-Translator: ro-la <lacoros@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/"
 "vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/sk/>\n"
@@ -43,31 +43,39 @@ msgstr ""
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr ""
+"Mali by ste najmä aktivovať modul „%1$s Vesta webtrees Location Data "
+"Provider“ ak spravujete vaše údaje o polohe prostredníctvom webtrees (mimo "
+"GEDCOM)."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:95
 msgid "Place hierarchy list"
-msgstr ""
+msgstr "Hierarchia miest"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:21
 #: PlacesAndPedigreeMapModuleTrait.php:27
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr ""
+"Hierarchia miest. Zobrazuje aj lokalitu udalostí a miesto narodenia na mape. "
+"Je náhradou za pôvodné moduly „Hierarchia miest“, „Miesta“ a „Vývod - mapa“."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:66
 msgid "Threshold size"
-msgstr ""
+msgstr "Hodnota prahu"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:28
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr ""
+"Používa údaje o polohe z GEDCOM-u, ako aj údaje poskytované inými modulmi."
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
 msgstr ""
+"Vesta Mapa miest a predkov: Teraz poskytuje náhradu za zoznam „Hierarchia "
+"miest“ a zobrazuje aj dodatočné údaje o polohe."
 
 #~ msgid "Families"
 #~ msgstr "Rodiny"

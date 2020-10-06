@@ -8,30 +8,35 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-09-19 15:42+0200\n"
-"PO-Revision-Date: 2020-08-09 19:53+0200\n"
-"Last-Translator: Ladislav Rosival <lacoros@gmail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2020-10-06 12:26+0000\n"
+"Last-Translator: ro-la <lacoros@gmail.com>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
+"Menší prah môže zabrániť problémom s výkonom vo veľkých zoznamoch, ktoré sa "
+"môžu vyskytovať pri plochých hierarchiách miest."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:63
 msgid "Display details"
-msgstr ""
+msgstr "Zobraziť detaily"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:67
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
 msgstr ""
+"Nezobrazovať detaily (ako napr. lokalita a počet osôb) ak je pre dané miesto "
+"počet prvkov zoznamu väčší ako tento prah."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:29

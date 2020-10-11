@@ -8,9 +8,9 @@ use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Fact;
-use Fisharebest\Webtrees\Factory;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
@@ -19,6 +19,7 @@ use ReflectionClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
+use function intdiv;
 use function redirect;
 use function route;
 use function view;
@@ -49,7 +50,7 @@ class PedigreeMapChartController extends AbstractBaseController {
       $xref = $request->getAttribute('xref');
       assert(is_string($xref));
 
-      $individual  = Factory::individual()->make($xref, $tree);
+      $individual  = Registry::individualFactory()->make($xref, $tree);
       $individual  = Auth::checkIndividualAccess($individual);
 
       $user        = $request->getAttribute('user');

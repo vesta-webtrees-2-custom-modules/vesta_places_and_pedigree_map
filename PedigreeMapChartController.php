@@ -9,6 +9,7 @@ use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Http\Controllers\AbstractBaseController;
+use Fisharebest\Webtrees\Module\ModuleChartInterface;
 use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ChartService;
@@ -55,8 +56,9 @@ class PedigreeMapChartController extends AbstractBaseController {
 
       $user        = $request->getAttribute('user');
       $generations = (int) $request->getAttribute('generations');
+      
       //[RC] ref adjusted
-      Auth::checkComponentAccess($this->module, 'chart', $tree, $user);
+      Auth::checkComponentAccess($this->module, ModuleChartInterface::class, $tree, $user);
 
       // Convert POST requests into GET requests for pretty URLs.
       if ($request->getMethod() === RequestMethodInterface::METHOD_POST) {

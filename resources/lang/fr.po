@@ -8,56 +8,77 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-09-19 15:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-10-25 17:26+0000\n"
+"Last-Translator: Vincent DENIS <vincent.denis06@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:21
 #: PlacesAndPedigreeMapModuleTrait.php:27
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr ""
+"La hiérarchie des lieux. Indiquez également l'emplacement des événements et "
+"le lieu de naissance des ancêtres sur une carte. Remplacement des modules "
+"d'origine «Hiérarchie des lieux», «Lieux» et «Carte généalogique»."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:28
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr ""
+"Utilise les données de localisation de GEDCOM, ainsi que les données de "
+"localisation fournies par d'autres modules."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:29
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr ""
+"En particulier, vous devez activer le module '%1$s Vesta Webtrees Location "
+"Data Provider' si vous gérez vos données de localisation via Webtrees (en "
+"dehors du GEDCOM)."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:63
 msgid "Display details"
-msgstr ""
+msgstr "Afficher les détails"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:66
+#, fuzzy
 msgid "Threshold size"
-msgstr ""
+msgstr "Taille limite"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:67
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
 msgstr ""
+"N'affichez pas les détails (tels que l'emplacement et le nombre d'individus) "
+"si la taille de la liste (pour un lieu spécifique) est supérieure à ce seuil."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:68
+#, fuzzy
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
+"Un paramètre de seuil plus petit évite les problèmes de performances dans "
+"les grandes listes, qui peuvent être rencontrés dans les hiérarchies "
+"d'espace plat."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:95
 msgid "Place hierarchy list"
-msgstr ""
+msgstr "Liste des lieux (hiérarchie)"
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
 msgstr ""
+"Vesta Places and Pedigree map : fournit désormais également un remplacement "
+"pour la liste de la hiérarchie des lieux, afin d'afficher des données de "
+"localisation supplémentaires."

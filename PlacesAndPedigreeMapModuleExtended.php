@@ -6,10 +6,10 @@ use Aura\Router\RouterContainer;
 use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
 use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
 use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
+use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
 use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
-use Fisharebest\Webtrees\Http\Controllers\Admin\ModuleController;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
@@ -26,21 +26,18 @@ use Fisharebest\Webtrees\Module\PlaceHierarchyListModule;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Services\SearchService;
-use Fisharebest\Webtrees\Services\TreeService;
 use Fisharebest\Webtrees\Statistics;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use ReflectionObject;
 use Vesta\CommonI18N;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
 use function app;
-use function redirect;
 use function route;
 use function view;
 
@@ -250,7 +247,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
   
   //hook management - generalize?
   //adapted from ModuleController (e.g. listFooters)
-  public function getProvidersAction(): ResponseInterface {
+  public function getFunctionsPlaceProvidersAction(): ResponseInterface {
     $modules = FunctionsPlaceUtils::modules($this, true);
 
     $controller = new VestaAdminController($this->name());
@@ -262,35 +259,10 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                     true,
                     true);
   }
-
-  public function postProvidersAction(ServerRequestInterface $request): ResponseInterface {
-    $modules = FunctionsPlaceUtils::modules($this, true);
-
-    $controller1 = new ModuleController($this->module_service, app(TreeService::class));
-    $reflector = new ReflectionObject($controller1);
-
-    //private!
-    //$controller1->updateStatus($modules, $request);
-
-    $method = $reflector->getMethod('updateStatus');
-    $method->setAccessible(true);
-    $method->invoke($controller1, $modules, $request);
-
-    FunctionsPlaceUtils::updateOrder($this, $request);
-
-    //private!
-    //$controller1->updateAccessLevel($modules, FunctionsPlaceInterface::class, $request);
-
-    $method = $reflector->getMethod('updateAccessLevel');
-    $method->setAccessible(true);
-    $method->invoke($controller1, $modules, FunctionsPlaceInterface::class, $request);
-
-    $url = route('module', [
-        'module' => $this->name(),
-        'action' => 'Providers'
-    ]);
-
-    return redirect($url);
+  
+  public function postFunctionsPlaceProvidersAction(ServerRequestInterface $request): ResponseInterface {
+    $controller = new FunctionsPlaceProvidersAction($this);
+    return $controller->handle($request);
   }
 
   protected function editConfigBeforeFaq() {
@@ -298,7 +270,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
     $url = route('module', [
         'module' => $this->name(),
-        'action' => 'Providers'
+        'action' => 'FunctionsPlaceProviders'
     ]);
 
     //cf control-panel.phtml

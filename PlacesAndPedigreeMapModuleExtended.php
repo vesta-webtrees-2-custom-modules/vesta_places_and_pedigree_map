@@ -225,7 +225,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     $detailsThreshold = intval($this->getPreference('DETAILS_THRESHOLD', 100));        
             
     $controller = new GenericPlaceHierarchyController(
-            new PlaceHierarchyUtilsImpl($this, $participants, $searchService, $statistics),
+            new PlaceHierarchyUtilsImpl(
+                    $this, 
+                    $participants, 
+                    $searchService, 
+                    $statistics),
+            
             $detailsThreshold);
 
     return $controller->show($request);

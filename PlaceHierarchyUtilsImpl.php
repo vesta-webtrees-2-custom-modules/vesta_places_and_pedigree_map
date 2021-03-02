@@ -2,6 +2,7 @@
 
 namespace Cissee\Webtrees\Module\PPM;
 
+use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
 use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyUtils;
 use Cissee\WebtreesExt\Http\Controllers\PlaceUrls;
 use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
@@ -59,16 +60,22 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
     $first = null;
     $others = [];
     $otherParticipants = [];    
+    
     foreach ($this->participants as $participant) {
-      $pwh = $participant->findPlace($id, $tree, $urls);
+      
+      /** @var PlaceHierarchyParticipant $participant */ 
       
       $parameterName = $participant->filterParameterName();
       $parameterValue = -1;
       if (array_key_exists($parameterName, $participantFilters)) {
         $parameterValue = intVal($participantFilters[$parameterName]);
       }
+
+      $asFirst = ($parameterValue === 1) && ($first === null);
       
-      if (($parameterValue === 1) && ($first === null)) {
+      $pwh = $participant->findPlace($id, $tree, $urls, !$asFirst);
+      
+      if ($asFirst) {
         //no need to load non-specific!
         $first = $pwh;          
         //and no need to keep track of this participant
@@ -80,7 +87,12 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
     
     if ($first === null) {
       $actual = Place::find($id, $tree);
-      $first = new VestaPlaceWithinHierarchy($actual, $urls, $this->search_service, $this->statistics, $this->module);
+      $first = new VestaPlaceWithinHierarchy(
+              $actual, 
+              $urls, 
+              $this->search_service, 
+              $this->statistics, 
+              $this->module);
     }
     
     return new PlaceWithinHierarchyViaParticipants(

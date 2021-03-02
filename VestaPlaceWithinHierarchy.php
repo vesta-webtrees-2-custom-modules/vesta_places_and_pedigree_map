@@ -82,7 +82,12 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
     $ret = $this
             ->getChildPlacesCacheIds($this->actual)
             ->mapWithKeys(static function (Place $place) use ($self): array {
-              return [$place->id() => new VestaPlaceWithinHierarchy($place, $self->urls, $self->search_service, $self->statistics, $self->module)];
+              return [$place->id() => new VestaPlaceWithinHierarchy(
+                      $place, 
+                      $self->urls, 
+                      $self->search_service, 
+                      $self->statistics, 
+                      $self->module)];
             })
             ->toArray();
     

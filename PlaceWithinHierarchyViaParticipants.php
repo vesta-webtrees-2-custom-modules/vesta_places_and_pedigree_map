@@ -194,7 +194,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     return $this->latLon;
   }
   
-  public function latitude(): float {
+  public function latitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $lati = null;
@@ -202,14 +202,14 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
       $lati = $this->getLatLon()->getLati();
     }
     if ($lati === null) {
-      return 0.0;
+      return null;
     }
     
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLatitude($lati);
   }
   
-  public function longitude(): float {
+  public function longitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $long = null;
@@ -217,7 +217,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
       $long = $this->getLatLon()->getLong();
     }
     if ($long === null) {
-      return 0.0;
+      return null;
     }
     
     $gedcom_service = new GedcomService();
@@ -232,18 +232,18 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     $latitudes = [];
     $longitudes = [];
 
-    if ($this->latitude() !== 0.0) {
+    if ($this->latitude() !== null) {
       $latitudes[] = $this->latitude();
     }
-    if ($this->longitude() !== 0.0) {
+    if ($this->longitude() !== null) {
       $longitudes[] = $this->longitude();
     }
 
     foreach ($children as $child) { 
-      if ($child->latitude() !== 0.0) {
+      if ($child->latitude() !== null) {
         $latitudes[] = $child->latitude();
       }
-      if ($child->longitude() !== 0.0) {
+      if ($child->longitude() !== null) {
         $longitudes[] = $child->longitude();
       }
     }

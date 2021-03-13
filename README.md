@@ -27,8 +27,8 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 
 ### Download<a name="download"/>
 
-* Current version: 2.0.11.4.0
-* Based on and tested with webtrees 2.0.11. Requires webtrees 2.0.9 or later.
+* Current version: 2.0.12.0.0
+* Based on and tested with webtrees 2.0.12. Requires webtrees 2.0.12 or later.
 * Requires the ⚶ Vesta Common module ('vesta_common').
 * Download the zipped module, including all related modules, [here](https://cissee.de/vesta.latest.zip).
 * Support, suggestions, feature requests: <ric@richard-cissee.de>
@@ -38,7 +38,7 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 ### Installation
 
 * Unzip the files and copy the contents of the modules_v4 folder to the respective folder of your webtrees installation. All related modules are included in the zip file. It's safe to overwrite the respective directories if they already exist (they are bundled with other custom modules as well), as long as other custom models using these dependencies are also upgraded to their respective latest versions.
-* Enable the main module via Control Panel -> Modules -> All modules -> ⚶ OpenStreetMap.
+* Enable the main module via Control Panel -> Modules -> All modules -> ⚶ Vesta Places and Pedigree map.
 
 ### License<a name="license"/>
 

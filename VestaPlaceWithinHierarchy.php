@@ -47,7 +47,7 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
     return $this->latLon;
   }
   
-  public function latitude(): float {
+  public function latitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $lati = null;
@@ -55,14 +55,14 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
       $lati = $this->getLatLon()->getLati();
     }
     if ($lati === null) {
-      return 0.0;
+      return null;
     }
     
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLatitude($lati);
   }
   
-  public function longitude(): float {
+  public function longitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
     
     $long = null;
@@ -70,7 +70,7 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
       $long = $this->getLatLon()->getLong();
     }
     if ($long === null) {
-      return 0.0;
+      return null;
     }
     
     $gedcom_service = new GedcomService();

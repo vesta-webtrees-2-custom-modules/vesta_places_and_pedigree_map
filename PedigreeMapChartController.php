@@ -151,12 +151,12 @@ class PedigreeMapChartController extends AbstractBaseController {
           $longitude = $fact->longitude();
 
           // Use the co-ordinates from the location otherwise.
-          if ($latitude === 0.0 && $longitude === 0.0) {
+          if ($latitude === null && $longitude === null) {
               $latitude  = $location->latitude();
               $longitude = $location->longitude();
           }
 
-          if ($latitude !== 0.0 || $longitude !== 0.0) {
+          if ($latitude !== null || $longitude !== null) {
           */ 
         
           //[RC] adjusted

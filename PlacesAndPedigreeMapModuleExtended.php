@@ -7,6 +7,8 @@ use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
 use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
 use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
 use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
+use Cissee\WebtreesExt\Module\ModuleMetaInterface;
+use Cissee\WebtreesExt\Module\ModuleMetaTrait;
 use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Auth;
@@ -44,6 +46,7 @@ use function view;
 //must extend PlaceHierarchyListModule in order to handle urls of standard places via $place->url()
 class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implements 
   ModuleCustomInterface, 
+  ModuleMetaInterface, 
   ModuleConfigInterface,
   ModuleTabInterface, 
   ModuleChartInterface,
@@ -51,13 +54,13 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
   ModulePlaceHierarchyInterface,
   RequestHandlerInterface {
 
-  use ModuleCustomTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait, ModuleListTrait {
+  use ModuleCustomTrait, ModuleMetaTrait, ModuleConfigTrait, ModuleTabTrait, ModuleChartTrait, VestaModuleTrait, ModuleListTrait {
     VestaModuleTrait::customTranslations insteadof ModuleCustomTrait;
-    VestaModuleTrait::customModuleLatestVersion insteadof ModuleCustomTrait;
     VestaModuleTrait::getAssetAction insteadof ModuleCustomTrait;
-    VestaModuleTrait::assetUrl insteadof ModuleCustomTrait;
-    
+    VestaModuleTrait::assetUrl insteadof ModuleCustomTrait;    
     VestaModuleTrait::getConfigLink insteadof ModuleConfigTrait;
+    ModuleMetaTrait::customModuleVersion insteadof ModuleCustomTrait;
+    ModuleMetaTrait::customModuleLatestVersion insteadof ModuleCustomTrait;
   }
   
   use PlacesAndPedigreeMapModuleTrait;
@@ -83,12 +86,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     return 'Richard Cissée';
   }
 
-  public function customModuleVersion(): string {
-    return file_get_contents(__DIR__ . '/latest-version.txt');
-  }
-
-  public function customModuleLatestVersionUrl(): string {
-    return 'https://raw.githubusercontent.com/vesta-webtrees-2-custom-modules/vesta_places_and_pedigree_map/master/latest-version.txt';
+  public function customModuleMetaDatasJson(): string {
+    return file_get_contents(__DIR__ . '/metadata.json');
+  } 
+  
+  public function customModuleLatestMetaDatasJsonUrl(): string {
+    return 'https://raw.githubusercontent.com/vesta-webtrees-2-custom-modules/vesta_places_and_pedigree_map/master/metadata.json';
   }
 
   public function customModuleSupportUrl(): string {

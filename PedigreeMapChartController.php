@@ -75,9 +75,9 @@ class PedigreeMapChartController extends AbstractBaseController {
       $map = view('modules/pedigree-map/chart', [
           'data'     => $this->getMapData($request),
           'provider' => [
-              'url'    => 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              'options' => [
-                  'attribution' => '<a href="https://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
+                    'url' => 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+                    'options' => [ 
+                    'attribution' => 'Tile style - from the <a href="https://www.hotosm.org">Humanitarian OpenStreetMap Team </a>, hosting - from <a href="https://openstreetmap.fr">OSM France</a>', 
                   'max_zoom'    => 19
               ]
           ]

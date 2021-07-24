@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2020-09-19 15:42+0200\n"
-"PO-Revision-Date: 2021-07-21 03:32+0000\n"
+"PO-Revision-Date: 2021-07-24 09:48+0000\n"
 "Last-Translator: ngohuuthuanfc9865b89dde4baf <ngohuuthuan@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/vi/>\n"
@@ -66,7 +66,7 @@ msgstr ""
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
 "Cài đặt ngưỡng nhỏ hơn ngăn chặn các vấn đề về hiệu suất trong danh sách "
-"lớn, có thể gặp phải trong phân cấp vị trí ngang hàng."
+"lớn, có thể gặp phải trong phân cấp vị trí bằng phẳng."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:95

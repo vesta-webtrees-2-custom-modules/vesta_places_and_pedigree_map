@@ -49,5 +49,9 @@ if (!$ok) {
   return;
 }
 
-return app(PlacesAndPedigreeMapModuleExtended::class);
+if (str_starts_with(Webtrees::VERSION, '2.1')) {
+    return app(PlacesAndPedigreeMapModuleExtended::class);
+}
+
+return app(PlacesAndPedigreeMapModuleExtended_20::class);
 

@@ -2,16 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the vesta package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2020-09-19 15:42+0200\n"
+"POT-Creation-Date: 2022-04-03 20:23+0200\n"
 "PO-Revision-Date: 2021-01-18 21:32+0000\n"
 "Last-Translator: Josef Prause <josef.prause@gmail.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/"
-"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/cs/>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,9 +21,7 @@ msgstr ""
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
-msgstr ""
-"Nastavení nižšího prahu brání problémům s výkonem u velkých seznamů, které "
-"se mohou vyskytnout u mělkých hierarchií."
+msgstr "Nastavení nižšího prahu brání problémům s výkonem u velkých seznamů, které se mohou vyskytnout u mělkých hierarchií."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:63
@@ -34,9 +31,7 @@ msgstr "Zobrazit podrobnosti"
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:67
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
-msgstr ""
-"Nezobrazovat podrobnosti (jako jsou poloha a počet osob), jestliže je "
-"velikost seznamu (pro určité místo) větší než tento práh."
+msgstr "Nezobrazovat podrobnosti (jako jsou poloha a počet osob), jestliže je velikost seznamu (pro určité místo) větší než tento práh."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:29
@@ -63,15 +58,11 @@ msgstr "Velikost prahu"
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:28
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
-msgstr ""
-"Používá údaje o poloze z GEDCOMu a údaje o poloze poskytnuté ostatními "
-"moduly."
+msgstr "Používá údaje o poloze z GEDCOMu a údaje o poloze poskytnuté ostatními moduly."
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
-"Vesta Mapa míst a předků: nyní také poskytuje náhradu za seznam Hierarchie "
-"míst za účelem zobrazení dodatečných údajů o poloze."
+msgstr "Vesta Mapa míst a předků: nyní také poskytuje náhradu za seznam Hierarchie míst za účelem zobrazení dodatečných údajů o poloze."
 
 #~ msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
 #~ msgstr "Potlačit, aby položka v menu Diagramy vypadala stejně jako v původním menu."

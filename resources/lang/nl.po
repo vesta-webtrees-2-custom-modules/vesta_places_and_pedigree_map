@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2020-09-19 15:42+0200\n"
+"POT-Creation-Date: 2022-04-03 20:23+0200\n"
 "PO-Revision-Date: 2021-10-23 09:03+0000\n"
 "Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/"
-"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/nl/>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,11 +48,7 @@ msgstr "Plaatshiërarchielijst"
 #: PlacesAndPedigreeMapModuleTrait.php:21
 #: PlacesAndPedigreeMapModuleTrait.php:27
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
-msgstr ""
-"De plaatshiërarchie. Toon ook de locatie van de gebeurtenissen en de "
-"geboorteplaats van voorouders op een kaart. Vervanging voor de "
-"oorspronkelijke modules 'Plaatshiërarchie', 'Plaatsen' en 'Grafische "
-"kwartierstaat'."
+msgstr "De plaatshiërarchie. Toon ook de locatie van de gebeurtenissen en de geboorteplaats van voorouders op een kaart. Vervanging voor de oorspronkelijke modules 'Plaatshiërarchie', 'Plaatsen' en 'Grafische kwartierstaat'."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:66
@@ -67,9 +62,7 @@ msgstr "Maakt gebruik van locatiegegevens van GEDCOM en van locatiegegevens van 
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
-"Vesta Plaatsen en Grafische kwartierstaat: Biedt nu ook een vervanging voor "
-"de plaatshiërarchielijst, om aanvullende locatiegegevens weer te geven."
+msgstr "Vesta Plaatsen en Grafische kwartierstaat: Biedt nu ook een vervanging voor de plaatshiërarchielijst, om aanvullende locatiegegevens weer te geven."
 
 #~ msgid "Deselect in order to have the chart menu entry appear exactly as the original chart menu entry."
 #~ msgstr "Schakel de selectie uit om in het Diagrammen-menu de oorspronkelijke naam te blijven gebruiken."

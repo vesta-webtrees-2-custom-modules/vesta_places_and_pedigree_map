@@ -1,0 +1,88 @@
+<?php
+
+use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyUtils;
+use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
+use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Webtrees\Place;
+use Fisharebest\Webtrees\Tree;
+
+//cf modules/place-hierarchy/page
+
+/**
+ * //[RC] additional
+ * @var PlaceHierarchyUtils $utils
+ * @var array               $urlFilters
+ * 
+ * @var string       $alt_link
+ * @var string       $alt_url
+ * 
+ * //[RC] type adjusted
+ * @var array<PlaceWithinHierarchy> $breadcrumbs
+ * 
+ * @var string       $content
+ * @var Place|null   $current
+ * @var string       $events_link
+ * @var Place        $place
+ * @var string       $title
+ * @var Tree         $tree
+ * @var string       $world_url
+ */
+
+?>
+
+<div id="place-hierarchy">
+    <div class="container">
+        <h4><?= $title ?></h4>
+        <?php if ($current instanceof PlaceWithinHierarchy) : ?>
+          <?php foreach ($current->links() as $links) : ?>
+            <div class="row">
+              <legend class="col-form-label col-sm-3 wt-page-options-label">
+                <?php if ($links->label() !== null) : ?>
+                  <?= $links->label() ?>
+                <?php endif ?>  
+              </legend>
+              <div class="col-sm-9 wt-page-options-value">
+                <div class="form-check-inline">
+                  <?php foreach ($links->links() as $link) : ?>
+                    <div>
+                      <?php if ($link->icon() !== null) : ?>
+                        <?= view($link->icon()) ?>
+                      <?php endif ?>  
+                      <?= $link->format() ?>
+                      &nbsp; <?php //TODO better formatting ?>  
+                    </div>
+                  <?php endforeach ?>
+                </div>
+              </div> 
+            </div>    
+          <?php endforeach ?>
+        <?php endif ?>
+        <h4>&nbsp;</h4> <?php //TODO better formatting ?>  
+        <h5 class="text-center">
+            <?php foreach ($breadcrumbs as $item) : ?>
+                <?= $item->additionalLinksHtmlBeforeName() ?>
+                <a href="<?= e($item->url()) ?>" dir="auto"><?= ($item->gedcomName() !== '')?$item->placeName():MoreI18N::xlate('World') ?></a>
+                - 
+            <?php endforeach ?>
+
+            <?= $current->additionalLinksHtmlBeforeName() ?>
+            <?= ($current->gedcomName() !== '')?$current->placeName():MoreI18N::xlate('World') ?>
+        </h5>
+
+        <?= $content ?>
+
+        <div class="text-center">
+            <?php if ($events_link !== '') : ?>
+                <a class="formField" href= <?= e($events_link) ?>>
+                    <?= MoreI18N::xlate('View table of events occurring in %s', $place->fullName()) ?>
+                </a>
+                |
+            <?php endif ?>
+
+            <a href="<?= e($alt_url) ?>">
+                <?= $alt_link ?>
+            </a>
+        </div>
+    </div>
+</div>
+

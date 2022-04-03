@@ -9,7 +9,6 @@ use Fisharebest\Webtrees\Module\ModuleInterface;
 use Fisharebest\Webtrees\Place;
 use Fisharebest\Webtrees\Services\GedcomService;
 use Fisharebest\Webtrees\Services\SearchService;
-use Fisharebest\Webtrees\Statistics;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 
@@ -23,10 +22,9 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
           Place $actual,
           PlaceUrls $urls,
           SearchService $search_service, 
-          Statistics $statistics,
           ModuleInterface $module) {
     
-    parent::__construct($actual, $urls, $search_service, $statistics);
+    parent::__construct($actual, $urls, $search_service);
     $this->module = $module;
   }
 
@@ -86,7 +84,6 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
                       $place, 
                       $self->urls, 
                       $self->search_service, 
-                      $self->statistics, 
                       $self->module)];
             })
             ->toArray();

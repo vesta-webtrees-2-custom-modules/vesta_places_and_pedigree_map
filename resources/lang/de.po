@@ -2,16 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the vesta package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2020-09-19 15:42+0200\n"
+"POT-Creation-Date: 2022-04-03 20:23+0200\n"
 "PO-Revision-Date: 2021-01-31 09:41+0000\n"
 "Last-Translator: Bernd Schwendinger <b0ernie@gmx.net>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/"
-"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/de/>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,29 +19,9 @@ msgstr ""
 "X-Generator: Weblate 4.5-dev\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:21
-#: PlacesAndPedigreeMapModuleTrait.php:27
-msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
-msgstr ""
-"Die Ortshierarchie. Zeigt auch die Lage von Ereignissen und den Geburtsort "
-"von Vorfahren auf einer Karte an. Ersatz für die ursprünglichen Module "
-"'Ortshierarchie', 'Orte' und 'Herkunftskarte'."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:28
-msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
-msgstr ""
-"Verwendet Standortdaten aus GEDCOM sowie Standortdaten, die von anderen "
-"Modulen bereitgestellt werden."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:29
-#, php-format
-msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
-msgstr ""
-"Insbesondere solltest Du das Modul '%1$s Vesta Webtrees Location Data "
-"Provider' aktivieren, wenn Du Standortdaten über Webtrees (außerhalb von "
-"GEDCOM) verwaltest."
+#: PlacesAndPedigreeMapModuleTrait.php:68
+msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
+msgstr "Eine kleinere Schwellenwerteinstellung verhindert Performance-Probleme bei großen Listen, wie sie bei flachen Platzhierarchien auftreten können."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:63
@@ -50,31 +29,37 @@ msgid "Display details"
 msgstr "Details anzeigen"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:66
-msgid "Threshold size"
-msgstr "Schwellenwertgröße"
-
-#. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:67
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
-msgstr ""
-"Details (wie Ort und Anzahl der Personen) nicht anzeigen, wenn die "
-"Listengröße (für einen bestimmten Ort) größer als dieser Schwellenwert ist."
+msgstr "Details (wie Ort und Anzahl der Personen) nicht anzeigen, wenn die Listengröße (für einen bestimmten Ort) größer als dieser Schwellenwert ist."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:68
-msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
-msgstr ""
-"Eine kleinere Schwellenwerteinstellung verhindert Performance-Probleme bei "
-"großen Listen, wie sie bei flachen Platzhierarchien auftreten können."
+#: PlacesAndPedigreeMapModuleTrait.php:29
+#, php-format
+msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
+msgstr "Insbesondere solltest Du das Modul '%1$s Vesta Webtrees Location Data Provider' aktivieren, wenn Du Standortdaten über Webtrees (außerhalb von GEDCOM) verwaltest."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:95
 msgid "Place hierarchy list"
 msgstr "Ortshierachie-Liste"
 
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:21
+#: PlacesAndPedigreeMapModuleTrait.php:27
+msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
+msgstr "Die Ortshierarchie. Zeigt auch die Lage von Ereignissen und den Geburtsort von Vorfahren auf einer Karte an. Ersatz für die ursprünglichen Module 'Ortshierarchie', 'Orte' und 'Herkunftskarte'."
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:66
+msgid "Threshold size"
+msgstr "Schwellenwertgröße"
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:28
+msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
+msgstr "Verwendet Standortdaten aus GEDCOM sowie Standortdaten, die von anderen Modulen bereitgestellt werden."
+
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
-"Vesta Orts- und Herkunftskarte: Stellt jetzt auch einen Ersatz für die "
-"Ortshierarchie-Liste zur Verfügung, um zusätzliche Ortsdaten anzuzeigen."
+msgstr "Vesta Orts- und Herkunftskarte: Stellt jetzt auch einen Ersatz für die Ortshierarchie-Liste zur Verfügung, um zusätzliche Ortsdaten anzuzeigen."

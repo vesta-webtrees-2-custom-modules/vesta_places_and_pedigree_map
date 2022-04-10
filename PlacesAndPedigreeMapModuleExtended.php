@@ -5,13 +5,11 @@ namespace Cissee\Webtrees\Module\PPM;
 use Aura\Router\RouterContainer;
 use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
 use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
-use Cissee\WebtreesExt\Http\Controllers\PlaceHierarchyParticipant;
 use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
 use Cissee\WebtreesExt\Module\ModuleMetaInterface;
 use Cissee\WebtreesExt\Module\ModuleMetaTrait;
 use Cissee\WebtreesExt\MoreI18N;
 use Fig\Http\Message\RequestMethodInterface;
-use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Menu;
 use Fisharebest\Webtrees\Module\ModuleChartInterface;
@@ -25,12 +23,12 @@ use Fisharebest\Webtrees\Module\ModuleListTrait;
 use Fisharebest\Webtrees\Module\ModuleTabInterface;
 use Fisharebest\Webtrees\Module\ModuleTabTrait;
 use Fisharebest\Webtrees\Module\PlaceHierarchyListModule;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Services\LeafletJsService;
 use Fisharebest\Webtrees\Services\ModuleService;
 use Fisharebest\Webtrees\Services\SearchService;
 use Fisharebest\Webtrees\Tree;
-use Fisharebest\Webtrees\Validator;
 use Fisharebest\Webtrees\View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -72,8 +70,13 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
     use PlacesAndPedigreeMapModuleTrait;
 
+    //chart
     protected const ROUTE_URL = '/tree/{tree}/vesta-pedigree-map-{generations}/{xref}';
     
+    //list
+    protected const ROUTE_URL_LIST = '/tree/{tree}/vesta-place-list';
+
+        
     // Defaults
     public const DEFAULT_GENERATIONS = '4';
     public const DEFAULT_PARAMETERS = [
@@ -154,6 +157,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         $router_container = app(RouterContainer::class);
         assert($router_container instanceof RouterContainer);
 
+        //chart
         $router_container->getMap()
             ->get(static::class, static::ROUTE_URL, $this)
             ->allows(RequestMethodInterface::METHOD_POST)
@@ -161,11 +165,20 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                 'generations' => '\d+',
         ]);
 
+        //list
+        $controller = new GenericPlaceHierarchyController($this);
+        
+        Registry::routeFactory()->routeMap()
+            ->get(GenericPlaceHierarchyController::class, static::ROUTE_URL_LIST, $controller);
+        
         //for GenericPlaceHierarchyController
         View::registerCustomView('::modules/generic-place-hierarchy/place-hierarchy', $this->name() . '::modules/generic-place-hierarchy/place-hierarchy');
+        View::registerCustomView('::modules/generic-place-hierarchy/events', $this->name() . '::modules/generic-place-hierarchy/events');
         View::registerCustomView('::modules/generic-place-hierarchy/list', $this->name() . '::modules/generic-place-hierarchy/list');
         View::registerCustomView('::modules/generic-place-hierarchy/page', $this->name() . '::modules/generic-place-hierarchy/page');
         View::registerCustomView('::modules/generic-place-hierarchy/sidebar', $this->name() . '::modules/generic-place-hierarchy/sidebar');
+        
+        View::registerCustomView('::lists/place-history', $this->name() . '::lists/place-history');
 
         $this->flashWhatsNew('\Cissee\Webtrees\Module\PPM\WhatsNew', 1);
     }
@@ -223,32 +236,34 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         return 'menu-list-plac';
     }
 
+    //obsolete, we're using a custom url now!
+    /*
     //cf PlaceHierarchyListModule::handle
-    public function getListAction(ServerRequestInterface $request): ResponseInterface {
-        $tree = Validator::attributes($request)->tree();
-        $user = Validator::attributes($request)->user();
-
-        Auth::checkComponentAccess($this, ModuleListInterface::class, $tree, $user);
-
-        $searchService = app(SearchService::class);
-        $participants = app(ModuleService::class)
-            ->findByComponent(PlaceHierarchyParticipant::class, $tree, Auth::user())
-            ->filter(function (PlaceHierarchyParticipant $php) use ($tree): bool {
-            return $php->participates($tree);
-        });
-
-        $detailsThreshold = intval($this->getPreference('DETAILS_THRESHOLD', 100));
+    public function getListAction(ServerRequestInterface $request): ResponseInterface {        
 
         $controller = new GenericPlaceHierarchyController(
-            new PlaceHierarchyUtilsImpl(
-                $this,
-                $participants,
-                $searchService),
-            $detailsThreshold);
+            $this);
 
-        return $controller->show($request);
+        return $controller->handle($request);
     }
+    */
 
+    public function listUrl(Tree $tree, array $parameters = []): string
+    {
+        //obsolete, we're using a custom url now!
+        /*
+        return route('module', [
+                'module' => $this->name(),
+                'action' => 'List',
+                'tree'    => $tree->name(),
+        ] + $parameters);
+        */
+        
+        $parameters['tree'] = $tree->name();
+        
+        return route(GenericPlaceHierarchyController::class, $parameters);
+    }
+    
     public function listUrlAttributes(): array {
         return [];
     }

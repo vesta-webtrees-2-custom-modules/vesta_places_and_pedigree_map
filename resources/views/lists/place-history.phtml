@@ -1,0 +1,100 @@
+<?php
+
+declare(strict_types=1);
+
+use Cissee\WebtreesExt\MoreI18N;
+use Fisharebest\Webtrees\Fact;
+use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Tree;
+use Fisharebest\Webtrees\View;
+use Illuminate\Support\Collection;
+use Vesta\Model\FactFilter;
+//use Ramsey\Uuid\Uuid;
+
+/**
+ * @var ?GedcomRecord              $record
+ * @var Collection<int,Individual> $individuals
+ * @var FactFilter                 $factFilter
+ * @var Tree                       $tree
+ */
+
+// lists requires a unique ID in case there are multiple lists per page
+//$table_id = 'place-history-' . Uuid::uuid4()->toString();
+
+if ($record === null) {
+    $dummy = Registry::individualFactory()->new('', '0 @@ INDI', null, $tree);
+    $record = $dummy;
+}
+
+//TODO: use own fact view (generalize first), add classes per-type there for persistent toggle
+
+//TODO: make configurable
+//TEMP ONLY
+$filter = [
+    'BIRT' => 'BIRT',
+    'CHR' => 'CHR'];
+
+$facts = $individuals
+    ->flatMap(function ($individual) use ($filter, $factFilter): Collection {
+        $individual_facts = $individual
+            ->facts($filter)
+            ->filter(function (Fact $fact) use ($factFilter) : bool {
+                return $factFilter->filter($fact);
+            });
+        
+        return $individual_facts;
+    });
+
+$facts = Fact::sortFacts($facts);
+
+?>
+
+<div class="wt-facts-tab py-4">
+    <table class="table wt-facts-table">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <?php if (array_key_exists('BIRT', $filter)) : ?>
+                        <label>
+                            <input id="show-births-in-place-history" type="checkbox" data-bs-toggle="collapse" data-bs-target=".wt-show-births-in-place-history" data-wt-persist="show-births-in-place-history">
+                            <?= MoreI18N::xlate('Births') ?>
+                        </label>
+                    <?php endif ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table wt-facts-table">
+        <tbody>
+            <?php foreach ($facts as $fact) : ?>
+                <?= view('fact', ['fact' => $fact, 'record' => $record]) ?>
+            <?php endforeach ?>
+
+            <?php if ($facts->isEmpty()) : ?>
+                <tr>
+                    <td colspan="2">
+                        <?= I18N::translate('No events of these specific types have occurred at this place.') ?>
+                    </td>
+                </tr>
+            <?php endif ?>
+        </tbody>
+    </table>
+</div>
+
+
+<?php View::push('javascript') ?>
+<script>
+  'use strict';
+
+    <?php
+        //note: webtrees registers other persistentToggles via webtrees.js itself, 
+        //not sure why we have register explicitly here - this isn't loaded via ajax!
+        //it is execute BEFORE persistentToggle via webtrees.js!
+        //but if we don't do this, checkbox isn't checked reliably - sometimes ...
+    ?>
+    document.querySelectorAll('[data-wt-persist]')
+        .forEach((element) => {webtrees.persistentToggle(element);});
+</script>
+<?php View::endpush() ?>

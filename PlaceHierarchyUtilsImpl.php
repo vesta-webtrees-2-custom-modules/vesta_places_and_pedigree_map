@@ -112,6 +112,10 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
         return 'modules/generic-place-hierarchy/place-hierarchy';
     }
 
+    public function eventsView(): string {
+        return 'modules/generic-place-hierarchy/events';
+    }
+    
     public function listView(): string {
         return 'modules/generic-place-hierarchy/list';
     }

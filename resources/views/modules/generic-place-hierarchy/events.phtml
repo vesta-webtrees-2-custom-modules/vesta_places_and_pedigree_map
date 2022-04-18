@@ -1,10 +1,13 @@
 <?php
 
+use Cissee\WebtreesExt\Module\ModuleVestalInterface;
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Fact;
-use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
+use Vesta\CommonI18N;
 use Vesta\Model\FactFilter;
+use Vesta\VestaUtils;
 
 /**
  * @var Collection<int,Family>     $famlist
@@ -13,6 +16,9 @@ use Vesta\Model\FactFilter;
  * 
  * //[RC] added
  * @var string                     $placename
+ * @var ModuleVestalInterface      $module
+ * 
+ * //$module must also provide getHelpAction for 'Predecessor'!
  */
 
 $factFilter = new class($placename) implements FactFilter {
@@ -44,13 +50,11 @@ $factFilter = new class($placename) implements FactFilter {
             <?= view('components/badge', ['count' => count($famlist)]) ?>
         </a>
     </li>
-    <?php if (false) : ?>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" data-bs-toggle="tab" role="tab" href="#placeHistory">
-                <?= I18N::translate('Place history') ?>
-            </a>
-        </li>
-    <?php endif ?>  
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" data-bs-toggle="tab" role="tab" href="#placeHistory">
+            <?= CommonI18N::placeHistory() ?>
+        </a>
+    </li>
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade show active" role="tabpanel" id="individuals">
@@ -73,13 +77,21 @@ $factFilter = new class($placename) implements FactFilter {
         <?php endif ?>
     </div>
     
-    <?php if (false) : ?>
-        <div class="tab-pane fade" role="tabpanel" id="placeHistory">
-            <?= view('lists/place-history', [
-                'individuals' => $indilist, 
-                'record' => null, 
-                'factFilter' => $factFilter,
-                'tree' => $tree]) ?>
-        </div>
-    <?php endif ?>
+    <div class="tab-pane fade" role="tabpanel" id="placeHistory">
+        <?php
+        //create a_LOC record as reference so ResearchSuggestions can use it!
+        ?>
+        <?= view(VestaUtils::vestaViewsNamespace() . '::lists/place-history', [
+            'individuals' => $indilist,             
+            'record' => Registry::locationFactory()->new('', '0 @@ _LOC\n1 PLAC ' . $placename, null, $tree), 
+            'factFilter' => $factFilter,
+            'tree' => $tree,
+            'context' => 'ppm',
+            'module' => $module]) ?>
+    </div>
 </div>
+
+<?php
+//for help link (in place-history)
+?>
+<?= view('modals/ajax') ?>

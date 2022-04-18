@@ -8,7 +8,10 @@ use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
 use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
 use Cissee\WebtreesExt\Module\ModuleMetaInterface;
 use Cissee\WebtreesExt\Module\ModuleMetaTrait;
+use Cissee\WebtreesExt\Module\ModuleVestalInterface;
+use Cissee\WebtreesExt\Module\ModuleVestalTrait;
 use Cissee\WebtreesExt\MoreI18N;
+use Cissee\WebtreesExt\Requests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Menu;
@@ -34,11 +37,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Vesta\CommonI18N;
+use Vesta\HelpTextsPlaceHistory;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
 use function app;
+use function response;
 use function route;
 use function view;
 
@@ -51,6 +56,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     ModuleChartInterface, 
     ModuleListInterface, 
     ModulePlaceHierarchyInterface, 
+    ModuleVestalInterface,
     RequestHandlerInterface {
 
     use ModuleCustomTrait,
@@ -59,6 +65,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         ModuleTabTrait,
         ModuleChartTrait,
         VestaModuleTrait,
+        ModuleVestalTrait,
         ModuleListTrait {
         VestaModuleTrait::customTranslations insteadof ModuleCustomTrait;
         VestaModuleTrait::getAssetAction insteadof ModuleCustomTrait;
@@ -330,4 +337,8 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         <?php
     }
 
+    public function getHelpAction(ServerRequestInterface $request): ResponseInterface {
+        $topic = Requests::getString($request, 'topic');
+        return response(HelpTextsPlaceHistory::helpText($topic));
+    }
 }

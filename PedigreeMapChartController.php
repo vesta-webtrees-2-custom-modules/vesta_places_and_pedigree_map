@@ -14,6 +14,7 @@ use Fisharebest\Webtrees\Module\PedigreeMapModule;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Services\LeafletJsService;
+use Fisharebest\Webtrees\Services\RelationshipService;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,20 +35,22 @@ class PedigreeMapChartController {
     
     // Limits
     public const MAXIMUM_GENERATIONS = 10;
-    private const MINZOOM = 2;
 
-    protected $module;
-    protected $chart_service;
-    protected $leaflet_js_service;
+    protected PlacesAndPedigreeMapModuleExtended $module;
+    protected ChartService $chart_service;
+    protected LeafletJsService $leaflet_js_service;
+    protected RelationshipService $relationship_service;
 
     public function __construct(
         PlacesAndPedigreeMapModuleExtended $module,
         ChartService $chart_service,
-        LeafletJsService $leaflet_js_service) {
+        LeafletJsService $leaflet_js_service,
+        RelationshipService $relationship_service) {
 
         $this->module = $module;
         $this->chart_service = $chart_service;
         $this->leaflet_js_service = $leaflet_js_service;
+        $this->relationship_service = $relationship_service;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface {
@@ -94,21 +97,9 @@ class PedigreeMapChartController {
                 'map' => $map,
         ]);
     }
-
+    
     // CSS colors for each generation
-    private const COLORS = [
-        'Red',
-        'Green',
-        'Blue',
-        'Gold',
-        'Cyan',
-        'Orange',
-        'DarkBlue',
-        'LightGreen',
-        'Magenta',
-        'Brown',
-    ];
-    private const DEFAULT_ZOOM = 2;
+    private const COUNT_CSS_COLORS = 12;
 
     /**
      * @param ServerRequestInterface $request
@@ -116,7 +107,10 @@ class PedigreeMapChartController {
      * @return array<mixed> $geojson
      */
     protected function getMapData(ServerRequestInterface $request): array {
-        $pedigreeMapModule = new PedigreeMapModule($this->chart_service, $this->leaflet_js_service);
+        $pedigreeMapModule = new PedigreeMapModule(
+            $this->chart_service, 
+            $this->leaflet_js_service,
+            $this->relationship_service);
 
         $class = new ReflectionClass($pedigreeMapModule);
         $getPedigreeMapFactsMethod = $class->getMethod('getPedigreeMapFacts');
@@ -124,12 +118,8 @@ class PedigreeMapChartController {
         $getSosaNameMethod = $class->getMethod('getSosaName');
         $getSosaNameMethod->setAccessible(true);
 
-        $tree = $request->getAttribute('tree');
-        assert($tree instanceof Tree);
-
-        $color_count = count(self::COLORS);
-
         //[RC] adjusted
+        //TODO: use facts with adjusted lat/lon instead - less intrusive!
         //$facts = $this->getPedigreeMapFacts($request, $this->chart_service);      
         $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $this->chart_service);
 
@@ -164,10 +154,12 @@ class PedigreeMapChartController {
                 $latitude = $latLon->getLati();
                 $longitude = $latLon->getLong();
 
-                $polyline = null;
+                $polyline           = null;
                 $sosa_points[$sosa] = [$latitude, $longitude];
-                $sosa_child = intdiv($sosa, 2);
-                $color = self::COLORS[$sosa_child % $color_count];
+                $sosa_child         = intdiv($sosa, 2);
+                $generation         = (int) log($sosa, 2);
+                $color              = 'var(--wt-pedigree-map-gen-' . $generation % self::COUNT_CSS_COLORS . ')';
+                $class              = 'wt-pedigree-map-gen-' . $generation % self::COUNT_CSS_COLORS;                
 
                 if (array_key_exists($sosa_child, $sosa_points)) {
                     // Would like to use a GeometryCollection to hold LineStrings
@@ -195,14 +187,13 @@ class PedigreeMapChartController {
                         'iconcolor' => $color,
                         'tooltip' => $fact->place()->gedcomName(),
                         'summary' => view('modules/pedigree-map/events', [
-                            'fact' => $fact,
-                            //'relationship' => ucfirst($this->getSosaName($sosa)),
+                            'class'        => $class,
+                            'fact'         => $fact,
+                            //'relationship' => $this->getSosaName($sosa),
                             //[RC] adjusted
-                            'relationship' => ucfirst($getSosaNameMethod->invoke($pedigreeMapModule, $sosa)),
-                            'sosa' => $sosa,
+                            'relationship' => $getSosaNameMethod->invoke($pedigreeMapModule, $sosa),
+                            'sosa'         => $sosa,
                         ]),
-                        //[RC] adjusted
-                        'zoom' => /* $location->zoom() ?: */ self::DEFAULT_ZOOM,
                     ],
                 ];
             }

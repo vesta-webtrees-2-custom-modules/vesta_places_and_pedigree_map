@@ -30,6 +30,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Services\ChartService;
 use Fisharebest\Webtrees\Services\LeafletJsService;
 use Fisharebest\Webtrees\Services\ModuleService;
+use Fisharebest\Webtrees\Services\RelationshipService;
 use Fisharebest\Webtrees\Services\SearchService;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
@@ -90,20 +91,23 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         'generations' => self::DEFAULT_GENERATIONS,
     ];
 
-    protected $module_service;
-    protected $chart_service;
-    protected $leaflet_js_service;
+    protected ModuleService $module_service;
+    protected ChartService $chart_service;
+    protected LeafletJsService $leaflet_js_service;
+    protected RelationshipService $relationship_service;
 
     public function __construct(
         LeafletJsService $leaflet_js_service,
         ModuleService $module_service,
         SearchService $search_service,
-        ChartService $chart_service) {
+        ChartService $chart_service,
+        RelationshipService $relationship_service) {
 
         parent::__construct($leaflet_js_service, $module_service, $search_service);
         $this->module_service = $module_service;
         $this->chart_service = $chart_service;
         $this->leaflet_js_service = $leaflet_js_service;
+        $this->relationship_service = $relationship_service;
     }
 
     public function customModuleAuthorName(): string {
@@ -220,7 +224,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface {
-        $controller = new PedigreeMapChartController($this, $this->chart_service, $this->leaflet_js_service);
+        $controller = new PedigreeMapChartController(
+            $this, 
+            $this->chart_service, 
+            $this->leaflet_js_service,
+            $this->relationship_service);
+        
         return $controller->handle($request);
     }
 
@@ -229,7 +238,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         $tree = $request->getAttribute('tree');
         assert($tree instanceof Tree);
 
-        $controller = new PedigreeMapChartController($this, $this->chart_service, $this->leaflet_js_service);
+        $controller = new PedigreeMapChartController(
+            $this, 
+            $this->chart_service, 
+            $this->leaflet_js_service,
+            $this->relationship_service);
+        
         return $controller->mapData($request, $tree);
     }
 

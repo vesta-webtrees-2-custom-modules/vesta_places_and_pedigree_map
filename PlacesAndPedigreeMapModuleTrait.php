@@ -5,10 +5,12 @@ namespace Cissee\Webtrees\Module\PPM;
 use Fisharebest\Webtrees\I18N;
 use Vesta\CommonI18N;
 use Vesta\ControlPanelUtils\Model\ControlPanelCheckbox;
+use Vesta\ControlPanelUtils\Model\ControlPanelFactRestriction;
 use Vesta\ControlPanelUtils\Model\ControlPanelPreferences;
 use Vesta\ControlPanelUtils\Model\ControlPanelSection;
 use Vesta\ControlPanelUtils\Model\ControlPanelSubsection;
 use Vesta\ControlPanelUtils\Model\ControlPanelTextbox;
+use Vesta\Model\PlaceHistory;
 
 trait PlacesAndPedigreeMapModuleTrait {
 
@@ -68,6 +70,16 @@ trait PlacesAndPedigreeMapModuleTrait {
                 /* I18N: Module Configuration */I18N::translate('A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies.'),
                 'DETAILS_THRESHOLD',
                 '100')));
+    
+    $placeSub[] = new ControlPanelSubsection(
+            CommonI18N::placeHistory(),
+            array(
+                new ControlPanelFactRestriction(
+                    PlaceHistory::getPicklistFacts(), 
+                    CommonI18N::restrictPlaceHistory(),
+                    'RESTRICTED_PLACE_HISTORY',
+                    PlaceHistory::initialFactsStringForPreferences())));
+
     
     //$placeSub[] = new ControlPanelSubsection(
     //				/* I18N: Module Configuration */I18N::translate('Zoom levels'),

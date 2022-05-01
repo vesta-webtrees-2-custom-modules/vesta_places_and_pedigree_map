@@ -84,7 +84,7 @@ $factFilter = new class($placename) implements FactFilter {
         ?>
         <?= view(VestaUtils::vestaViewsNamespace() . '::lists/place-history', [
             'individuals' => $indilist,             
-            'record' => Registry::locationFactory()->new('', '0 @@ _LOC\n1 PLAC ' . $placename, null, $tree), 
+            'record' => Registry::locationFactory()->new('', "0 @@ _LOC\n1 PLAC " . $placename, null, $tree), 
             'factFilter' => $factFilter,
             'tree' => $tree,
             'context' => 'ppm',

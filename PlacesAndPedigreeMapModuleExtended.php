@@ -2,7 +2,6 @@
 
 namespace Cissee\Webtrees\Module\PPM;
 
-use Aura\Router\RouterContainer;
 use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
 use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
 use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
@@ -43,7 +42,6 @@ use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
-use function app;
 use function response;
 use function route;
 use function view;
@@ -165,11 +163,16 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         //webtrees isn't interested in solving this properly, see
         //https://www.webtrees.net/index.php/en/forum/2-open-discussion/33687-pretty-urls-in-2-x
 
+        /*
         $router_container = app(RouterContainer::class);
         assert($router_container instanceof RouterContainer);
+        $router = $router_container->getMap();
+        */
+
+        $router = Registry::routeFactory()->routeMap();
 
         //chart
-        $router_container->getMap()
+        $router
             ->get(static::class, static::ROUTE_URL, $this)
             ->allows(RequestMethodInterface::METHOD_POST)
             ->tokens([
@@ -179,7 +182,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         //list
         $controller = new GenericPlaceHierarchyController($this);
         
-        Registry::routeFactory()->routeMap()
+        $router
             ->get(GenericPlaceHierarchyController::class, static::ROUTE_URL_LIST, $controller);
         
         //for GenericPlaceHierarchyController

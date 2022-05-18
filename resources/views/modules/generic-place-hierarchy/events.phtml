@@ -2,8 +2,8 @@
 
 use Cissee\WebtreesExt\Module\ModuleVestalInterface;
 use Cissee\WebtreesExt\MoreI18N;
+use Cissee\WebtreesExt\PlaceAsTopLevelRecord;
 use Fisharebest\Webtrees\Fact;
-use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 use Vesta\CommonI18N;
 use Vesta\Model\FactFilter;
@@ -80,11 +80,12 @@ $factFilter = new class($placename) implements FactFilter {
     
     <div class="tab-pane fade" role="tabpanel" id="placeHistory">
         <?php
-        //create a_LOC record as reference so ResearchSuggestions can use it!
+        //create special top-level _LOC record as reference so ResearchSuggestions can use it!
+        //also this also allows to obtain a proper url to return to after editing
         ?>
         <?= view(VestaUtils::vestaViewsNamespace() . '::lists/place-history', [
             'individuals' => $indilist,             
-            'record' => Registry::locationFactory()->new('', "0 @@ _LOC\n1 PLAC " . $placename, null, $tree), 
+            'record' => new PlaceAsTopLevelRecord($placename, $tree), 
             'factFilter' => $factFilter,
             'tree' => $tree,
             'context' => 'ppm',

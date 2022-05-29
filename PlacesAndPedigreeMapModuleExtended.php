@@ -5,6 +5,7 @@ namespace Cissee\Webtrees\Module\PPM;
 use Cissee\WebtreesExt\Http\Controllers\GenericPlaceHierarchyController;
 use Cissee\WebtreesExt\Http\Controllers\ModulePlaceHierarchyInterface;
 use Cissee\WebtreesExt\Http\RequestHandlers\FunctionsPlaceProvidersAction;
+use Cissee\WebtreesExt\Http\RequestHandlers\IndividualFactsTabExtenderProvidersAction;
 use Cissee\WebtreesExt\Module\ModuleMetaInterface;
 use Cissee\WebtreesExt\Module\ModuleMetaTrait;
 use Cissee\WebtreesExt\Module\ModuleVestalInterface;
@@ -40,6 +41,7 @@ use Vesta\CommonI18N;
 use Vesta\HelpTextsPlaceHistory;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceInterface;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
+use Vesta\Hook\HookInterfaces\IndividualFactsTabExtenderUtils;
 use Vesta\VestaAdminController;
 use Vesta\VestaModuleTrait;
 use function response;
@@ -292,42 +294,81 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         return [];
     }
 
-    //////////////////////////////////////////////////////////////////////////////
+    public function getHelpAction(ServerRequestInterface $request): ResponseInterface {
+        $topic = Requests::getString($request, 'topic');
+        return response(HelpTextsPlaceHistory::helpText($topic));
+    }
+        
+    ////////////////////////////////////////////////////////////////////////////
 
     private function title1(): string {
         return CommonI18N::locationDataProviders();
     }
-
+  
     private function description1(): string {
         return CommonI18N::mapCoordinates();
     }
-
+  
+    private function title2(): string {
+        return CommonI18N::placeHistoryDataProviders();
+    }
+  
+    private function description2(): string {
+        return CommonI18N::factDataProvidersDescription();
+    }
+  
     //hook management - generalize?
     //adapted from ModuleController (e.g. listFooters)
     public function getFunctionsPlaceProvidersAction(): ResponseInterface {
         $modules = FunctionsPlaceUtils::modules($this, true);
 
-        $controller = new VestaAdminController($this->name());
+        $controller = new VestaAdminController($this);
         return $controller->listHooks(
-                $modules,
-                FunctionsPlaceInterface::class,
-                $this->title1(),
-                $this->description1(),
-                true,
-                true);
+                    $modules,
+                    FunctionsPlaceInterface::class,
+                    $this->title1(),
+                    $this->description1(),
+                    true,
+                    true);
+    }
+  
+    public function getIndividualFactsTabExtenderProvidersAction(): ResponseInterface {
+        $modules = IndividualFactsTabExtenderUtils::modules($this, true);
+
+        $controller = new VestaAdminController($this);
+        return $controller->listHooks(
+                    $modules,
+                    IndividualFactsTabExtenderUtils::moduleSpecificComponentName($this),
+                    $this->title2(),
+                    $this->description2(),
+                    true,
+                    true,
+                    true);
     }
 
     public function postFunctionsPlaceProvidersAction(ServerRequestInterface $request): ResponseInterface {
         $controller = new FunctionsPlaceProvidersAction($this);
         return $controller->handle($request);
     }
+  
+    public function postIndividualFactsTabExtenderProvidersAction(ServerRequestInterface $request): ResponseInterface {
+        $controller = new IndividualFactsTabExtenderProvidersAction($this);
+        return $controller->handle($request);
+    }
 
     protected function editConfigBeforeFaq() {
-        $modules = FunctionsPlaceUtils::modules($this, true);
+        $modules1 = FunctionsPlaceUtils::modules($this, true);
 
-        $url = route('module', [
+        $url1 = route('module', [
             'module' => $this->name(),
             'action' => 'FunctionsPlaceProviders'
+        ]);
+    
+        $modules2 = IndividualFactsTabExtenderUtils::modules($this, true);
+
+        $url2 = route('module', [
+            'module' => $this->name(),
+            'action' => 'IndividualFactsTabExtenderProviders'
         ]);
 
         //cf control-panel.phtml
@@ -338,12 +379,22 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                     <ul class="fa-ul">
                         <li>
                             <span class="fa-li"><?= view('icons/block') ?></span>
-                            <a href="<?= e($url) ?>">
-        <?= $this->title1() ?>
+                            <a href="<?= e($url1) ?>">
+                                <?= $this->title1() ?>
                             </a>
-                                <?= view('components/badge', ['count' => $modules->count()]) ?>
+                            <?= view('components/badge', ['count' => $modules1->count()]) ?>
                             <p class="small text-muted">
-                            <?= $this->description1() ?>
+                              <?= $this->description1() ?>
+                            </p>
+                        </li>
+                        <li>
+                            <span class="fa-li"><?= view('icons/block') ?></span>
+                            <a href="<?= e($url2) ?>">
+                                <?= $this->title2() ?>
+                            </a>
+                            <?= view('components/badge', ['count' => $modules2->count()]) ?>
+                            <p class="small text-muted">
+                              <?= $this->description2() ?>
                             </p>
                         </li>
                     </ul>
@@ -354,8 +405,4 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         <?php
     }
 
-    public function getHelpAction(ServerRequestInterface $request): ResponseInterface {
-        $topic = Requests::getString($request, 'topic');
-        return response(HelpTextsPlaceHistory::helpText($topic));
-    }
 }

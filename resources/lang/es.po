@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2022-04-03 20:23+0200\n"
-"PO-Revision-Date: 2022-09-16 17:19+0000\n"
+"PO-Revision-Date: 2022-09-19 12:23+0000\n"
 "Last-Translator: Jose Antonio Corral <calducho@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/"
 "vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:21
@@ -75,9 +75,8 @@ msgid "Place hierarchy list"
 msgstr "Lista de jerarquía de lugares"
 
 #: WhatsNew/WhatsNew0.php:11
-#, fuzzy
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
 msgstr ""
-"Lugares Vesta (Vesta Places) y Mapa genealógico (Pedigree map): ahora "
-"también reemplazan la Lista de jerarquía de lugares (Place hierarchy list), "
-"con el fin de mostrar datos adicionales de ubicación ."
+"Lugares Vesta y Mapa genealógico: ahora también reemplazan la Lista "
+"jerárquica de lugares (Place hierarchy list), con el fin de mostrar datos "
+"adicionales de ubicación ."

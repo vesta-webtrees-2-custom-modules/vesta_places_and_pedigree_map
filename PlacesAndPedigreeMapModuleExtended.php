@@ -144,11 +144,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     }
 
     public function hasTabContent(Individual $individual): bool {
-        return true;
+        $controller = new PlacesController($this, $this->module_service, $this->leaflet_js_service);
+        return $controller->hasTabContent($individual);
     }
 
     public function isGrayedOut(Individual $individual): bool {
-        //TODO could be improved, but probably not when canLoadAjax is true
+        //no need to evaluate here, cf isGrayedOut
         return false;
     }
 

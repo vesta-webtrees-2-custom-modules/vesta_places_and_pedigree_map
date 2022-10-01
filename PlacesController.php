@@ -65,6 +65,11 @@ class PlacesController {
         ]);
     }
 
+    public function hasTabContent(Individual $individual): bool {
+        $placesModule = new PlacesModule($this->leaflet_js_service, $this->module_service);
+        return $this->hasMapData($placesModule, $individual);
+    }
+    
     //adapted from PlacesModule
     private function getMapData($placesModule, Individual $indi): stdClass {
         $class = new ReflectionClass($placesModule);
@@ -115,7 +120,29 @@ class PlacesController {
 
         return (object) $geojson;
     }
+    
+    //adapted from PlacesModule
+    private function hasMapData($placesModule, Individual $indi): bool {
+        $class = new ReflectionClass($placesModule);
+        $getPersonalFactsMethod = $class->getMethod('getPersonalFacts');
+        $getPersonalFactsMethod->setAccessible(true);
+        $summaryDataMethod = $class->getMethod('summaryData');
+        $summaryDataMethod->setAccessible(true);
 
+        //$placesModule->getPersonalFacts($indi);
+        $facts = $getPersonalFactsMethod->invoke($placesModule, $indi);
+
+        foreach ($facts as $id => $fact) {
+            $latLon = $this->getLatLon($fact);
+
+            if ($latLon !== null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
     private function getLatLon($fact): ?MapCoordinates {
         $ps = PlaceStructure::fromFact($fact);
         if ($ps === null) {

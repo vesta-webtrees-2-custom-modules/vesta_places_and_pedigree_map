@@ -18,7 +18,6 @@ use Fisharebest\Webtrees\Services\RelationshipService;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use ReflectionClass;
 use Vesta\Hook\HookInterfaces\FunctionsPlaceUtils;
 use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
@@ -27,9 +26,8 @@ use function redirect;
 use function route;
 use function view;
 
-//adapted from PedigreeMapModule.handle - we could just use that, if getMapData() wasn't private,
-//which is the part we actually override
-class PedigreeMapChartController {
+//adapted from PedigreeMapModule.handle
+class PedigreeMapChartController extends PedigreeMapModule {
 
     use ViewResponseTrait;
     
@@ -47,6 +45,11 @@ class PedigreeMapChartController {
         LeafletJsService $leaflet_js_service,
         RelationshipService $relationship_service) {
 
+        parent::__construct(
+            $chart_service, 
+            $leaflet_js_service, 
+            $relationship_service);
+        
         $this->module = $module;
         $this->chart_service = $chart_service;
         $this->leaflet_js_service = $leaflet_js_service;
@@ -97,31 +100,18 @@ class PedigreeMapChartController {
                 'map' => $map,
         ]);
     }
-    
-    // CSS colors for each generation
-    private const COUNT_CSS_COLORS = 12;
 
+    //TODO: use wrapper around Fact instead, providing lat/lon via getLatLon
+    //(no need to re-implement getMapData then)
     /**
      * @param ServerRequestInterface $request
      *
      * @return array<mixed> $geojson
      */
     protected function getMapData(ServerRequestInterface $request): array {
-        $pedigreeMapModule = new PedigreeMapModule(
-            $this->chart_service, 
-            $this->leaflet_js_service,
-            $this->relationship_service);
 
-        $class = new ReflectionClass($pedigreeMapModule);
-        $getPedigreeMapFactsMethod = $class->getMethod('getPedigreeMapFacts');
-        $getPedigreeMapFactsMethod->setAccessible(true);
-        $getSosaNameMethod = $class->getMethod('getSosaName');
-        $getSosaNameMethod->setAccessible(true);
-
-        //[RC] adjusted
         //TODO: use facts with adjusted lat/lon instead - less intrusive!
-        //$facts = $this->getPedigreeMapFacts($request, $this->chart_service);      
-        $facts = $getPedigreeMapFactsMethod->invoke($pedigreeMapModule, $request, $this->chart_service);
+        $facts = $this->getPedigreeMapFacts($request, $this->chart_service);      
 
         $geojson = [
             'type' => 'FeatureCollection',
@@ -189,9 +179,7 @@ class PedigreeMapChartController {
                         'summary' => view('modules/pedigree-map/events', [
                             'class'        => $class,
                             'fact'         => $fact,
-                            //'relationship' => $this->getSosaName($sosa),
-                            //[RC] adjusted
-                            'relationship' => $getSosaNameMethod->invoke($pedigreeMapModule, $sosa),
+                            'relationship' => $this->getSosaName($sosa),
                             'sosa'         => $sosa,
                         ]),
                     ],

@@ -7,12 +7,13 @@ use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\I18N;
 
 /**
- * @var bool                 $showlink
- * 
+ * @var string               $edit_url
+ * @var int                  $id
+
  * //[RC] type adjusted
  * @var PlaceWithinHierarchy $place
- * 
- * @var int                  $id
+
+ * @var bool                 $showlink
  * @var string               $sidebar_class
  * @var array<string,string> $stats
  */
@@ -42,7 +43,11 @@ use Fisharebest\Webtrees\I18N;
         <?php if ($sidebar_class === 'unmapped') : ?>
             <div class="row">
                 <div class="col-sm-9"><i><?= MoreI18N::xlate('The location of this place is not known.') ?></i></div>
-                <div class="col-sm-3 align-digits"><?= view('icons/warning') ?></div>
+                <?php if ($edit_url === '') : ?>
+                    <div class="col-sm-3 align-digits"><?= view('icons/warning') ?></div>
+                <?php else : ?>
+                    <div class="col-sm-3 align-digits"><a class="col-sm-3 align-digits"><a href="<?= e($edit_url) ?>"><?= view('icons/edit') ?></a></div>
+                <?php endif ?>                
             </div>
         <?php endif ?>
 

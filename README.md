@@ -27,8 +27,8 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 
 ### Download<a name="download"/>
 
-* Current version: 2.1.15.0.0
-* Based on and tested with webtrees 2.1.15. Requires webtrees 2.1.8 or later.
+* Current version: 2.1.16.0.0
+* Based on and tested with webtrees 2.1.16. Requires webtrees 2.1.8 or later.
 * Requires the ⚶ Vesta Common module ('vesta_common').
 * Download the zip file, which includes all Vesta modules, [here](https://cissee.de/vesta.latest.zip).
 * Support, suggestions, feature requests: <ric@richard-cissee.de>
@@ -43,7 +43,7 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 ### License<a name="license"/>
 
 * **vesta_places_and_pedigree_map: a webtrees custom module**
-* Copyright (C) 2019 – 2022 Richard Cissée
+* Copyright (C) 2019 – 2023 Richard Cissée
 * Derived from **webtrees** - Copyright 2022 webtrees development team.
 * Dutch translations provided by TheDutchJewel.
 * Czech translations provided by Josef Prause.

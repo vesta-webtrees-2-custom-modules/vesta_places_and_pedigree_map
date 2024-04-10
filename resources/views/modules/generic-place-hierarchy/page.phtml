@@ -12,13 +12,13 @@ use Fisharebest\Webtrees\Tree;
  * //[RC] additional
  * @var PlaceHierarchyUtils $utils
  * @var array               $urlFilters
- * 
+ *
  * @var string       $alt_link
  * @var string       $alt_url
- * 
+ *
  * //[RC] type adjusted
  * @var array<PlaceWithinHierarchy> $breadcrumbs
- * 
+ *
  * @var string       $content
  * @var Place|null   $current
  * @var string       $events_link
@@ -39,7 +39,7 @@ use Fisharebest\Webtrees\Tree;
               <legend class="col-form-label col-sm-3 wt-page-options-label">
                 <?php if ($links->label() !== null) : ?>
                   <?= $links->label() ?>
-                <?php endif ?>  
+                <?php endif ?>
               </legend>
               <div class="col-sm-9 wt-page-options-value">
                 <div class="form-check-inline">
@@ -47,22 +47,22 @@ use Fisharebest\Webtrees\Tree;
                     <div>
                       <?php if ($link->icon() !== null) : ?>
                         <?= view($link->icon()) ?>
-                      <?php endif ?>  
+                      <?php endif ?>
                       <?= $link->format() ?>
-                      &nbsp; <?php //TODO better formatting ?>  
+                      &nbsp; <?php //TODO better formatting ?>
                     </div>
                   <?php endforeach ?>
                 </div>
-              </div> 
-            </div>    
+              </div>
+            </div>
           <?php endforeach ?>
         <?php endif ?>
-        <h4>&nbsp;</h4> <?php //TODO better formatting ?>  
+        <h4>&nbsp;</h4> <?php //TODO better formatting ?>
         <h5 class="text-center">
             <?php foreach ($breadcrumbs as $item) : ?>
                 <?= $item->additionalLinksHtmlBeforeName() ?>
                 <a href="<?= e($item->url()) ?>" dir="auto"><?= ($item->gedcomName() !== '')?$item->placeName():MoreI18N::xlate('World') ?></a>
-                - 
+                -
             <?php endforeach ?>
 
             <?= $current->additionalLinksHtmlBeforeName() ?>
@@ -85,4 +85,3 @@ use Fisharebest\Webtrees\Tree;
         </div>
     </div>
 </div>
-

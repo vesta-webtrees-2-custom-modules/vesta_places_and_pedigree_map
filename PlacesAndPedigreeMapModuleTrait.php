@@ -25,11 +25,11 @@ trait PlacesAndPedigreeMapModuleTrait {
 
   protected function getFullDescription() {
     $description = array();
-    $description[] = 
+    $description[] =
             /* I18N: Module Configuration */I18N::translate('The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original \'Place hierarchy\', \'Places\' and  \'Pedigree map\' modules.') . ' ' .
             /* I18N: Module Configuration */I18N::translate('Uses location data from GEDCOM, as well as location data provided by other modules.') . ' ' .
             /* I18N: Module Configuration */I18N::translate('In particular, you should activate the \'%1$s Vesta Webtrees Location Data Provider\' module if you manage your location data via webtrees (outside the GEDCOM).', $this->getVestaSymbol());
-    $description[] = 
+    $description[] =
             CommonI18N::requires1(CommonI18N::titleVestaCommon());
     return $description;
   }
@@ -70,32 +70,32 @@ trait PlacesAndPedigreeMapModuleTrait {
                 /* I18N: Module Configuration */I18N::translate('A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies.'),
                 'DETAILS_THRESHOLD',
                 '100')));
-    
+
     $placeSub[] = new ControlPanelSubsection(
             CommonI18N::placeHistory(),
             array(
                 new ControlPanelFactRestriction(
-                    PlaceHistory::getPicklistFacts(), 
+                    PlaceHistory::getPicklistFacts(),
                     CommonI18N::restrictPlaceHistory(),
                     'RESTRICTED_PLACE_HISTORY',
                     PlaceHistory::initialFactsStringForPreferences())));
 
-    
+
     //$placeSub[] = new ControlPanelSubsection(
     //				/* I18N: Module Configuration */I18N::translate('Zoom levels'),
     //				array(new ControlPanelRange(
     //								/* I18N: Module Configuration */I18N::translate('Maximal initial zoom level'),
-    //								I18N::translate('If all events displayed in the map are located closely together, a suitably small value here avoids zooming in too far when initially displaying the map.'), 
+    //								I18N::translate('If all events displayed in the map are located closely together, a suitably small value here avoids zooming in too far when initially displaying the map.'),
     //								1,
     //								18,
-    //								'INITIAL_ZOOM', 
+    //								'INITIAL_ZOOM',
     //								12),
     //						new ControlPanelRange(
     //								/* I18N: Module Configuration */I18N::translate('Maximal zoom level for clusters'),
-    //								I18N::translate('When clicking on clusters, it may be desirable not to zoom too far either.'), 
+    //								I18N::translate('When clicking on clusters, it may be desirable not to zoom too far either.'),
     //								1,
     //								18,
-    //								'CLUSTERCLICK_MAX_ZOOM', 
+    //								'CLUSTERCLICK_MAX_ZOOM',
     //								18)));
 
     $sections = array();

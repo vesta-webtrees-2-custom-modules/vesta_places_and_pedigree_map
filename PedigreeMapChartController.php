@@ -30,7 +30,7 @@ use function view;
 class PedigreeMapChartController extends PedigreeMapModule {
 
     use ViewResponseTrait;
-    
+
     // Limits
     public const MAXIMUM_GENERATIONS = 10;
 
@@ -46,10 +46,10 @@ class PedigreeMapChartController extends PedigreeMapModule {
         RelationshipService $relationship_service) {
 
         parent::__construct(
-            $chart_service, 
-            $leaflet_js_service, 
+            $chart_service,
+            $leaflet_js_service,
             $relationship_service);
-        
+
         $this->module = $module;
         $this->chart_service = $chart_service;
         $this->leaflet_js_service = $leaflet_js_service;
@@ -111,7 +111,7 @@ class PedigreeMapChartController extends PedigreeMapModule {
     protected function getMapData(ServerRequestInterface $request): array {
 
         //TODO: use facts with adjusted lat/lon instead - less intrusive!
-        $facts = $this->getPedigreeMapFacts($request, $this->chart_service);      
+        $facts = $this->getPedigreeMapFacts($request, $this->chart_service);
 
         $geojson = [
             'type' => 'FeatureCollection',
@@ -149,7 +149,7 @@ class PedigreeMapChartController extends PedigreeMapModule {
                 $sosa_child         = intdiv($sosa, 2);
                 $generation         = (int) log($sosa, 2);
                 $color              = 'var(--wt-pedigree-map-gen-' . $generation % self::COUNT_CSS_COLORS . ')';
-                $class              = 'wt-pedigree-map-gen-' . $generation % self::COUNT_CSS_COLORS;                
+                $class              = 'wt-pedigree-map-gen-' . $generation % self::COUNT_CSS_COLORS;
 
                 if (array_key_exists($sosa_child, $sosa_points)) {
                     // Would like to use a GeometryCollection to hold LineStrings

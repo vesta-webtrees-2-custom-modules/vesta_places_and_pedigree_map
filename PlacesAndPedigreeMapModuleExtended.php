@@ -50,13 +50,13 @@ use function view;
 
 //must extend PlaceHierarchyListModule in order to handle urls of standard places via $place->url()
 class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implements
-    ModuleCustomInterface, 
-    ModuleMetaInterface, 
-    ModuleConfigInterface, 
-    ModuleTabInterface, 
-    ModuleChartInterface, 
-    ModuleListInterface, 
-    ModulePlaceHierarchyInterface, 
+    ModuleCustomInterface,
+    ModuleMetaInterface,
+    ModuleConfigInterface,
+    ModuleTabInterface,
+    ModuleChartInterface,
+    ModuleListInterface,
+    ModulePlaceHierarchyInterface,
     ModuleVestalInterface,
     RequestHandlerInterface {
 
@@ -80,11 +80,11 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
     //chart
     protected const ROUTE_URL = '/tree/{tree}/vesta-pedigree-map-{generations}/{xref}';
-    
+
     //list
     protected const ROUTE_URL_LIST = '/tree/{tree}/vesta-place-list';
 
-        
+
     // Defaults
     public const DEFAULT_GENERATIONS = '4';
     public const DEFAULT_PARAMETERS = [
@@ -162,7 +162,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
      */
     public function onBoot(): void {
         //define our 'pretty' routes
-        //note: potentially problematic in case of name clashes; 
+        //note: potentially problematic in case of name clashes;
         //webtrees isn't interested in solving this properly, see
         //https://www.webtrees.net/index.php/en/forum/2-open-discussion/33687-pretty-urls-in-2-x
 
@@ -184,17 +184,17 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
         //list
         $controller = new GenericPlaceHierarchyController($this);
-        
+
         $router
             ->get(GenericPlaceHierarchyController::class, static::ROUTE_URL_LIST, $controller);
-        
+
         //for GenericPlaceHierarchyController
         View::registerCustomView('::modules/generic-place-hierarchy/place-hierarchy', $this->name() . '::modules/generic-place-hierarchy/place-hierarchy');
         View::registerCustomView('::modules/generic-place-hierarchy/events', $this->name() . '::modules/generic-place-hierarchy/events');
         View::registerCustomView('::modules/generic-place-hierarchy/list', $this->name() . '::modules/generic-place-hierarchy/list');
         View::registerCustomView('::modules/generic-place-hierarchy/page', $this->name() . '::modules/generic-place-hierarchy/page');
         View::registerCustomView('::modules/generic-place-hierarchy/sidebar', $this->name() . '::modules/generic-place-hierarchy/sidebar');
-        
+
         View::registerCustomView('::lists/place-history', $this->name() . '::lists/place-history');
 
         $this->flashWhatsNew('\Cissee\Webtrees\Module\PPM\WhatsNew', 1);
@@ -231,11 +231,11 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
     public function handle(ServerRequestInterface $request): ResponseInterface {
         $controller = new PedigreeMapChartController(
-            $this, 
-            $this->chart_service, 
+            $this,
+            $this->chart_service,
             $this->leaflet_js_service,
             $this->relationship_service);
-        
+
         return $controller->handle($request);
     }
 
@@ -245,11 +245,11 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         assert($tree instanceof Tree);
 
         $controller = new PedigreeMapChartController(
-            $this, 
-            $this->chart_service, 
+            $this,
+            $this->chart_service,
             $this->leaflet_js_service,
             $this->relationship_service);
-        
+
         return $controller->mapData($request, $tree);
     }
 
@@ -266,7 +266,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     //obsolete, we're using a custom url now!
     /*
     //cf PlaceHierarchyListModule::handle
-    public function getListAction(ServerRequestInterface $request): ResponseInterface {        
+    public function getListAction(ServerRequestInterface $request): ResponseInterface {
 
         $controller = new GenericPlaceHierarchyController(
             $this);
@@ -285,12 +285,12 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                 'tree'    => $tree->name(),
         ] + $parameters);
         */
-        
+
         $parameters['tree'] = $tree->name();
-        
+
         return route(GenericPlaceHierarchyController::class, $parameters);
     }
-    
+
     public function listUrlAttributes(): array {
         return [];
     }
@@ -299,25 +299,25 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         $topic = Requests::getString($request, 'topic');
         return response(HelpTextsPlaceHistory::helpText($topic));
     }
-        
+
     ////////////////////////////////////////////////////////////////////////////
 
     private function title1(): string {
         return CommonI18N::locationDataProviders();
     }
-  
+
     private function description1(): string {
         return CommonI18N::mapCoordinates();
     }
-  
+
     private function title2(): string {
         return CommonI18N::placeHistoryDataProviders();
     }
-  
+
     private function description2(): string {
         return CommonI18N::factDataProvidersDescription();
     }
-  
+
     //hook management - generalize?
     //adapted from ModuleController (e.g. listFooters)
     public function getFunctionsPlaceProvidersAction(): ResponseInterface {
@@ -332,7 +332,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                     true,
                     true);
     }
-  
+
     public function getIndividualFactsTabExtenderProvidersAction(): ResponseInterface {
         $modules = IndividualFactsTabExtenderUtils::modules($this, true);
 
@@ -351,7 +351,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         $controller = new FunctionsPlaceProvidersAction($this);
         return $controller->handle($request);
     }
-  
+
     public function postIndividualFactsTabExtenderProvidersAction(ServerRequestInterface $request): ResponseInterface {
         $controller = new IndividualFactsTabExtenderProvidersAction($this);
         return $controller->handle($request);
@@ -364,7 +364,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
             'module' => $this->name(),
             'action' => 'FunctionsPlaceProviders'
         ]);
-    
+
         $modules2 = IndividualFactsTabExtenderUtils::modules($this, true);
 
         $url2 = route('module', [
@@ -401,7 +401,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                     </ul>
                 </div>
             </div>
-        </div>		
+        </div>
 
         <?php
     }

@@ -20,16 +20,16 @@ use function view;
 class PlacesController {
 
     use ViewResponseTrait;
-    
+
     protected $module;
     protected $module_service;
     protected $leaflet_js_service;
 
     public function __construct(
-        PlacesAndPedigreeMapModuleExtended $module, 
+        PlacesAndPedigreeMapModuleExtended $module,
         ModuleService $module_service,
         LeafletJsService $leaflet_js_service) {
-        
+
         $this->module = $module;
         $this->module_service = $module_service;
         $this->leaflet_js_service = $leaflet_js_service;
@@ -53,7 +53,7 @@ class PlacesController {
         'INDI:OCCU' => ['color' => 'darkcyan', 'name' => 'industry fas'],
         'INDI:RESI' => ['color' => 'darkcyan', 'name' => 'home fas'],
     ];
-    
+
     protected const DEFAULT_ICON = ['color' => 'gold', 'name' => 'bullseye fas'];
 
     public function getTabContent(Individual $individual): string {
@@ -69,7 +69,7 @@ class PlacesController {
         $placesModule = new PlacesModule($this->leaflet_js_service, $this->module_service);
         return $this->hasMapData($placesModule, $individual);
     }
-    
+
     //adapted from PlacesModule
     private function getMapData($placesModule, Individual $indi): stdClass {
         $class = new ReflectionClass($placesModule);
@@ -120,7 +120,7 @@ class PlacesController {
 
         return (object) $geojson;
     }
-    
+
     //adapted from PlacesModule
     private function hasMapData($placesModule, Individual $indi): bool {
         $class = new ReflectionClass($placesModule);
@@ -142,7 +142,7 @@ class PlacesController {
 
         return false;
     }
-    
+
     private function getLatLon($fact): ?MapCoordinates {
         $ps = PlaceStructure::fromFact($fact);
         if ($ps === null) {

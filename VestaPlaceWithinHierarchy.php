@@ -14,16 +14,16 @@ use Vesta\Model\MapCoordinates;
 
 //DefaultPlaceWithinHierarchy with better lat/lon resolution
 class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements PlaceWithinHierarchy {
-    
+
   protected $module;
   protected $latLonInitialized = false;
-  
+
   public function __construct(
           Place $actual,
           PlaceUrls $urls,
-          SearchService $search_service, 
+          SearchService $search_service,
           ModuleInterface $module) {
-    
+
     parent::__construct($actual, $urls, $search_service);
     $this->module = $module;
   }
@@ -35,19 +35,19 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
     }
     return FunctionsPlaceUtils::plac2map($this->module, $ps, false);
   }
-  
+
   public function getLatLon(): ?MapCoordinates {
     if (!$this->latLonInitialized) {
       $this->latLon = $this->initLatLon();
       $this->latLonInitialized = true;
     }
-    
+
     return $this->latLon;
   }
-  
+
   public function latitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
-    
+
     $lati = null;
     if ($this->getLatLon() !== null) {
       $lati = $this->getLatLon()->getLati();
@@ -55,14 +55,14 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
     if ($lati === null) {
       return null;
     }
-    
+
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLatitude($lati);
   }
-  
+
   public function longitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
-    
+
     $long = null;
     if ($this->getLatLon() !== null) {
       $long = $this->getLatLon()->getLong();
@@ -70,24 +70,24 @@ class VestaPlaceWithinHierarchy extends DefaultPlaceWithinHierarchy implements P
     if ($long === null) {
       return null;
     }
-    
+
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLongitude($long);
   }
-  
+
   public function getChildPlaces(): array {
-    $self = $this;    
+    $self = $this;
     $ret = $this
             ->getChildPlacesCacheIds($this->actual)
             ->mapWithKeys(static function (Place $place) use ($self): array {
               return [$place->id() => new VestaPlaceWithinHierarchy(
-                      $place, 
-                      $self->urls, 
-                      $self->search_service, 
+                      $place,
+                      $self->urls,
+                      $self->search_service,
                       $self->module)];
             })
             ->toArray();
-    
+
     return $ret;
   }
 }

@@ -13,24 +13,24 @@ use Vesta\VestaUtils;
  * @var Collection<int,Family>     $famlist
  * @var Collection<int,Individual> $indilist
  * @var Tree                       $tree
- * 
+ *
  * //[RC] added
  * @var string                     $placename
  * @var ModuleVestalInterface      $module
- * 
+ *
  * //$module must also provide getHelpAction for 'Predecessor'!
  * //$module may also provide preferences for 'RESTRICTED_PLACE_HISTORY'!
  */
 
 $factFilter = new class($placename) implements FactFilter {
-    
+
     //gah painful
     private $placename;
 
     public function __construct($placename) {
         $this->placename = $placename;
     }
-    
+
     public function filter(Fact $fact): bool {
         return ($this->placename === $fact->place()->gedcomName());
     }
@@ -77,15 +77,15 @@ $factFilter = new class($placename) implements FactFilter {
             <?= view('lists/families-table', ['families' => $famlist, 'tree' => $tree]) ?>
         <?php endif ?>
     </div>
-    
+
     <div class="tab-pane fade" role="tabpanel" id="placeHistory">
         <?php
         //create special top-level _LOC record as reference so ResearchSuggestions can use it!
         //also this also allows to obtain a proper url to return to after editing
         ?>
         <?= view(VestaUtils::vestaViewsNamespace() . '::lists/place-history', [
-            'individuals' => $indilist,             
-            'record' => new PlaceAsTopLevelRecord($placename, $tree), 
+            'individuals' => $indilist,
+            'record' => new PlaceAsTopLevelRecord($placename, $tree),
             'factFilter' => $factFilter,
             'tree' => $tree,
             'context' => 'ppm',

@@ -1,8 +1,8 @@
 
 # ⚶ Vesta Places and Pedigree map (Webtrees 2 Custom Module)
 
-This [webtrees](https://www.webtrees.net/) custom module provides replacements for the original 'Places' and 'Pedigree map' modules, using location data from GEDCOM, as well as location data provided by other modules.  
-The project’s website is [cissee.de](https://cissee.de). 
+This [webtrees](https://www.webtrees.net/) custom module provides replacements for the original 'Places' and 'Pedigree map' modules, using location data from GEDCOM, as well as location data provided by other modules.
+The project’s website is [cissee.de](https://cissee.de).
 
 This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its webtrees 1.x counterpart, see [here](https://github.com/ric2016/openstreetmap_hooked).
 
@@ -17,7 +17,7 @@ This is a webtrees 2.x module - It cannot be used with webtrees 1.x. For its web
 
 * This custom module displays the location of events and the birthplace of ancestors on a map.
 
-* Location data is obtained directly from gedcom data, and may also be provided by other custom modules. 
+* Location data is obtained directly from gedcom data, and may also be provided by other custom modules.
 
 * If you have collected non-GEDCOM location data via webtrees (Control panel > Map > Geographic data), activate the 'Vesta Webtrees Location Data Provider' custom module to make this data available.
 

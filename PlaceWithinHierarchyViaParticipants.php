@@ -13,14 +13,14 @@ use Vesta\Model\MapCoordinates;
 use Vesta\Model\PlaceStructure;
 
 class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
-  
+
   protected $urls;
-          
+
   protected $first;
   protected $others;
 
   protected $participants;
-  
+
   //0 exclude, 1 restrict to
   protected $participantFilters;
 
@@ -28,18 +28,18 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
 
   /** @var MapCoordinates|null */
   protected $latLon = null;
-  
+
   protected $latLonInitialized = false;
 
   //all collections keyed by parameterName
   public function __construct(
           PlaceUrls $urls,
-          PlaceWithinHierarchy $first,          
-          Collection $others,          
+          PlaceWithinHierarchy $first,
+          Collection $others,
           Collection $participants,
           Collection $participantFilters,
           $module) {
-    
+
     $this->urls = $urls;
     $this->first = $first;
     $this->others = $others;
@@ -47,35 +47,35 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     $this->participantFilters = $participantFilters;
     $this->module = $module;
   }
-  
+
   public function url(): string {
     return $this->first->url();
   }
-  
+
   public function gedcomName(): string {
     return $this->first->gedcomName();
   }
-  
+
   public function placeName(): string {
     return $this->first->placeName();
   }
-  
+
   public function getChildPlaces(): array {
     $firstChildren = $this->first->getChildPlaces();
-    
+
     $otherChildrenArray = [];
     foreach ($this->participants as $participant) {
       /* @var $participant PlaceHierarchyParticipant */
       $parameterName = $participant->filterParameterName();
-      
+
       /* @var $pwh PlaceWithinHierarchy */
-      $pwh = $this->others->get($parameterName);      
+      $pwh = $this->others->get($parameterName);
       $otherChildrenArray[$parameterName] = $pwh->getChildPlaces();
     }
-    
+
     //either filter, or add others
     $ret = [];
-    
+
     foreach ($firstChildren as $id => $finalFirst) {
       $finalOthers = [];
       $exclude = false;
@@ -84,21 +84,21 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
         if (array_key_exists($id, $otherChildren)) {
           $otherChild = $otherChildren[$id];
         }
-        
+
         $parameterValue = $this->participantFilters->get($parameterName);
-        
+
         //in other, therefore exclude?
         if (($parameterValue === 0) && ($otherChild !== null)) {
           $exclude = true;
           break;
         }
-        
+
         //not in other, therefore exclude?
         if (($parameterValue === 1) && ($otherChild === null)) {
           $exclude = true;
           break;
         }
-        
+
         //we still have to create for each participant
         //because children of this child may exist
         //but it's sufficient to create a placeholder (may be more efficient)
@@ -107,30 +107,30 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
           $otherChild = $this->participants->get($parameterName)->
                   createNonMatchingPlace(new Place($finalFirst->gedcomName(), $finalFirst->tree()), $this->urls);
         }
-        
+
         $finalOthers[$parameterName] = $otherChild;
       }
-      
+
       if (!$exclude) {
         $ret[$id] = new PlaceWithinHierarchyViaParticipants($this->urls, $finalFirst, new Collection($finalOthers), $this->participants, $this->participantFilters, $this->module);
       }
     }
-    
+
     return $ret;
   }
-  
+
   public function id(): int {
     return $this->first->id();
   }
-  
+
   public function tree(): Tree {
     return $this->first->tree();
   }
-  
+
   public function fullName(bool $link = false): string {
     return $this->first->fullName($link);
   }
-  
+
   public function searchIndividualsInPlace(): Collection {
     $ret = $this->first->searchIndividualsInPlace();
     foreach ($this->others as $other) {
@@ -138,7 +138,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     }
     return $ret->unique();
   }
-  
+
   public function countIndividualsInPlace(): int {
     $counts = new Collection();
     $counts->add($this->first->countIndividualsInPlace());
@@ -150,7 +150,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     //assumption is dubious in general (in particular if places aren't linked to shared places consistently)
     return $counts->max();
   }
-  
+
   public function searchFamiliesInPlace(): Collection {
     $ret = $this->first->searchFamiliesInPlace();
     foreach ($this->others as $other) {
@@ -158,7 +158,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     }
     return $ret->unique();
   }
-  
+
   public function countFamiliesInPlace(): int {
     $counts = new Collection();
     $counts->add($this->first->countFamiliesInPlace());
@@ -170,7 +170,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     //assumption is dubious in general (in particular if places aren't linked to shared places consistently)
     return $counts->max();
   }
-  
+
   protected function initLatLon(): ?MapCoordinates {
     $ret = $this->first->getLatLon();
     if ($ret !== null) {
@@ -184,19 +184,19 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     }
     return null;
   }
-  
+
   public function getLatLon(): ?MapCoordinates {
     if (!$this->latLonInitialized) {
       $this->latLon = $this->initLatLon();
       $this->latLonInitialized = true;
     }
-    
+
     return $this->latLon;
   }
-  
+
   public function latitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
-    
+
     $lati = null;
     if ($this->getLatLon() !== null) {
       $lati = $this->getLatLon()->getLati();
@@ -204,14 +204,14 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     if ($lati === null) {
       return null;
     }
-    
+
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLatitude($lati);
   }
-  
+
   public function longitude(): ?float {
     //we don't go up the hierarchy here - there may be more than one parent!
-    
+
     $long = null;
     if ($this->getLatLon() !== null) {
       $long = $this->getLatLon()->getLong();
@@ -219,15 +219,15 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     if ($long === null) {
       return null;
     }
-    
+
     $gedcom_service = new GedcomService();
     return $gedcom_service->readLongitude($long);
   }
-  
+
   public function icon(): string {
     return '';
   }
-  
+
   public function boundingRectangleWithChildren(array $children): array {
     $latitudes = [];
     $longitudes = [];
@@ -239,7 +239,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
       $longitudes[] = $this->longitude();
     }
 
-    foreach ($children as $child) { 
+    foreach ($children as $child) {
       if ($child->latitude() !== null) {
         $latitudes[] = $child->latitude();
       }
@@ -263,7 +263,7 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
       $latiMin -= (1 - $latiSpread)/2;
       $latiMax += (1 - $latiSpread)/2;
     }
-    
+
     $longSpread = $longMax - $longMin;
     if ($longSpread < 1) {
       $longMin -= (1 - $longSpread)/2;
@@ -285,20 +285,20 @@ class PlaceWithinHierarchyViaParticipants implements PlaceWithinHierarchy {
     }
     return $html;
   }
-  
+
   public function links(): Collection {
     return $this->first->links();
   }
-  
+
   public function parent(): PlaceWithinHierarchy {
     return new PlaceWithinHierarchyViaParticipants(
-            $this->urls, 
-            $this->first->parent(), 
+            $this->urls,
+            $this->first->parent(),
             $this->others->map(function ($place) {
               return $place->parent();
-            }), 
-            $this->participants, 
-            $this->participantFilters, 
+            }),
+            $this->participants,
+            $this->participantFilters,
             $this->module);
   }
 }

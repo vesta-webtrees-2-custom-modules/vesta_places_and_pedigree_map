@@ -66,7 +66,7 @@ trait PlacesAndPedigreeMapModuleTrait {
             array(
         new ControlPanelTextbox(
                 /* I18N: Module Configuration */I18N::translate('Threshold size'),
-                /* I18N: Module Configuration */I18N::translate('Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold.') . ' ' .
+                /* I18N: Module Configuration */I18N::translate('Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold.') . ' ' .
                 /* I18N: Module Configuration */I18N::translate('A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies.'),
                 'DETAILS_THRESHOLD',
                 '100')));

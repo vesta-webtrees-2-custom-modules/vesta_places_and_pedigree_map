@@ -4,7 +4,6 @@ use Cissee\WebtreesExt\Http\Controllers\PlaceWithinHierarchy;
 use Cissee\WebtreesExt\MoreI18N;
 use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\Individual;
-use Fisharebest\Webtrees\I18N;
 
 /**
  * @var string               $edit_url
@@ -52,13 +51,13 @@ use Fisharebest\Webtrees\I18N;
         <?php endif ?>
 
         <div class="row">
-            <div class="col-sm-9"><?= I18N::translate('Individuals') ?></div>
+            <div class="col-sm-9"><?= MoreI18N::xlate('Individuals') ?></div>
             <div class="col-sm-3 align-digits"><?= I18N::number($stats[Individual::RECORD_TYPE]) ?></div>
         </div>
 
         <?php if ($stats[Family::RECORD_TYPE] > 0): ?>
             <div class="row">
-                <div class="col-sm-9"><?= I18N::translate('Families') ?></div>
+                <div class="col-sm-9"><?= MoreI18N::xlate('Families') ?></div>
                 <div class="col-sm-3 align-digits"><?= I18N::number($stats[Family::RECORD_TYPE]) ?></div>
             </div>
         <?php endif ?>

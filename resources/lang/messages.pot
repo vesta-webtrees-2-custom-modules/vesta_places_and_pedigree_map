@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2022-04-03 20:23+0200\n"
+"POT-Creation-Date: 2024-06-09 20:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,44 +18,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:21
-#: PlacesAndPedigreeMapModuleTrait.php:27
+#: PlacesAndPedigreeMapModuleTrait.php:23
+#: PlacesAndPedigreeMapModuleTrait.php:29
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:28
+#: PlacesAndPedigreeMapModuleTrait.php:30
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:29
+#: PlacesAndPedigreeMapModuleTrait.php:31
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:63
+#: PlacesAndPedigreeMapModuleTrait.php:65
 msgid "Display details"
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:66
+#: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "Threshold size"
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:67
-msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
+#: PlacesAndPedigreeMapModuleTrait.php:69
+msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:68
+#: PlacesAndPedigreeMapModuleTrait.php:70
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:95
+#: PlacesAndPedigreeMapModuleTrait.php:107
 msgid "Place hierarchy list"
 msgstr ""
 

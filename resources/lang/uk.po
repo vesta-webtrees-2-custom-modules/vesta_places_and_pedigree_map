@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the vesta package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2022-04-03 20:23+0200\n"
+"POT-Creation-Date: 2024-06-09 20:42+0200\n"
 "PO-Revision-Date: 2021-06-10 13:32+0000\n"
 "Last-Translator: z-yurets <zaharchenko.yurij@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/uk/>\n"
@@ -19,47 +19,50 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:68
+#: PlacesAndPedigreeMapModuleTrait.php:70
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr "Менший параметр порогового рівня запобігає проблемам з продуктивністю у великих списках, які можуть зустрічатися в ієрархіях простого місця."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:63
+#: PlacesAndPedigreeMapModuleTrait.php:65
 msgid "Display details"
 msgstr "Показати деталі"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:67
-msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
-msgstr "Не відображайте деталі (наприклад, місцезнаходження та кількість осіб), якщо розмір списку (для певного місця) перевищує цей поріг."
+#: PlacesAndPedigreeMapModuleTrait.php:69
+msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
+msgstr ""
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:29
+#: PlacesAndPedigreeMapModuleTrait.php:31
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr "Зокрема, вам слід активувати модуль \"%1$s Vesta Webtrees Location Data Provider\", якщо ви керуєте даними про своє місцезнаходження через webtrees (за межами GEDCOM)."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:95
+#: PlacesAndPedigreeMapModuleTrait.php:107
 msgid "Place hierarchy list"
 msgstr "Ієрархічний перелік місць"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:21
-#: PlacesAndPedigreeMapModuleTrait.php:27
+#: PlacesAndPedigreeMapModuleTrait.php:23
+#: PlacesAndPedigreeMapModuleTrait.php:29
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr "Ієрархія місця. Також показує на карті місця подій та місця народження предків. Заміна оригінальних модулів \"Ієрархія місць\", \"Місця\" та \"Карта родоводу\"."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:66
+#: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "Threshold size"
 msgstr "Розмір порогу"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:28
+#: PlacesAndPedigreeMapModuleTrait.php:30
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr "Використовує дані про місцезнаходження із GEDCOM, а також дані про місцезнаходження, надані іншими модулями."
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
 msgstr "Vesta Places and Pedigree map: Тепер також надає заміну ієрархічному списку місць, щоб показати додаткові дані про місцезнаходження."
+
+#~ msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
+#~ msgstr "Не відображайте деталі (наприклад, місцезнаходження та кількість осіб), якщо розмір списку (для певного місця) перевищує цей поріг."

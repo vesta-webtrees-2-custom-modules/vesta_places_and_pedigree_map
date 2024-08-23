@@ -2,16 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the vesta package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
-"POT-Creation-Date: 2022-04-03 20:23+0200\n"
+"POT-Creation-Date: 2024-06-09 20:42+0200\n"
 "PO-Revision-Date: 2022-09-19 12:23+0000\n"
 "Last-Translator: Jose Antonio Corral <calducho@gmail.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/"
-"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/es/>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,63 +19,50 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:21
-#: PlacesAndPedigreeMapModuleTrait.php:27
-msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
-msgstr ""
-"La jerarquía del lugar. También muestra la ubicación de los eventos y el "
-"lugar de nacimiento de los antepasados en un mapa. Reemplaza los módulos "
-"originales 'Jerarquía de lugares' (Place hierarchy), 'Lugares' (Places) y "
-"'Mapa genealógico' (Pedigree map)."
+#: PlacesAndPedigreeMapModuleTrait.php:70
+msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
+msgstr "Una configuración de umbral más pequeña evita problemas de rendimiento cuando usas listas grandes, que puedan estar en jerarquías planas."
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:28
-msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
-msgstr ""
-"Utiliza los datos de geolocalización del GEDCOM, así como datos de "
-"geolocalización proporcionados por otros módulos."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:29
-#, php-format
-msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
-msgstr ""
-"En concreto, debe activar el módulo ' %1$s 'Proveedor de datos de ubicación "
-"de Vesta Webtrees' si quieren gestionar sus datos de localización a través "
-"de webtrees (fuera de GEDCOM)."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:63
+#: PlacesAndPedigreeMapModuleTrait.php:65
 msgid "Display details"
 msgstr "Mostrar detalles"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:66
+#: PlacesAndPedigreeMapModuleTrait.php:69
+msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
+msgstr ""
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:31
+#, php-format
+msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
+msgstr "En concreto, debe activar el módulo ' %1$s 'Proveedor de datos de ubicación de Vesta Webtrees' si quieren gestionar sus datos de localización a través de webtrees (fuera de GEDCOM)."
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:107
+msgid "Place hierarchy list"
+msgstr "Lista de jerarquía de lugares"
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:23
+#: PlacesAndPedigreeMapModuleTrait.php:29
+msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
+msgstr "La jerarquía del lugar. También muestra la ubicación de los eventos y el lugar de nacimiento de los antepasados en un mapa. Reemplaza los módulos originales 'Jerarquía de lugares' (Place hierarchy), 'Lugares' (Places) y 'Mapa genealógico' (Pedigree map)."
+
+#. I18N: Module Configuration
+#: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "Threshold size"
 msgstr "Tamaño del umbral"
 
 #. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:67
-msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
-msgstr ""
-"No mostrar detalles (como la ubicación y el número de personas) si el tamaño "
-"de la lista (para un lugar específico) es mayor que este umbral."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:68
-msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
-msgstr ""
-"Una configuración de umbral más pequeña evita problemas de rendimiento "
-"cuando usas listas grandes, que puedan estar en jerarquías planas."
-
-#. I18N: Module Configuration
-#: PlacesAndPedigreeMapModuleTrait.php:95
-msgid "Place hierarchy list"
-msgstr "Lista de jerarquía de lugares"
+#: PlacesAndPedigreeMapModuleTrait.php:30
+msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
+msgstr "Utiliza los datos de geolocalización del GEDCOM, así como datos de geolocalización proporcionados por otros módulos."
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
-msgstr ""
-"Lugares Vesta y Mapa genealógico: ahora también reemplazan la Lista "
-"jerárquica de lugares (Place hierarchy list), con el fin de mostrar datos "
-"adicionales de ubicación ."
+msgstr "Lugares Vesta y Mapa genealógico: ahora también reemplazan la Lista jerárquica de lugares (Place hierarchy list), con el fin de mostrar datos adicionales de ubicación ."
+
+#~ msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than ths threshold."
+#~ msgstr "No mostrar detalles (como la ubicación y el número de personas) si el tamaño de la lista (para un lugar específico) es mayor que este umbral."

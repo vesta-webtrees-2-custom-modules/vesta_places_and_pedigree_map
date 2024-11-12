@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2024-06-09 20:42+0200\n"
-"PO-Revision-Date: 2022-09-19 12:23+0000\n"
-"Last-Translator: Jose Antonio Corral <calducho@gmail.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/es/>\n"
+"PO-Revision-Date: 2024-11-12 21:00+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:70
@@ -32,6 +33,8 @@ msgstr "Mostrar detalles"
 #: PlacesAndPedigreeMapModuleTrait.php:69
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
 msgstr ""
+"No muestre detalles (como ubicación y número de personas) si el tamaño de la "
+"lista (para un lugar específico) es mayor que este umbral."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:31

@@ -167,7 +167,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         //https://www.webtrees.net/index.php/en/forum/2-open-discussion/33687-pretty-urls-in-2-x
 
         /*
-        $router_container = app(RouterContainer::class);
+        $router_container = \Vesta\VestaUtils::get(RouterContainer::class);
         assert($router_container instanceof RouterContainer);
         $router = $router_container->getMap();
         */

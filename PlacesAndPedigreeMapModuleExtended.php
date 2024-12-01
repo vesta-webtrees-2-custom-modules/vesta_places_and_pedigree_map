@@ -79,10 +79,10 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
     use PlacesAndPedigreeMapModuleTrait;
 
     //chart
-    protected const ROUTE_URL = '/tree/{tree}/vesta-pedigree-map-{generations}/{xref}';
+    protected const VESTA_ROUTE_URL = '/tree/{tree}/vesta-pedigree-map-{generations}/{xref}';
 
     //list
-    protected const ROUTE_URL_LIST = '/tree/{tree}/vesta-place-list';
+    protected const VESTA_ROUTE_URL_LIST = '/tree/{tree}/vesta-place-list';
 
 
     // Defaults
@@ -176,7 +176,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
 
         //chart
         $router
-            ->get(static::class, static::ROUTE_URL, $this)
+            ->get(static::class, static::VESTA_ROUTE_URL, $this)
             ->allows(RequestMethodInterface::METHOD_POST)
             ->tokens([
                 'generations' => '\d+',
@@ -186,7 +186,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
         $controller = new GenericPlaceHierarchyController($this);
 
         $router
-            ->get(GenericPlaceHierarchyController::class, static::ROUTE_URL_LIST, $controller);
+            ->get(GenericPlaceHierarchyController::class, static::VESTA_ROUTE_URL_LIST, $controller);
 
         //for GenericPlaceHierarchyController
         View::registerCustomView('::modules/generic-place-hierarchy/place-hierarchy', $this->name() . '::modules/generic-place-hierarchy/place-hierarchy');

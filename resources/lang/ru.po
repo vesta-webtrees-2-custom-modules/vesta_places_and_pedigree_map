@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2024-06-09 20:42+0200\n"
-"PO-Revision-Date: 2021-05-13 10:31+0000\n"
-"Last-Translator: Продай Своё <ol810car@gmail.com>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/ru/>\n"
+"PO-Revision-Date: 2024-12-02 00:00+0000\n"
+"Last-Translator: Олег <uolega@yandex.ru>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:70
@@ -32,6 +34,8 @@ msgstr "Показать детали"
 #: PlacesAndPedigreeMapModuleTrait.php:69
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
 msgstr ""
+"Не отображайте подробную информацию (например, местоположение и количество "
+"людей), если размер списка (для конкретного места) превышает этот порог."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:31

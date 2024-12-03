@@ -32,7 +32,7 @@ class PedigreeMapChartController extends PedigreeMapModule {
     use ViewResponseTrait;
 
     // Limits
-    public const MAXIMUM_GENERATIONS = 10;
+    public const VESTA_MAXIMUM_GENERATIONS = 10;
 
     protected PlacesAndPedigreeMapModuleExtended $module;
     protected ChartService $chart_service;
@@ -96,7 +96,7 @@ class PedigreeMapChartController extends PedigreeMapModule {
                 'tree' => $tree,
                 'individual' => $individual,
                 'generations' => $generations,
-                'maxgenerations' => self::MAXIMUM_GENERATIONS,
+                'maxgenerations' => self::VESTA_MAXIMUM_GENERATIONS,
                 'map' => $map,
         ]);
     }

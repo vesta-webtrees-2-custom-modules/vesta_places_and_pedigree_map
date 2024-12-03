@@ -22,7 +22,7 @@ class PlaceHierarchyUtilsImpl implements PlaceHierarchyUtils {
     protected $participants;
 
     /** @var SearchService */
-    protected $search_servicet;
+    protected $search_service;
 
     public function __construct(
         ModuleInterface $module,

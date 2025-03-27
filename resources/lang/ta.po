@@ -8,56 +8,72 @@ msgstr ""
 "Project-Id-Version: vesta 1.0\n"
 "Report-Msgid-Bugs-To: ric@richard-cissee.de\n"
 "POT-Creation-Date: 2024-06-09 20:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-03-27 05:01+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/"
+"vesta-webtrees-custom-modules/vesta-places-and-pedigree-map/ta/>\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:23
 #: PlacesAndPedigreeMapModuleTrait.php:29
 msgid "The Place hierarchy. Also show the location of events and the birthplace of ancestors on a map. Replacement for the original 'Place hierarchy', 'Places' and  'Pedigree map' modules."
 msgstr ""
+"இடம் வரிசைமுறை. நிகழ்வுகளின் இருப்பிடத்தையும் மூதாதையர்களின் பிறப்பிடத்தையும் ஒரு "
+"வரைபடத்தில் காட்டுங்கள். அசல் 'இடம் வரிசைமுறை', 'இடங்கள்' மற்றும் 'வம்சாவளி வரைபடம்' "
+"தொகுதிகளுக்கு மாற்றாக."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:30
 msgid "Uses location data from GEDCOM, as well as location data provided by other modules."
 msgstr ""
+"GEDCOM இலிருந்து இருப்பிடத் தரவையும், பிற தொகுதிகள் வழங்கப்பட்ட இருப்பிடத் தரவையும் "
+"பயன்படுத்துகிறது."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:31
 #, php-format
 msgid "In particular, you should activate the '%1$s Vesta Webtrees Location Data Provider' module if you manage your location data via webtrees (outside the GEDCOM)."
 msgstr ""
+"குறிப்பாக, உங்கள் இருப்பிடத் தரவை வெப் ட்ரீச் (GEDCOM க்கு வெளியே) வழியாக நிர்வகித்தால், "
+"'%1$s வெச்டா வெப் ட்ரீச் இருப்பிட தரவு வழங்குநர்' தொகுதியை நீங்கள் செயல்படுத்த வேண்டும்."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:65
 msgid "Display details"
-msgstr ""
+msgstr "காட்சி விவரங்கள்"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:68
 msgid "Threshold size"
-msgstr ""
+msgstr "வாசல் அளவு"
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:69
 msgid "Do not display details (such as location and number of individuals) if list size (for a specific place) is larger than this threshold."
 msgstr ""
+"பட்டியல் அளவு (ஒரு குறிப்பிட்ட இடத்திற்கு) இந்த வாசலை விட பெரியதாக இருந்தால் விவரங்களை "
+"(இருப்பிடம் மற்றும் தனிநபர்களின் எண்ணிக்கை போன்றவை) காண்பிக்க வேண்டாம்."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:70
 msgid "A smaller threshold setting prevents performance issues in large lists, which may be encountered in flat place hierarchies."
 msgstr ""
+"ஒரு சிறிய வாசல் அமைப்பு பெரிய பட்டியல்களில் செயல்திறன் சிக்கல்களைத் தடுக்கிறது, இது "
+"தட்டையான இட வரிசைகளில் எதிர்கொள்ளப்படலாம்."
 
 #. I18N: Module Configuration
 #: PlacesAndPedigreeMapModuleTrait.php:107
 msgid "Place hierarchy list"
-msgstr ""
+msgstr "படிநிலை பட்டியலை வைக்கவும்"
 
 #: WhatsNew/WhatsNew0.php:11
 msgid "Vesta Places and Pedigree map: Now also provides a replacement for the Place hierarchy list, in order to show additional location data."
 msgstr ""
+"வெச்டா இடங்கள் மற்றும் வம்சாவளி வரைபடம்: கூடுதல் இருப்பிடத் தரவைக் காண்பிப்பதற்காக, இட "
+"வரிசைமுறை பட்டியலுக்கு மாற்றீட்டை இப்போது வழங்குகிறது."

@@ -25,7 +25,7 @@ The project’s website is [cissee.de](https://cissee.de).
 
 ### Download<a name="download"/>
 
-* Current version: 2.2.1.3.0
+* Current version: 2.2.1.4.0
 * Based on and tested with webtrees 2.2.1. Requires webtrees 2.2.1 or later.
 * Requires the ⚶ Vesta Common module ('vesta_common').
 * Download the zip file, which includes all Vesta modules, [here](https://cissee.de/vesta.latest.zip).

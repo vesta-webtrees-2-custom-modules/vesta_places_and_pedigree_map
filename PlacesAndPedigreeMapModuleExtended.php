@@ -330,6 +330,7 @@ class PlacesAndPedigreeMapModuleExtended extends PlaceHierarchyListModule implem
                     $this->title1(),
                     $this->description1(),
                     true,
+                    true,
                     true);
     }
 

@@ -383,5 +383,10 @@
 		"from": "2.2.5",
 		"to": "2.2.7",
 		"changelog": ["Bugfix (Pedigree Map)."]
+	},
+	{
+		"version": "2.2.6.1.0",
+		"from": "2.2.5",
+		"to": "2.2.7"
 	}
 ]
